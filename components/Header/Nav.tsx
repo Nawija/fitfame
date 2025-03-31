@@ -69,9 +69,9 @@ export default function Nav() {
                 />
             )}
             <header
-                className={`fixed top-0 z-50 w-screen bg-white/90  backdrop-blur-md transition-all duration-300 ${
+                className={`fixed top-0 z-50 w-screen transition-all duration-300 ${
                     kanit.className
-                } ${hasShadow ? "shadow-md " : ""}`}
+                } ${hasShadow ? "shadow-md bg-white/90 backdrop-blur-md" : "bg-transparent text-white"}`}
             >
                 <div className="mx-auto flex items-center justify-between p-4 max-w-screen-2xl">
                     <Logo />
@@ -160,7 +160,7 @@ export default function Nav() {
                                         className={`block w-max py-4 px-1 uppercase lg:text-sm xl:text-base transition-all hover:text-[#a58b34] ${
                                             pathname === link.href
                                                 ? "text-[#a58b34]"
-                                                : "text-gray-800"
+                                                : ""
                                         }`}
                                         aria-current={
                                             pathname === link.href
@@ -182,7 +182,7 @@ export default function Nav() {
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label="Facebook"
-                            className="text-gray-600 hover:text-[#a58b34] transition-all text-2xl"
+                            className="hover:text-[#a58b34] transition-all text-2xl"
                         >
                             <TiSocialFacebook />
                         </Link>
@@ -191,7 +191,7 @@ export default function Nav() {
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label="Instagram"
-                            className="text-gray-600 hover:text-[#a58b34] transition-all text-xl"
+                            className="hover:text-[#a58b34] transition-all text-xl"
                         >
                             <FiInstagram />
                         </Link>

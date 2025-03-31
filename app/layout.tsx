@@ -17,7 +17,7 @@ export default function RootLayout({
     return (
         <html lang="pl">
             <body
-                className={`flex flex-col min-h-screen w-full font-light antialiased font-sans`}
+                className={`flex flex-col min-h-screen w-full font-light antialiased font-sans bg-white`}
             >
                 <Nav />
                 <main className="flex-1 pt-12 w-full overflow-x-hidden relative">
