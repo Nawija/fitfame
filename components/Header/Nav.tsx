@@ -71,7 +71,13 @@ export default function Nav() {
             <header
                 className={`fixed top-0 z-50 w-screen transition-all duration-300 ${
                     kanit.className
-                } ${hasShadow ? "shadow-md bg-white/90 backdrop-blur-md" : "bg-transparent text-white"}`}
+                } ${
+                    hasShadow
+                        ? "shadow-md bg-white/90 backdrop-blur-md text-black"
+                        : pathname === "/"
+                        ? "bg-transparent text-white"
+                        : "bg-white text-black"
+                }`}
             >
                 <div className="mx-auto flex items-center justify-between p-4 max-w-screen-2xl">
                     <Logo />

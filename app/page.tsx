@@ -3,7 +3,7 @@ import Hero from "@/public/Images/tired-bearded-man.jpg";
 
 export default function Home() {
     return (
-        <>
+        <div className="anim-opacity">
             <div className="relative h-[85vh] w-full -mt-12">
                 <Image src={Hero} fill className="object-cover" alt="hero" />
                 <div className="absolute inset-0 bg-black/60" />
@@ -16,6 +16,6 @@ export default function Home() {
             <section>
                 <div className="h-[200vh]" />
             </section>
-        </>
+        </div>
     );
 }
