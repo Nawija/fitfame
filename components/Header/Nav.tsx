@@ -184,7 +184,7 @@ export default function Nav() {
                     {/* Social media desktop */}
                     <div className="hidden lg:flex items-center gap-4">
                         <Link
-                            href="https://www.facebook.com/JarekOlszewskiFotografia/"
+                            href="/"
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label="Facebook"
@@ -193,7 +193,7 @@ export default function Nav() {
                             <TiSocialFacebook />
                         </Link>
                         <Link
-                            href="https://www.instagram.com/jarek.olszewski.fotografia/"
+                            href="/"
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label="Instagram"
