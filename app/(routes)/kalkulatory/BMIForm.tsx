@@ -14,10 +14,10 @@ export const BMIForm = () => {
             const bmiValue = weight / (heightInMeters * heightInMeters);
             setBmi(parseFloat(bmiValue.toFixed(2)));
 
-            if (bmiValue < 18.5) setCategory("Underweight");
-            else if (bmiValue < 24.9) setCategory("Normal weight");
-            else if (bmiValue < 29.9) setCategory("Overweight");
-            else setCategory("Obese");
+            if (bmiValue < 18.5) setCategory("Niedowaga");
+            else if (bmiValue < 24.9) setCategory("Prawidłowa waga");
+            else if (bmiValue < 29.9) setCategory("Nadwaga");
+            else setCategory("Otyłość");
         }
     };
 
@@ -59,15 +59,15 @@ export const BMIForm = () => {
 
             <button
                 onClick={calculateBMI}
-                className="w-full p-4 bg-yellow-500 text-white rounded-lg text-lg font-semibold hover:bg-yellow-400 transition duration-200"
+                className="w-full p-4 bg-yellow-500 text-white rounded-lg text-lg font-semibold hover:bg-yellow-400 transition duration-200 cursor-pointer"
             >
-                Calculate BMI
+                Oblicz BMI
             </button>
 
             {bmi !== null && (
                 <div className="mt-6 text-center">
                     <p className="text-xl text-black font-bold mb-2">
-                        Your BMI is: {bmi}
+                        Twoje BMI wynosi: {bmi}
                     </p>
                     <p className="text-lg text-gray-700">{category}</p>
                 </div>
