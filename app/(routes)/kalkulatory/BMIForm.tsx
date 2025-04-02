@@ -22,7 +22,7 @@ export const BMIForm = () => {
 
             setErrorMessage(null); // Clear error message if calculation succeeds
         } else {
-            setErrorMessage("Please enter both weight and height!");
+            setErrorMessage("Proszę wpisać wagę i wzrost!");
         }
     };
 
@@ -78,7 +78,7 @@ export const BMIForm = () => {
             {bmi !== null && !errorMessage && (
                 <div className="mt-6 text-center">
                     <p className="text-xl text-black font-bold mb-2">
-                    Twoje BMI wynosi: {bmi}
+                        Twoje BMI wynosi: {bmi}
                     </p>
                     <p className="text-lg text-gray-700">{category}</p>
                 </div>
