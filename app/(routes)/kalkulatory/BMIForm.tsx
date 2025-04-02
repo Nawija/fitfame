@@ -63,6 +63,7 @@ export const BMIForm = () => {
             </div>
 
             <button
+                type="submit"
                 onClick={calculateBMI}
                 className="w-full p-4 bg-yellow-500 text-white rounded-lg text-lg font-semibold hover:bg-yellow-400 transition duration-200 cursor-pointer"
             >
