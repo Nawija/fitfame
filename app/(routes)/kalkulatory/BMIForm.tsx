@@ -7,6 +7,7 @@ export const BMIForm = () => {
     const [height, setHeight] = useState<number>(0);
     const [bmi, setBmi] = useState<number | null>(null);
     const [category, setCategory] = useState<string | null>(null);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     const calculateBMI = () => {
         if (weight && height) {
@@ -18,6 +19,10 @@ export const BMIForm = () => {
             else if (bmiValue < 24.9) setCategory("Prawidłowa waga");
             else if (bmiValue < 29.9) setCategory("Nadwaga");
             else setCategory("Otyłość");
+
+            setErrorMessage(null); // Clear error message if calculation succeeds
+        } else {
+            setErrorMessage("Please enter both weight and height!");
         }
     };
 
@@ -64,10 +69,16 @@ export const BMIForm = () => {
                 Oblicz BMI
             </button>
 
-            {bmi !== null && (
+            {errorMessage && (
+                <div className="mt-4 p-3 text-center text-red-600 font-semibold bg-red-100 rounded-lg animate-pulse">
+                    {errorMessage}
+                </div>
+            )}
+
+            {bmi !== null && !errorMessage && (
                 <div className="mt-6 text-center">
                     <p className="text-xl text-black font-bold mb-2">
-                        Twoje BMI wynosi: {bmi}
+                    Twoje BMI wynosi: {bmi}
                     </p>
                     <p className="text-lg text-gray-700">{category}</p>
                 </div>
