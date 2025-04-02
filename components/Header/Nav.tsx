@@ -75,7 +75,7 @@ export default function Nav() {
                     hasShadow
                         ? "shadow-md bg-white/90 backdrop-blur-md text-black"
                         : pathname === "/"
-                        ? "bg-transparent text-white"
+                        ? "bg-transparent text-white "
                         : "bg-white text-black"
                 }`}
             >

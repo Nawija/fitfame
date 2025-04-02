@@ -12,6 +12,15 @@ const nextConfig: NextConfig = {
             },
         ],
     },
+    theme: {
+        extend: {
+            colors: {
+                black: "#000000",
+                white: "#ffffff",
+                gold: "#a58b34",
+            },
+        },
+    },
 };
 
 export default nextConfig;
