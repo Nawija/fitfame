@@ -1,13 +1,17 @@
-import { BMIForm } from "./BMIForm";
+import { MainBtn } from "@/components/Buttons/MainBtn";
+import Link from "next/link";
 
-export default function Omnie() {
+export default function Kalkulatory() {
     return (
-        <div className="flex justify-center items-center bg-white text-black font-sans anim-opacity">
-            <div className="w-full max-w-lg px-4 py-8 bg-white shadow-lg rounded-lg">
-                <h1 className="text-3xl font-bold text-center text-black mb-6">
-                    BMI Calculator
-                </h1>
-                <BMIForm />
+        <div className="flex justify-center flex-col space-y-8 items-center bg-white text-black font-sans anim-opacity">
+            <h1 className="text-2xl font-semibold ">Wybierz kalkulator:</h1>
+            <div className="flex flex-col items-center justify-center space-y-4">
+            <Link href="kalkulatory/bmi">
+                <MainBtn>Kalkulator BMI</MainBtn>
+            </Link>
+            <Link href="kalkulatory/zapotrzebowanie-kaloryczne">
+                <MainBtn>Zapotrzebowanie kaloryczne</MainBtn>
+            </Link>
             </div>
         </div>
     );
