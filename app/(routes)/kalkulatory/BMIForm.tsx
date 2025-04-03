@@ -28,16 +28,17 @@ export const BMIForm = () => {
         }
     };
 
-    // Ustal kolor tła na podstawie kategorii BMI
     const getBackgroundColor = () => {
         if (category === "Prawidłowa waga") return "bg-green-100";
         if (category === "Nadwaga") return "bg-yellow-100";
         if (category === "Otyłość") return "bg-red-100";
-        return "bg-gray-100"; // Niedowaga lub brak wartości
+        return "bg-gray-100";
     };
 
+    const sliderColor = gender === "male" ? "accent-blue-500" : "accent-pink-500";
+
     return (
-        <div className="p-6 bg-white rounded-lg">
+        <div className="p-6 bg-white shadow-lg rounded-lg">
             {/* Wybór płci */}
             <div className="mb-4 flex justify-center gap-4">
                 <button
@@ -69,7 +70,7 @@ export const BMIForm = () => {
                     max="200"
                     value={weight}
                     onChange={(e) => setWeight(e.target.value)}
-                    className="w-full"
+                    className={`w-full ${sliderColor}`}
                 />
                 <input
                     type="number"
@@ -90,7 +91,7 @@ export const BMIForm = () => {
                     max="250"
                     value={height}
                     onChange={(e) => setHeight(e.target.value)}
-                    className="w-full"
+                    className={`w-full ${sliderColor}`}
                 />
                 <input
                     type="number"
