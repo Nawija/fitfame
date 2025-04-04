@@ -14,13 +14,21 @@ export const BMIForm = () => {
     const calculateBMI = () => {
         if (weight && height) {
             const heightInMeters = parseFloat(height) / 100;
-            const bmiValue = parseFloat(weight) / (heightInMeters * heightInMeters);
+            const bmiValue =
+                parseFloat(weight) / (heightInMeters * heightInMeters);
             setBmi(parseFloat(bmiValue.toFixed(2)));
 
-            if (bmiValue < 18.5) setCategory("Niedowaga");
-            else if (bmiValue < 24.9) setCategory("Prawidłowa waga");
-            else if (bmiValue < 29.9) setCategory("Nadwaga");
-            else setCategory("Otyłość");
+            if (gender === "male") {
+                if (bmiValue < 18.5) setCategory("Niedowaga");
+                else if (bmiValue < 24.9) setCategory("Prawidłowa waga");
+                else if (bmiValue < 29.9) setCategory("Nadwaga");
+                else setCategory("Otyłość");
+            } else {
+                if (bmiValue < 18.0) setCategory("Niedowaga");
+                else if (bmiValue < 24.4) setCategory("Prawidłowa waga");
+                else if (bmiValue < 29.0) setCategory("Nadwaga");
+                else setCategory("Otyłość");
+            }
 
             setErrorMessage(null);
         } else {
@@ -35,104 +43,113 @@ export const BMIForm = () => {
         return "bg-gray-100";
     };
 
-    const sliderColor = gender === "male" ? "accent-blue-500" : "accent-pink-500";
+    const sliderColor =
+        gender === "male" ? "accent-blue-500" : "accent-pink-500";
 
     return (
-        <div className="p-6 bg-white shadow-lg rounded-lg">
-            {/* Wybór płci */}
-            <div className="mb-4 flex justify-center gap-4">
-                <button
-                    className={`p-2 px-4 rounded-lg ${
-                        gender === "male" ? "bg-blue-500 text-white" : "bg-gray-200"
-                    }`}
-                    onClick={() => setGender("male")}
-                >
-                    Mężczyzna
-                </button>
-                <button
-                    className={`p-2 px-4 rounded-lg ${
-                        gender === "female" ? "bg-pink-500 text-white" : "bg-gray-200"
-                    }`}
-                    onClick={() => setGender("female")}
-                >
-                    Kobieta
-                </button>
+        <div className="p-6 bg-white w-full shadow-md rounded-lg border border-gray-50">
+            <div className="flex flex-col lg:flex-row gap-6">
+                <div className="flex-1">
+                    {/* Wybór płci */}
+                    <div className="mb-4 flex justify-center gap-4">
+                        <button
+                            className={`p-2 px-4 rounded-lg ${
+                                gender === "male"
+                                    ? "bg-blue-500 text-white"
+                                    : "bg-gray-200"
+                            }`}
+                            onClick={() => setGender("male")}
+                        >
+                            Mężczyzna
+                        </button>
+                        <button
+                            className={`p-2 px-4 rounded-lg ${
+                                gender === "female"
+                                    ? "bg-pink-500 text-white"
+                                    : "bg-gray-200"
+                            }`}
+                            onClick={() => setGender("female")}
+                        >
+                            Kobieta
+                        </button>
+                    </div>
+
+                    {/* Waga */}
+                    <div className="mb-4">
+                        <label className="block text-black text-lg font-medium mb-2">
+                            Waga: {weight} kg
+                        </label>
+                        <input
+                            type="range"
+                            min="30"
+                            max="200"
+                            value={weight}
+                            onChange={(e) => setWeight(e.target.value)}
+                            className={`w-full ${sliderColor}`}
+                        />
+                        <input
+                            type="number"
+                            value={weight}
+                            onChange={(e) => setWeight(e.target.value)}
+                            className="w-full p-2 border rounded-lg text-center"
+                        />
+                    </div>
+
+                    {/* Wzrost */}
+                    <div className="mb-6">
+                        <label className="block text-black text-lg font-medium mb-2">
+                            Wzrost: {height} cm
+                        </label>
+                        <input
+                            type="range"
+                            min="100"
+                            max="250"
+                            value={height}
+                            onChange={(e) => setHeight(e.target.value)}
+                            className={`w-full ${sliderColor}`}
+                        />
+                        <input
+                            type="number"
+                            value={height}
+                            onChange={(e) => setHeight(e.target.value)}
+                            className="w-full p-2 border rounded-lg text-center"
+                        />
+                    </div>
+
+                    {/* Oblicz BMI */}
+                    <button
+                        onClick={calculateBMI}
+                        className="w-full p-4 bg-yellow-500 text-white rounded-lg text-lg font-semibold hover:bg-yellow-400 transition duration-200"
+                    >
+                        Oblicz BMI
+                    </button>
+
+                    {/* Błąd */}
+                    {errorMessage && (
+                        <motion.div
+                            className="mt-4 p-3 text-center text-red-600 font-semibold bg-red-100 rounded-lg"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                        >
+                            {errorMessage}
+                        </motion.div>
+                    )}
+
+                    {/* Wynik BMI */}
+                    {bmi !== null && !errorMessage && (
+                        <motion.div
+                            className={`mt-6 text-center p-4 rounded-lg ${getBackgroundColor()}`}
+                            initial={{ scale: 0.8, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                        >
+                            <p className="text-xl text-black font-bold">
+                                Twoje BMI wynosi: {bmi}
+                            </p>
+                            <p className="text-lg text-gray-700">{category}</p>
+                        </motion.div>
+                    )}
+                </div>
             </div>
-
-            {/* Waga */}
-            <div className="mb-4">
-                <label className="block text-black text-lg font-medium mb-2">
-                    Waga: {weight} kg
-                </label>
-                <input
-                    type="range"
-                    min="30"
-                    max="200"
-                    value={weight}
-                    onChange={(e) => setWeight(e.target.value)}
-                    className={`w-full ${sliderColor}`}
-                />
-                <input
-                    type="number"
-                    value={weight}
-                    onChange={(e) => setWeight(e.target.value)}
-                    className="w-full p-2 border rounded-lg text-center"
-                />
-            </div>
-
-            {/* Wzrost */}
-            <div className="mb-6">
-                <label className="block text-black text-lg font-medium mb-2">
-                    Wzrost: {height} cm
-                </label>
-                <input
-                    type="range"
-                    min="100"
-                    max="250"
-                    value={height}
-                    onChange={(e) => setHeight(e.target.value)}
-                    className={`w-full ${sliderColor}`}
-                />
-                <input
-                    type="number"
-                    value={height}
-                    onChange={(e) => setHeight(e.target.value)}
-                    className="w-full p-2 border rounded-lg text-center"
-                />
-            </div>
-
-            {/* Oblicz BMI */}
-            <button
-                onClick={calculateBMI}
-                className="w-full p-4 bg-yellow-500 text-white rounded-lg text-lg font-semibold hover:bg-yellow-400 transition duration-200"
-            >
-                Oblicz BMI
-            </button>
-
-            {/* Błąd */}
-            {errorMessage && (
-                <motion.div
-                    className="mt-4 p-3 text-center text-red-600 font-semibold bg-red-100 rounded-lg"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                >
-                    {errorMessage}
-                </motion.div>
-            )}
-
-            {/* Wynik BMI */}
-            {bmi !== null && !errorMessage && (
-                <motion.div
-                    className={`mt-6 text-center p-4 rounded-lg ${getBackgroundColor()}`}
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                >
-                    <p className="text-xl text-black font-bold">
-                        Twoje BMI wynosi: {bmi}
-                    </p>
-                    <p className="text-lg text-gray-700">{category}</p>
-                </motion.div>
-            )}
         </div>
     );
 };
