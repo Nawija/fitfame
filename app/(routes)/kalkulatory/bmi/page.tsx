@@ -1,7 +1,12 @@
+"use client";
+
+import { useState } from "react";
 import { BMIForm } from "./BMIForm";
 import Legends from "./Legends";
 
 export default function BMI() {
+    const [category, setCategory] = useState<string | null>(null);
+    
     return (
         <>
             <div className="flex justify-center items-center bg-white text-black font-sans anim-opacity">
@@ -14,8 +19,8 @@ export default function BMI() {
                         znajdujesz.
                     </p>
                     <div className="flex flex-col w-full lg:flex-row items-center justify-start lg:items-start lg:justify-center gap-6">
-                        <BMIForm />
-                        <Legends />
+                        <BMIForm setCategory={setCategory} />
+                        <Legends activeCategory={category} />
                     </div>
                 </div>
             </div>

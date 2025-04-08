@@ -1,14 +1,18 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 
-export const BMIForm = () => {
+export const BMIForm = ({
+    setCategory,
+}: {
+    setCategory: (c: string | null) => void;
+}) => {
     const [weight, setWeight] = useState("70");
     const [height, setHeight] = useState("175");
     const [gender, setGender] = useState("male");
     const [bmi, setBmi] = useState<number | null>(null);
-    const [category, setCategory] = useState<string | null>(null);
+    const [categoryLocal, setCategoryLocal] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
 
     const calculateBMI = () => {
@@ -24,21 +28,24 @@ export const BMIForm = () => {
             gender === "male" ? [18.5, 24.9, 29.9] : [18, 24.4, 29];
         const labels = ["Niedowaga", "Prawidłowa waga", "Nadwaga", "Otyłość"];
 
-        setCategory(
+        const result =
             bmiValue < thresholds[0]
                 ? labels[0]
                 : bmiValue < thresholds[1]
                 ? labels[1]
                 : bmiValue < thresholds[2]
                 ? labels[2]
-                : labels[3]
-        );
+                : labels[3];
+
+        setCategoryLocal(result);
+        setCategory(result);
     };
 
     const categoryColors: { [key: string]: string } = {
         "Prawidłowa waga": "bg-green-100",
         Nadwaga: "bg-yellow-100",
         Otyłość: "bg-red-100",
+        Niedowaga: "bg-yellow-100",
     };
 
     const sliderColor =
@@ -122,7 +129,7 @@ export const BMIForm = () => {
                 {bmi !== null && !error && (
                     <motion.div
                         className={`mt-6 text-center p-4 rounded-lg ${
-                            categoryColors[category!] || "bg-gray-100"
+                            categoryColors[categoryLocal!] || "bg-gray-100"
                         }`}
                         initial={{ scale: 0.8, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
@@ -130,7 +137,7 @@ export const BMIForm = () => {
                         <p className="text-xl font-bold">
                             Twoje BMI wynosi: {bmi}
                         </p>
-                        <p className="text-lg text-gray-700">{category}</p>
+                        <p className="text-lg text-gray-700">{categoryLocal}</p>
                     </motion.div>
                 )}
             </div>
