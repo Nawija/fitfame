@@ -60,8 +60,8 @@ export default function Przepisy() {
     };
 
     return (
-        <div className="min-h-screen bg-gray-100 py-6 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-7xl mx-auto">
+        <div className="min-h-screen bg-gray-100 py-6 px-4 sm:px-6 lg:px-8 ">
+            <div className="max-w-7xl mx-auto anim-opacity">
                 <div className="flex flex-col lg:flex-row gap-8">
                     {/* Filters Section */}
                     <div className="lg:w-1/4 w-full bg-white p-6 rounded-lg shadow-lg">
@@ -290,7 +290,9 @@ export default function Przepisy() {
                                         B: {recipe.protein}g T: {recipe.fat}g W:{" "}
                                         {recipe.carbs}g
                                     </p>
-                                    <SecondBtn className="mt-4">Zobacz przepis</SecondBtn>
+                                    <SecondBtn className="mt-4">
+                                        Zobacz przepis
+                                    </SecondBtn>
                                 </div>
                             ))
                         ) : (
