@@ -5,6 +5,7 @@ import { SecondBtn } from "@/components/Buttons/SecondBtn";
 import { recipesData } from "@/constants/Przepisy";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { FaSearch } from "react-icons/fa";
 
 export default function Przepisy() {
     const [selectedCategories, setSelectedCategories] = useState<string[]>([
@@ -17,6 +18,7 @@ export default function Przepisy() {
     const [carbsRange, setCarbsRange] = useState<number>(0);
     const [filteredRecipes, setFilteredRecipes] = useState(recipesData);
     const [filtersVisible, setFiltersVisible] = useState<boolean>(false);
+    const [searchKeywords, setSearchKeywords] = useState<string>("");
 
     const handleCategoryChange = (category: string) => {
         if (category === "all") {
@@ -36,18 +38,30 @@ export default function Przepisy() {
     };
 
     const handleFilterApply = () => {
-        const newFilteredRecipes = recipesData.filter(
-            (recipe) =>
-                (selectedCategories.includes("all") ||
-                    selectedCategories.includes(recipe.category)) &&
+        const newFilteredRecipes = recipesData.filter((recipe) => {
+            const matchesCategory =
+                selectedCategories.includes("all") ||
+                selectedCategories.includes(recipe.category);
+
+            // Sprawdzanie, czy tytuł zawiera słowa kluczowe
+            const matchesKeyword =
+                !searchKeywords ||
+                recipe.title
+                    .toLowerCase()
+                    .includes(searchKeywords.toLowerCase());
+
+            return (
+                matchesCategory &&
                 recipe.calories >= minCalories &&
                 recipe.calories <= maxCalories &&
                 recipe.protein >= proteinRange &&
                 recipe.fat >= fatRange &&
-                recipe.carbs >= carbsRange
-        );
+                recipe.carbs >= carbsRange &&
+                matchesKeyword
+            );
+        });
+
         setFilteredRecipes(newFilteredRecipes);
-        // Po zastosowaniu filtrów automatycznie zwijamy sekcję filtrów na urządzeniach mobilnych
         setFiltersVisible(false);
     };
 
@@ -57,6 +71,13 @@ export default function Przepisy() {
             setMinCalories(Number(value));
         } else if (e.target.name === "maxCalories") {
             setMaxCalories(Number(value));
+        }
+    };
+
+    // Handler for pressing the Enter key
+    const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+            handleFilterApply();
         }
     };
 
@@ -83,12 +104,34 @@ export default function Przepisy() {
                         {/* Filters Content */}
                         <div
                             className={`lg:block transition-all ease-in-out duration-300 ${
-                                filtersVisible ? "block h-[700px]" : "h-0 overflow-y-hidden"
+                                filtersVisible
+                                    ? "block h-[700px]"
+                                    : "h-0 lg:h-max overflow-y-hidden"
                             } lg:space-y-6`}
                         >
                             <h2 className="text-2xl font-semibold text-gray-900 mb-6">
                                 Opcje filtrowania
                             </h2>
+
+                            {/* Keyword Search */}
+                            <div className="mb-6 flex items-center justify-center">
+                                <input
+                                    type="text"
+                                    value={searchKeywords}
+                                    onChange={(e) =>
+                                        setSearchKeywords(e.target.value)
+                                    }
+                                    onKeyDown={handleKeyPress} 
+                                    className="w-full p-1.5 border text-sm border-gray-300 rounded-lg focus:outline-none"
+                                    placeholder="Wyszukaj"
+                                />
+                                <button
+                                    className="p-2 border rounded-lg ml-1 bg-blue-400 text-white"
+                                    onClick={handleFilterApply}
+                                >
+                                    <FaSearch />
+                                </button>
+                            </div>
 
                             {/* Category Filter - Checkboxes */}
                             <div className="mb-6">
