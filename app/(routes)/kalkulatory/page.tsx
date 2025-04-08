@@ -1,4 +1,3 @@
-import { MainBtn } from "@/components/Buttons/MainBtn";
 import Link from "next/link";
 
 export default function Kalkulatory() {
