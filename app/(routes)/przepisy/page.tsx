@@ -4,6 +4,7 @@ import { MainBtn } from "@/components/Buttons/MainBtn";
 import { SecondBtn } from "@/components/Buttons/SecondBtn";
 import { recipesData } from "@/constants/Przepisy";
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 export default function Przepisy() {
     const [selectedCategories, setSelectedCategories] = useState<string[]>([
@@ -82,7 +83,7 @@ export default function Przepisy() {
                         {/* Filters Content */}
                         <div
                             className={`lg:block transition-all ease-in-out duration-300 ${
-                                filtersVisible ? "block" : "hidden"
+                                filtersVisible ? "block h-[700px]" : "h-0 overflow-y-hidden"
                             } lg:space-y-6`}
                         >
                             <h2 className="text-2xl font-semibold text-gray-900 mb-6">
@@ -268,7 +269,9 @@ export default function Przepisy() {
                     <div className="lg:w-3/4 w-full h-60 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         {filteredRecipes.length > 0 ? (
                             filteredRecipes.map((recipe) => (
-                                <div
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
                                     key={recipe.id}
                                     className="bg-white group px-2 py-4 rounded-lg shadow-lg transition-all transform border border-transparent hover:border-yellow-200 text-center"
                                 >
@@ -293,7 +296,7 @@ export default function Przepisy() {
                                     <SecondBtn className="mt-4">
                                         Zobacz przepis
                                     </SecondBtn>
-                                </div>
+                                </motion.div>
                             ))
                         ) : (
                             <div className="w-full text-center text-gray-700">
