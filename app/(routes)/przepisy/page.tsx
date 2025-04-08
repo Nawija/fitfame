@@ -121,7 +121,7 @@ export default function Przepisy() {
                                     onChange={(e) =>
                                         setSearchKeywords(e.target.value)
                                     }
-                                    onKeyDown={handleKeyPress} 
+                                    onKeyDown={handleKeyPress}
                                     className="w-full p-1.5 border text-sm border-gray-300 rounded-lg focus:outline-none"
                                     placeholder="Wyszukaj"
                                 />
@@ -184,95 +184,98 @@ export default function Przepisy() {
 
                                 {/* Protein Filter */}
                                 <div className="mb-4">
-                                    <label className="text-sm text-gray-700">
-                                        Białko (min.)
-                                    </label>
-                                    <div className="flex gap-4 mb-4">
+                                    <div className="flex items-center justify-between mb-2">
+                                        <label className="text-sm text-gray-700">
+                                            Białko (min.)
+                                        </label>
                                         <input
-                                            type="range"
-                                            min="0"
-                                            max="200"
+                                            type="number"
                                             value={proteinRange}
                                             onChange={(e) =>
                                                 setProteinRange(
                                                     Number(e.target.value)
                                                 )
                                             }
-                                            className="w-full"
-                                        />
-                                        <input
-                                            value={proteinRange}
-                                            onChange={(e) =>
-                                                setProteinRange(
-                                                    Number(e.target.value)
-                                                )
-                                            }
-                                            className="w-10 p-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                                            className="w-10 p-1 border border-gray-300 rounded-lg focus:outline-none"
                                             placeholder="Minimalne białko"
                                         />
                                     </div>
+
+                                    <input
+                                        type="range"
+                                        min="0"
+                                        max="200"
+                                        value={proteinRange}
+                                        onChange={(e) =>
+                                            setProteinRange(
+                                                Number(e.target.value)
+                                            )
+                                        }
+                                        className="w-full"
+                                    />
                                 </div>
 
                                 {/* Fat Filter */}
                                 <div className="mb-4">
-                                    <label className="text-sm text-gray-700">
-                                        Tłuszcz (min.)
-                                    </label>
-                                    <div className="flex gap-4 mb-4">
+                                    <div className="flex items-center justify-between mb-2">
+                                        <label className="text-sm text-gray-700">
+                                            Tłuszcz (min.)
+                                        </label>
                                         <input
-                                            type="range"
-                                            min="0"
-                                            max="200"
+                                            type="number"
                                             value={fatRange}
                                             onChange={(e) =>
                                                 setFatRange(
                                                     Number(e.target.value)
                                                 )
                                             }
-                                            className="w-full"
-                                        />
-                                        <input
-                                            value={fatRange}
-                                            onChange={(e) =>
-                                                setFatRange(
-                                                    Number(e.target.value)
-                                                )
-                                            }
-                                            className="w-10 p-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                                            className="w-10 p-1 border border-gray-300 rounded-lg focus:outline-none"
                                             placeholder="Minimalny tłuszcz"
                                         />
                                     </div>
+
+                                    <input
+                                        type="range"
+                                        min="0"
+                                        max="200"
+                                        value={fatRange}
+                                        onChange={(e) =>
+                                            setFatRange(Number(e.target.value))
+                                        }
+                                        className="w-full"
+                                    />
                                 </div>
 
                                 {/* Carbs Filter */}
                                 <div className="mb-4">
-                                    <label className="text-sm text-gray-700">
-                                        Węglowodany (min.)
-                                    </label>
-                                    <div className="flex gap-4 mb-4">
+                                    <div className="flex items-center justify-between mb-2">
+                                        <label className="text-sm text-gray-700">
+                                            Węglowodany (min.)
+                                        </label>
                                         <input
-                                            type="range"
-                                            min="0"
-                                            max="500"
+                                            type="number"
                                             value={carbsRange}
                                             onChange={(e) =>
                                                 setCarbsRange(
                                                     Number(e.target.value)
                                                 )
                                             }
-                                            className="w-full"
-                                        />
-                                        <input
-                                            value={carbsRange}
-                                            onChange={(e) =>
-                                                setCarbsRange(
-                                                    Number(e.target.value)
-                                                )
-                                            }
-                                            className="w-10 p-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                                            className="w-10 p-1 border border-gray-300 rounded-lg focus:outline-none"
                                             placeholder="Minimalne węglowodany"
                                         />
                                     </div>
+                                    <input
+                                        type="range"
+                                        min="0"
+                                        max="500"
+                                        value={carbsRange}
+                                        onChange={(e) =>
+                                            setCarbsRange(
+                                                Number(e.target.value)
+                                            )
+                                        }
+                                        className="w-full"
+                                    />
                                 </div>
                             </div>
 
