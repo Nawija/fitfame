@@ -24,8 +24,8 @@ export const NAVLINKS = [
         href: "/biblioteka-cwiczen",
     },
     {
-        label: "Blog",
-        href: "/blog",
+        label: "Przepisy",
+        href: "/przepisy",
     },
     {
         label: "Kontakt",

@@ -69,7 +69,7 @@ export default function Nav() {
                 />
             )}
             <header
-                className={`fixed top-0 z-50 w-screen transition-all duration-300 ${
+                className={`fixed top-0 z-50 w-screen transition-all ${
                     kanit.className
                 } ${
                     hasShadow

@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Hero from "@/public/Images/tired-bearded-man.jpg";
 
 export default function Home() {
     return (
@@ -7,7 +6,7 @@ export default function Home() {
             <div>
                 <div className="relative h-[85vh] w-full -mt-48 ">
                     <Image
-                        src={Hero}
+                        src="/images/tired-bearded-man.jpg"
                         fill
                         className="object-cover -z-20"
                         alt="hero"
