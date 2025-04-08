@@ -63,12 +63,14 @@ export default function Przepisy() {
     const [proteinRange, setProteinRange] = useState<number>(0);
     const [fatRange, setFatRange] = useState<number>(0);
     const [carbsRange, setCarbsRange] = useState<number>(0);
-    const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>(recipesData);
+    const [filteredRecipes, setFilteredRecipes] =
+        useState<Recipe[]>(recipesData);
 
     const handleFilterApply = () => {
         const newFilteredRecipes = recipesData.filter(
             (recipe) =>
-                (selectedCategory === "all" || recipe.category === selectedCategory) &&
+                (selectedCategory === "all" ||
+                    recipe.category === selectedCategory) &&
                 recipe.calories >= minCalories &&
                 recipe.calories <= maxCalories &&
                 recipe.protein >= proteinRange &&
@@ -103,7 +105,9 @@ export default function Przepisy() {
                                 Kategoria
                             </h3>
                             <select
-                                onChange={(e) => setSelectedCategory(e.target.value)}
+                                onChange={(e) =>
+                                    setSelectedCategory(e.target.value)
+                                }
                                 value={selectedCategory}
                                 className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
                             >
@@ -111,7 +115,9 @@ export default function Przepisy() {
                                 <option value="Kurczak">Kurczak</option>
                                 <option value="Masa">Masa</option>
                                 <option value="Rzeźba">Rzeźba</option>
-                                <option value="Niskokaloryczne">Niskokaloryczne</option>
+                                <option value="Niskokaloryczne">
+                                    Niskokaloryczne
+                                </option>
                             </select>
                         </div>
 
@@ -123,38 +129,91 @@ export default function Przepisy() {
 
                             {/* Protein Filter */}
                             <div className="mb-4">
-                                <label className="text-sm text-gray-700">Białko (min.)</label>
-                                <input
-                                    type="number"
-                                    value={proteinRange}
-                                    onChange={(e) => setProteinRange(Number(e.target.value))}
-                                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
-                                    placeholder="Minimalne białko"
-                                />
+                                <label className="text-sm text-gray-700">
+                                    Białko (min.)
+                                </label>
+                                <div className="flex gap-4 mb-4">
+                                    <input
+                                        type="range"
+                                        min="0"
+                                        max="200"
+                                        value={proteinRange}
+                                        onChange={(e) =>
+                                            setProteinRange(
+                                                Number(e.target.value)
+                                            )
+                                        }
+                                        className="w-full"
+                                    />
+                                    <input
+                                        value={proteinRange}
+                                        onChange={(e) =>
+                                            setProteinRange(
+                                                Number(e.target.value)
+                                            )
+                                        }
+                                        className="w-10 p-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                                        placeholder="Minimalne białko"
+                                    />
+                                </div>
                             </div>
 
                             {/* Fat Filter */}
                             <div className="mb-4">
-                                <label className="text-sm text-gray-700">Tłuszcz (min.)</label>
-                                <input
-                                    type="number"
-                                    value={fatRange}
-                                    onChange={(e) => setFatRange(Number(e.target.value))}
-                                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
-                                    placeholder="Minimalny tłuszcz"
-                                />
+                                <label className="text-sm text-gray-700">
+                                    Tłuszcz (min.)
+                                </label>
+                                <div className="flex gap-4 mb-4">
+                                    <input
+                                        type="range"
+                                        min="0"
+                                        max="200"
+                                        value={fatRange}
+                                        onChange={(e) =>
+                                            setFatRange(Number(e.target.value))
+                                        }
+                                        className="w-full"
+                                    />
+                                    <input
+                                        value={fatRange}
+                                        onChange={(e) =>
+                                            setFatRange(Number(e.target.value))
+                                        }
+                                        className="w-10 p-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                                        placeholder="Minimalny tłuszcz"
+                                    />
+                                </div>
                             </div>
 
                             {/* Carbs Filter */}
                             <div className="mb-4">
-                                <label className="text-sm text-gray-700">Węglowodany (min.)</label>
-                                <input
-                                    type="number"
-                                    value={carbsRange}
-                                    onChange={(e) => setCarbsRange(Number(e.target.value))}
-                                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
-                                    placeholder="Minimalne węglowodany"
-                                />
+                                <label className="text-sm text-gray-700">
+                                    Węglowodany (min.)
+                                </label>
+                                <div className="flex gap-4 mb-4">
+                                    <input
+                                        type="range"
+                                        min="0"
+                                        max="500"
+                                        value={carbsRange}
+                                        onChange={(e) =>
+                                            setCarbsRange(
+                                                Number(e.target.value)
+                                            )
+                                        }
+                                        className="w-full"
+                                    />
+                                    <input
+                                        value={carbsRange}
+                                        onChange={(e) =>
+                                            setCarbsRange(
+                                                Number(e.target.value)
+                                            )
+                                        }
+                                        className="w-10 p-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                                        placeholder="Minimalne węglowodany"
+                                    />
+                                </div>
                             </div>
                         </div>
 
@@ -215,7 +274,8 @@ export default function Przepisy() {
                                         {recipe.calories} kcal
                                     </p>
                                     <p className="text-sm text-gray-600 mt-1">
-                                        B: {recipe.protein}g T: {recipe.fat}g W: {recipe.carbs}g
+                                        B: {recipe.protein}g T: {recipe.fat}g W:{" "}
+                                        {recipe.carbs}g
                                     </p>
                                     <button className="w-full bg-yellow-500 text-sm font-semibold text-white p-2 rounded-lg mt-4 transition-colors group-hover:bg-yellow-400">
                                         Zobacz przepis
