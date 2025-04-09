@@ -2,13 +2,8 @@ import { recipesData } from "@/constants/Przepisy";
 import { notFound } from "next/navigation";
 import { IoTimeOutline } from "react-icons/io5";
 
-export async function generateStaticParams() {
-    return recipesData.map((recipe) => ({
-        slug: recipe.slug,
-    }));
-}
 
-export default async function Page({ params }: { params: { slug: string } }) {
+export default function Page({ params }: { params: { slug: string } }) {
     const recipe = recipesData.find((r) => r.slug === params.slug);
 
     if (!recipe) return notFound();
