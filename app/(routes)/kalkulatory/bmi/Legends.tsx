@@ -14,7 +14,7 @@ export default function Legends({
     };
 
     return (
-        <div className="lg:max-w-xs text-center lg:text-left bg-gray-100 border border-stone-300 p-4 rounded-lg w-full">
+        <div className="lg:max-w-xs text-center lg:text-left bg-blue-50 border border-blue-300 p-4 rounded-lg w-full">
             <h2 className="text-xl font-semibold mb-3">Kategoria BMI</h2>
             <ul className="text-sm text-gray-700 space-y-1.5">
                 <li>

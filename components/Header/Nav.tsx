@@ -69,17 +69,19 @@ export default function Nav() {
                 />
             )}
             <header
-                className={`fixed top-0 z-50 w-screen transition-all ${
+                className={`${
+                    pathname === "/" ? "fixed top-0" : "static"
+                } z-50 w-full transition-all max-w-screen-2xl mx-auto ${
                     kanit.className
                 } ${
                     hasShadow
                         ? "shadow-md bg-white/90 backdrop-blur-md text-black"
                         : pathname === "/"
-                        ? "bg-transparent text-white "
+                        ? "bg-transparent text-white"
                         : "bg-white text-black"
                 }`}
             >
-                <div className="mx-auto flex items-center justify-between p-4 max-w-screen-2xl">
+                <div className="mx-auto flex items-center justify-between p-4 relative w-full">
                     <Logo />
                     <MenuBurger
                         handleShowMenu={() => setShowMenu(!showMenu)}
@@ -157,13 +159,13 @@ export default function Nav() {
                     </div>
 
                     {/* Menu desktopowe */}
-                    <nav className="hidden lg:block">
+                    <nav className="hidden lg:block w-full">
                         <ul className="flex items-center justify-center xl:space-x-4 space-x-2 absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
                             {NAVLINKS.map((link) => (
-                                <li key={link.label} className="relative">
+                                <li key={link.label} className="relative w-max">
                                     <Link
                                         href={link.href}
-                                        className={`block w-max py-4 px-1 uppercase lg:text-sm xl:text-base transition-all hover:text-[#a58b34] ${
+                                        className={`w-max py-4 px-1 uppercase lg:text-sm xl:text-base transition-all hover:text-[#a58b34] ${
                                             pathname === link.href
                                                 ? "text-[#a58b34]"
                                                 : ""

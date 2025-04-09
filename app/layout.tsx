@@ -20,7 +20,7 @@ export default function RootLayout({
                 className={`flex flex-col min-h-screen w-full font-light antialiased font-sans bg-white`}
             >
                 <Nav />
-                <main className="flex-1 xl:pt-48 lg:pt-32 pt-20 w-full overflow-x-hidden relative">
+                <main className="flex-1 w-full overflow-x-hidden relative">
                     {children}
                 </main>
                 <Footer />
