@@ -8,7 +8,7 @@ export async function generateStaticParams() {
     }));
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
+export default function Page({ params }: { params: { slug: string } }) {
     const { slug } = params;
     const recipe = recipesData.find((r) => r.slug === slug);
 
