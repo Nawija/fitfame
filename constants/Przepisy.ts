@@ -13,7 +13,7 @@ interface Recipe {
 export const recipesData = [
     {
       id: 1,
-      slug: 'kurczak-z-ryżem-i-warzywami',
+      slug: 'kurczak-z-ryzem-i-warzywami',
       title: "Kurczak z ryżem i warzywami",
       image: "/images/przepisy/krewetki.jpg",
       category: "Masa",
@@ -55,7 +55,8 @@ export const recipesData = [
     },
     {
         id: 3,
-        title: "Sałatka z tuńczykiem i jajkiem",
+        slug: 'salatka-z-tunczykiem',
+        title: "Sałatka z tuńczykiem",
         image: "/images/przepisy/krewetki.jpg",
         category: "Rzeźba",
         calories: 420,
@@ -75,6 +76,7 @@ export const recipesData = [
       },
     {
       id: 4,
+      slug: 'omlet-bialkowy',
       title: "Omlet białkowy z płatkami owsianymi",
       image: "/images/przepisy/ham.jpg",
       category: "Niskokaloryczne",
