@@ -7,6 +7,7 @@ import Link from "next/link";
 
 type Recipe = {
     id: number;
+    slug: string;
     title: string;
     image: string;
     calories: number;

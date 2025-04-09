@@ -62,7 +62,7 @@ export default function PrzepisyPage() {
     };
 
     return (
-        <div className="min-h-screen bg-gray-100 py-6 px-4 sm:px-6 lg:px-8">
+        <div className="min-h-screen bg-gray-100 py-6 px-4 sm:px-6 lg:px-8 h-[300vh]">
             <div className="max-w-7xl mx-auto anim-opacity flex flex-col lg:flex-row gap-8">
                 <FiltersSection
                     filtersVisible={filtersVisible}

@@ -1,5 +1,6 @@
 interface Recipe {
     id: number;
+    slug: string;
     title: string;
     image: string;
     category: string;
@@ -12,6 +13,7 @@ interface Recipe {
 export const recipesData = [
     {
       id: 1,
+      slug: 'kurczak-z-ryżem-i-warzywami',
       title: "Kurczak z ryżem i warzywami",
       image: "/images/przepisy/krewetki.jpg",
       category: "Masa",
@@ -32,6 +34,7 @@ export const recipesData = [
     },
     {
       id: 2,
+      slug: 'salatka-z-tunczykiem-i-jajkiem',
       title: "Sałatka z tuńczykiem i jajkiem",
       image: "/images/przepisy/krewetki.jpg",
       category: "Rzeźba",
