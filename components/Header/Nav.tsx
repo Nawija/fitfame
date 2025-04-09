@@ -71,7 +71,7 @@ export default function Nav() {
             <header
                 className={`${
                     pathname === "/" ? "fixed top-0" : "static"
-                } z-50 w-full transition-all max-w-screen-2xl mx-auto ${
+                } z-50 w-screen transition-all ${
                     kanit.className
                 } ${
                     hasShadow
@@ -81,7 +81,7 @@ export default function Nav() {
                         : "bg-white text-black"
                 }`}
             >
-                <div className="mx-auto flex items-center justify-between p-4 relative w-full">
+                <div className="mx-auto flex items-center justify-between max-w-screen-2xl p-4 relative w-full">
                     <Logo />
                     <MenuBurger
                         handleShowMenu={() => setShowMenu(!showMenu)}
@@ -165,7 +165,7 @@ export default function Nav() {
                                 <li key={link.label} className="relative w-max">
                                     <Link
                                         href={link.href}
-                                        className={`w-max py-4 px-1 uppercase lg:text-sm xl:text-base transition-all hover:text-[#a58b34] ${
+                                        className={` py-4 px-1 uppercase lg:text-sm transition-all hover:text-[#a58b34] ${
                                             pathname === link.href
                                                 ? "text-[#a58b34]"
                                                 : ""
