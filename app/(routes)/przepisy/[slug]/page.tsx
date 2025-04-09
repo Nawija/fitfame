@@ -1,9 +1,8 @@
-"use client";
 import { recipesData } from "@/constants/Przepisy";
 import { notFound } from "next/navigation";
 import { IoTimeOutline } from "react-icons/io5";
 
-export default function Page({ params }: { params: { slug: string } }) {
+export default async function Page({ params }: { params: { slug: string } }) {
     const recipe = recipesData.find((r) => r.slug === params.slug);
 
 
