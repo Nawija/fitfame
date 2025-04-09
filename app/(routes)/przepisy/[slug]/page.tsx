@@ -8,13 +8,7 @@ export async function generateStaticParams() {
     }));
 }
 
-type Props = {
-    params: {
-        slug: string;
-    };
-};
-
-export default async function Page({ params }: Props) {
+export default async function Page({ params }: { params: { slug: string } }) {
     const recipe = recipesData.find((r) => r.slug === params.slug);
 
     if (!recipe) return notFound();
