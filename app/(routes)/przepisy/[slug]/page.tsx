@@ -7,8 +7,10 @@ export async function generateStaticParams() {
         slug: recipe.slug,
     }));
 }
+
 export default async function Page({ params }: { params: { slug: string } }) {
-    const recipe = recipesData.find((r) => r.slug === params.slug);
+    const { slug } = params;
+    const recipe = recipesData.find((r) => r.slug === slug);
 
     if (!recipe) return notFound();
 
