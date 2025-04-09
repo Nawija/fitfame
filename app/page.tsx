@@ -7,18 +7,18 @@ export default function Home() {
     return (
         <div className="anim-opacity">
             {/* HERO */}
-            <div className="relative h-[80vh] lg:h-screen w-full outline-hidden">
+            <div className="relative h-[84vh] lg:h-screen w-full outline-hidden">
                 <Image
                     src="/images/conor.jpg"
                     fill
-                    className="object-cover -z-20"
+                    className="object-cover object-left -z-20"
                     alt="hero"
-                    quality={60}
+                    quality={70}
                 />
                 <svg
                     width="1440"
                     height="124"
-                    className="absolute bottom-0 left-0 w-full"
+                    className="absolute -bottom-2 left-0 w-full"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                 >
@@ -92,7 +92,7 @@ export default function Home() {
                         className="grid lg:grid-cols-2 gap-12 items-center"
                     >
                         <Image
-                            src="/images/tired-bearded-man.jpg"
+                            src="/images/conor.jpg"
                             width={600}
                             height={400}
                             alt="Trening siłowy"
