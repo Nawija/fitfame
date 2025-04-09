@@ -75,7 +75,7 @@ export default function Nav() {
                     kanit.className
                 } ${
                     hasShadow
-                        ? "shadow-md bg-white/90 backdrop-blur-md text-black"
+                        ? "bg-white/90 backdrop-blur-md text-black"
                         : pathname === "/"
                         ? "bg-transparent text-white"
                         : "bg-white text-black"

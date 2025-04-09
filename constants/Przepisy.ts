@@ -9,65 +9,86 @@ interface Recipe {
     carbs: number;
 }
 
-export const recipesData: Recipe[] = [
+export const recipesData = [
     {
-        id: 1,
-        title: "Kurczak z warzywami",
-        image: "/images/przepisy/krewetki.jpg",
-        category: "Kurczak Masa",
-        calories: 750,
-        protein: 35,
-        fat: 10,
-        carbs: 20,
+      id: 1,
+      title: "Kurczak z ryżem i warzywami",
+      image: "/images/przepisy/krewetki.jpg",
+      category: "Masa",
+      calories: 620,
+      protein: 45,
+      fat: 12,
+      carbs: 70,
+      time: "30 min",
+      description:
+        "Syty posiłek z kurczakiem, ryżem i warzywami. Idealny na budowę masy mięśniowej.",
+      steps: [
+        "Ugotuj 100 g ryżu według instrukcji na opakowaniu.",
+        "Na patelni podsmaż 200 g pokrojonej piersi z kurczaka na oliwie.",
+        "Dodaj ulubione warzywa (np. brokuł, paprykę, marchewkę) i smaż razem przez 5 7 minut.",
+        "Dodaj przyprawy (sól, pieprz, curry) i wymieszaj z ugotowanym ryżem.",
+        "Podawaj na ciepło. Można dodać odrobinę sosu sojowego dla smaku."
+      ]
     },
     {
-        id: 2,
-        title: "Bowl na masę",
-        image: "/images/przepisy/pancakes.jpg",
-        category: "Masa",
-        calories: 900,
-        protein: 40,
-        fat: 30,
-        carbs: 80,
+      id: 2,
+      title: "Sałatka z tuńczykiem i jajkiem",
+      image: "/images/przepisy/krewetki.jpg",
+      category: "Rzeźba",
+      calories: 420,
+      protein: 35,
+      fat: 22,
+      carbs: 10,
+      time: "15 min",
+      description:
+        "Lekka sałatka wysokobiałkowa, idealna na redukcję lub jako lunch do pracy.",
+      steps: [
+        "W misce połącz miks sałat, pomidorki koktajlowe i plasterki ogórka.",
+        "Dodaj 1 puszkę tuńczyka w sosie własnym oraz 2 ugotowane na twardo jajka pokrojone w ćwiartki.",
+        "Skrop oliwą z oliwek i dopraw solą, pieprzem oraz oregano.",
+        "Wymieszaj całość delikatnie.",
+        "Opcjonalnie: dodaj kilka oliwek i skrop cytryną."
+      ]
     },
     {
         id: 3,
-        title: "Sałatka białkowa",
-        image: "/images/przepisy/pancakes.jpg",
-        category: "Rzeźba",
-        calories: 300,
-        protein: 20,
-        fat: 12,
-        carbs: 15,
-    },
-    {
-        id: 4,
-        title: "Zupa pomidorowa",
+        title: "Sałatka z tuńczykiem i jajkiem",
         image: "/images/przepisy/krewetki.jpg",
-        category: "Niskokaloryczne",
-        calories: 400,
-        protein: 5,
-        fat: 3,
-        carbs: 25,
-    },
-    {
-        id: 5,
-        title: "Ciasteczka białkowe",
-        image: "/images/przepisy/ciastko.jpg",
-        category: "Niskokaloryczne",
-        calories: 150,
+        category: "Rzeźba",
+        calories: 420,
         protein: 35,
-        fat: 3,
-        carbs: 33,
-    },
+        fat: 22,
+        carbs: 10,
+        time: "15 min",
+        description:
+          "Lekka sałatka wysokobiałkowa, idealna na redukcję lub jako lunch do pracy.",
+        steps: [
+          "W misce połącz miks sałat, pomidorki koktajlowe i plasterki ogórka.",
+          "Dodaj 1 puszkę tuńczyka w sosie własnym oraz 2 ugotowane na twardo jajka pokrojone w ćwiartki.",
+          "Skrop oliwą z oliwek i dopraw solą, pieprzem oraz oregano.",
+          "Wymieszaj całość delikatnie.",
+          "Opcjonalnie: dodaj kilka oliwek i skrop cytryną."
+        ]
+      },
     {
-        id: 6,
-        title: "Fit burgery",
-        image: "/images/przepisy/ham.jpg",
-        category: "Masa",
-        calories: 1150,
-        protein: 65,
-        fat: 25,
-        carbs: 75,
-    },
-];
+      id: 4,
+      title: "Omlet białkowy z płatkami owsianymi",
+      image: "/images/przepisy/ham.jpg",
+      category: "Niskokaloryczne",
+      calories: 360,
+      protein: 30,
+      fat: 10,
+      carbs: 30,
+      time: "20 min",
+      description:
+        "Szybkie i pożywne śniadanie z dużą ilością białka i złożonych węglowodanów.",
+      steps: [
+        "W misce wymieszaj 4 białka jaj, 1 całe jajko i 40 g płatków owsianych.",
+        "Dodaj łyżeczkę cynamonu i opcjonalnie trochę słodzika lub banana.",
+        "Na patelni rozgrzej odrobinę oleju kokosowego i wlej masę.",
+        "Smaż na małym ogniu pod przykryciem przez 5 7 minut.",
+        "Podawaj z jogurtem naturalnym i owocami (np. borówki, truskawki)."
+      ]
+    }
+  ];
+  
