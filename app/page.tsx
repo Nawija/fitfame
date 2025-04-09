@@ -9,7 +9,7 @@ export default function Home() {
             {/* HERO */}
             <div className="relative h-[80vh] lg:h-screen w-full outline-hidden">
                 <Image
-                    src="/images/tired-bearded-man.jpg"
+                    src="/images/conor.jpg"
                     fill
                     className="object-cover -z-20"
                     alt="hero"
