@@ -1,16 +1,19 @@
-interface Recipe {
-    id: number;
-    slug: string;
-    title: string;
-    image: string;
-    category: string;
-    calories: number;
-    protein: number;
-    fat: number;
-    carbs: number;
-}
+type Recipe = {
+  id: number;  // lub number, zależnie od tego, jak identyfikatory są reprezentowane
+  slug: string;
+  title: string;
+  category: string;
+  calories: number;
+  protein: number;
+  fat: number;
+  carbs: number;
+  time: string;
+  description: string;
+  image: string;
+  steps: string[];
+};
 
-export const recipesData = [
+export const recipesData: Recipe[] = [
     {
       id: 1,
       slug: 'kurczak-z-ryzem-i-warzywami',

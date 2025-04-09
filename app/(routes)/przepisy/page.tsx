@@ -1,12 +1,12 @@
-"use client";
-
 import { useState } from "react";
 import { recipesData } from "@/constants/Przepisy";
 import { FiltersSection } from "./FiltersSection";
 import { RecipesGrid } from "./RecipesGrid";
 
 export default function PrzepisyPage() {
-    const [selectedCategories, setSelectedCategories] = useState<string[]>(["all"]);
+    const [selectedCategories, setSelectedCategories] = useState<string[]>([
+        "all",
+    ]);
     const [minCalories, setMinCalories] = useState<number>(0);
     const [maxCalories, setMaxCalories] = useState<number>(3000);
     const [proteinRange, setProteinRange] = useState<number>(0);
@@ -14,6 +14,7 @@ export default function PrzepisyPage() {
     const [carbsRange, setCarbsRange] = useState<number>(0);
     const [searchKeywords, setSearchKeywords] = useState<string>("");
     const [filteredRecipes, setFilteredRecipes] = useState(recipesData);
+
     const [filtersVisible, setFiltersVisible] = useState<boolean>(false);
 
     const handleCategoryChange = (category: string) => {
@@ -46,7 +47,9 @@ export default function PrzepisyPage() {
                 selectedCategories.includes(recipe.category);
             const matchesKeyword =
                 !searchKeywords ||
-                recipe.title.toLowerCase().includes(searchKeywords.toLowerCase());
+                recipe.title
+                    .toLowerCase()
+                    .includes(searchKeywords.toLowerCase());
             return (
                 matchesCategory &&
                 recipe.calories >= minCalories &&
