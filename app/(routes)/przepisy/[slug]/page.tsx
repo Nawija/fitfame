@@ -1,11 +1,9 @@
-"use client";
-
-import { useState } from "react";
 import { recipesData } from "@/constants/Przepisy";
 import { notFound } from "next/navigation";
 import { IoTimeOutline } from "react-icons/io5";
 import { RiPuzzle2Line } from "react-icons/ri";
 import Link from "next/link";
+import Ingredients from "./Ingredients";
 
 export default async function Page({
     params,
@@ -14,17 +12,8 @@ export default async function Page({
 }) {
     const { slug } = await params;
     const recipe = recipesData.find((r) => r.slug === slug);
-    const [checkedIngredients, setCheckedIngredients] = useState<number[]>([]);
 
     if (!recipe) return notFound();
-
-    const toggleIngredient = (index: number) => {
-        setCheckedIngredients((prev) =>
-            prev.includes(index)
-                ? prev.filter((i) => i !== index)
-                : [...prev, index]
-        );
-    };
 
     const similarRecipes = recipesData
         .filter(
@@ -118,28 +107,7 @@ export default async function Page({
                     <h2 className="text-xl font-medium text-gray-700 my-6">
                         Składniki (kliknij, aby wykreślić):
                     </h2>
-                    <div className=" bg-gray-100 border border-gray-200 rounded-lg py-4">
-                        {recipe.ingredients?.map((ingredient, index) => (
-                            <button
-                                key={index}
-                                onClick={() => toggleIngredient(index)}
-                                className="w-full text-left flex items-center gap-2 cursor-pointer p-1.5 px-6"
-                            >
-                                <div className="w-6 h-6 flex items-center mr-4 justify-center rounded-full bg-white text-gray-400 font-bold text-sm shadow">
-                                    {index + 1}
-                                </div>
-                                <p
-                                    className={`text-gray-700 lg:text-lg text-base font-semibold transition ${
-                                        checkedIngredients.includes(index)
-                                            ? "line-through opacity-50"
-                                            : ""
-                                    }`}
-                                >
-                                    {ingredient}
-                                </p>
-                            </button>
-                        ))}
-                    </div>
+                    <Ingredients ingredients={recipe.ingredients} />
                 </div>
 
                 <div className="sticky top-0">
