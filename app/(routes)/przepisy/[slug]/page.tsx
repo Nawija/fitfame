@@ -7,8 +7,13 @@ import { IoTimeOutline } from "react-icons/io5";
 import { RiPuzzle2Line } from "react-icons/ri";
 import Link from "next/link";
 
-export default function Page({ params }: { params: { slug: string } }) {
-    const recipe = recipesData.find((r) => r.slug === params.slug);
+export default async function Page({
+    params,
+}: {
+    params: Promise<{ slug: string }>;
+}) {
+    const { slug } = await params;
+    const recipe = recipesData.find((r) => r.slug === slug);
     const [checkedIngredients, setCheckedIngredients] = useState<number[]>([]);
 
     if (!recipe) return notFound();
