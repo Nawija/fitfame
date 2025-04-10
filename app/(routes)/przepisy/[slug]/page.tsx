@@ -1,13 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useState, use } from "react";
 import { recipesData } from "@/constants/Przepisy";
 import { notFound } from "next/navigation";
 import { IoTimeOutline } from "react-icons/io5";
 import { RiPuzzle2Line } from "react-icons/ri";
+import Link from "next/link";
 
-export default function Page({ params }: { params: { slug: string } }) {
-    const recipe = recipesData.find((r) => r.slug === params.slug);
+export default function Page({
+    params,
+}: {
+    params: Promise<{ slug: string }>;
+}) {
+    const { slug } = use(params);
+    const recipe = recipesData.find((r) => r.slug === slug);
     if (!recipe) return notFound();
 
     const [checkedIngredients, setCheckedIngredients] = useState<number[]>([]);
@@ -19,6 +25,16 @@ export default function Page({ params }: { params: { slug: string } }) {
                 : [...prev, index]
         );
     };
+
+    const similarRecipes = recipesData
+        .filter(
+            (r) =>
+                r.slug !== recipe.slug &&
+                r.title
+                    .toLowerCase()
+                    .includes(recipe.title.split(" ")[0].toLowerCase())
+        )
+        .slice(0, 4);
 
     return (
         <div className="w-full overflow-hidden relative h-full">
@@ -151,6 +167,67 @@ export default function Page({ params }: { params: { slug: string } }) {
                 <p>Twoja skrzynkę e-mail.</p>
                 <input type="text" className=""></input>
             </div>
+            {similarRecipes.length > 0 && (
+                <div className="my-16 px-4 max-w-6xl mx-auto">
+                    <h4 className="text-2xl font-bold text-gray-800 mb-6">
+                    To też może Ci zasmakować
+                    </h4>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                        {similarRecipes.map((similar) => (
+                            <Link
+                                key={similar.slug}
+                                href={`/przepisy/${similar.slug}`}
+                                className="bg-white rounded-lg shadow hover:shadow-md transition p-2 flex flex-col gap-4"
+                            >
+                                <div className="relative">
+                                    <img
+                                        src={similar.image}
+                                        alt={similar.title}
+                                        className="rounded-lg object-cover h-40 w-full"
+                                    />
+                                    <div className="flex items-center justify-center absolute -bottom-2 -right-2 p-2 bg-white rounded-xl">
+                                        <IoTimeOutline className="mr-1 text-base" />
+                                        <p className="text-sm font-medium">
+                                            {recipe.time}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="text-center py-3">
+                                    <h4 className="text-lg font-semibold text-gray-700">
+                                        {similar.title}
+                                    </h4>
+                                    <div className="flex items-center justify-center space-x-3">
+                                        <p className="text-sm text-gray-500">
+                                            <strong className="font-semibold">
+                                                Kcal:
+                                            </strong>{" "}
+                                            {similar.calories}
+                                        </p>
+                                        <p className="text-sm text-gray-500">
+                                            <strong className="font-semibold">
+                                                B:
+                                            </strong>{" "}
+                                            {similar.protein}
+                                        </p>
+                                        <p className="text-sm text-gray-500">
+                                            <strong className="font-semibold">
+                                                T:
+                                            </strong>{" "}
+                                            {similar.fat}
+                                        </p>
+                                        <p className="text-sm text-gray-500">
+                                            <strong className="font-semibold">
+                                                W:
+                                            </strong>{" "}
+                                            {similar.carbs}
+                                        </p>
+                                    </div>
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
