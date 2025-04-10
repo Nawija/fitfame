@@ -7,16 +7,11 @@ import { IoTimeOutline } from "react-icons/io5";
 import { RiPuzzle2Line } from "react-icons/ri";
 import Link from "next/link";
 
-export default function Page({
-    params,
-}: {
-    params: Promise<{ slug: string }>;
-}) {
-    const { slug } = use(params);
-    const recipe = recipesData.find((r) => r.slug === slug);
-    if (!recipe) return notFound();
-
+export default function Page({ params }: { params: { slug: string } }) {
+    const recipe = recipesData.find((r) => r.slug === params.slug);
     const [checkedIngredients, setCheckedIngredients] = useState<number[]>([]);
+
+    if (!recipe) return notFound();
 
     const toggleIngredient = (index: number) => {
         setCheckedIngredients((prev) =>
@@ -170,7 +165,7 @@ export default function Page({
             {similarRecipes.length > 0 && (
                 <div className="my-16 px-4 max-w-6xl mx-auto">
                     <h4 className="text-2xl font-bold text-gray-800 mb-6">
-                    To też może Ci zasmakować
+                        To też może Ci zasmakować
                     </h4>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                         {similarRecipes.map((similar) => (
