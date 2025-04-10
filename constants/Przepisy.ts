@@ -8,6 +8,7 @@ type Recipe = {
     fat: number;
     carbs: number;
     time: string;
+    level: string;
     description: string;
     image: string;
     ingredients: string[];
@@ -26,6 +27,7 @@ export const recipesData: Recipe[] = [
         fat: 12,
         carbs: 70,
         time: "30 min",
+        level: "łatwe",
         description:
             "Syty posiłek z kurczakiem, ryżem i warzywami. Idealny na budowę masy mięśniowej.",
         ingredients: [
@@ -57,6 +59,7 @@ export const recipesData: Recipe[] = [
         fat: 22,
         carbs: 10,
         time: "15 min",
+        level: "łatwe",
         description:
             "Lekka sałatka wysokobiałkowa, idealna na redukcję lub jako lunch do pracy.",
         ingredients: [
@@ -88,6 +91,7 @@ export const recipesData: Recipe[] = [
         fat: 22,
         carbs: 10,
         time: "15 min",
+        level: "łatwe",
         description:
             "Lekka sałatka wysokobiałkowa, idealna na redukcję lub jako lunch do pracy.",
         ingredients: [
@@ -119,6 +123,7 @@ export const recipesData: Recipe[] = [
         fat: 10,
         carbs: 30,
         time: "20 min",
+        level: "łatwe",
         description:
             "Szybkie i pożywne śniadanie z dużą ilością białka i złożonych węglowodanów.",
         ingredients: [

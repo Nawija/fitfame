@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, use } from "react";
+import { useState } from "react";
 import { recipesData } from "@/constants/Przepisy";
 import { notFound } from "next/navigation";
 import { IoTimeOutline } from "react-icons/io5";
@@ -52,14 +52,16 @@ export default function Page({ params }: { params: { slug: string } }) {
                         {recipe.category}
                     </p>
                     <div className="flex items-center justify-start space-x-4 py-4">
-                        <div className="flex items-center justify-center">
+                        <div className="flex items-center justify-center text-yellow-600">
                             <IoTimeOutline className="mr-1 text-2xl" />
                             <p className="text-xl font-medium">{recipe.time}</p>
                         </div>
 
-                        <div className="flex items-center justify-center">
+                        <div className="flex items-center justify-center text-green-600">
                             <RiPuzzle2Line className="mr-1 text-2xl" />
-                            <p className="text-xl font-medium">{recipe.time}</p>
+                            <p className="text-xl font-medium capitalize">
+                                {recipe.level}
+                            </p>
                         </div>
                     </div>
 
