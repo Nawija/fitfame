@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { FaMinus, FaPlus } from "react-icons/fa";
 
 type IngredientsProps = {
     ingredients: string[];
@@ -8,6 +9,7 @@ type IngredientsProps = {
 
 export default function Ingredients({ ingredients }: IngredientsProps) {
     const [checkedIngredients, setCheckedIngredients] = useState<number[]>([]);
+    const [portions, setPortions] = useState<number>(1);
 
     const toggleIngredient = (index: number) => {
         setCheckedIngredients((prev) =>
@@ -17,8 +19,46 @@ export default function Ingredients({ ingredients }: IngredientsProps) {
         );
     };
 
+    const handlePortionChange = (delta: number) => {
+        setPortions((prev) => Math.max(1, prev + delta));
+    };
+
+    const scaleIngredient = (ingredient: string) => {
+        // Szuka liczby z jednostką np. "200g", "150 ml", "3 szt."
+        return ingredient.replace(
+            /(\d+)(\s?[a-zA-Ząćęłńóśźż]+)/g,
+            (_, num, unit) => `${parseInt(num) * portions}${unit}`
+        );
+    };
+
+    const getPortionLabel = (count: number) => {
+        if (count === 1) return "Porcja";
+        if (count > 1 && count < 5) return "Porcje";
+        return "Porcji";
+    };
+
     return (
         <div className="bg-gray-100 border border-gray-200 rounded-lg py-4">
+            <div className="flex items-center justify-between px-6 mb-4">
+                <div className="flex items-center gap-4">
+                    <button
+                        onClick={() => handlePortionChange(-1)}
+                        className="p-2 bg-yellow-400 rounded-full shadow hover:bg-yellow-300 cursor-pointer text-white"
+                    >
+                        <FaMinus />
+                    </button>
+                    <span className="text-gray-700 font-semibold text-lg">
+                        {portions} {getPortionLabel(portions)}
+                    </span>
+                    <button
+                        onClick={() => handlePortionChange(1)}
+                        className="p-2 bg-yellow-400 rounded-full shadow hover:bg-yellow-300 cursor-pointer text-white"
+                    >
+                        <FaPlus />
+                    </button>
+                </div>
+            </div>
+
             {ingredients.map((ingredient, index) => (
                 <button
                     key={index}
@@ -35,7 +75,7 @@ export default function Ingredients({ ingredients }: IngredientsProps) {
                                 : ""
                         }`}
                     >
-                        {ingredient}
+                        {scaleIngredient(ingredient)}
                     </p>
                 </button>
             ))}
