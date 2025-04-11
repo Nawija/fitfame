@@ -129,11 +129,11 @@ export const recipesData: Recipe[] = [
         ingredients: [
             "100 g ryżu",
             "200 g piersi z kurczaka",
-            "Brokuł",
-            "Papryka",
-            "Marchewka",
-            "Oliwa z oliwek",
-            "Sól, pieprz, curry",
+            "1x Brokuł",
+            "3x Papryka",
+            "4x Marchewka",
+            "5g Oliwa z oliwek",
+            "Sól, pieprz, curry (do smaku)",
             "Sos sojowy (opcjonalnie)",
         ],
         steps: [
