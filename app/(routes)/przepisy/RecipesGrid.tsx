@@ -6,6 +6,7 @@ import { IoTime } from "react-icons/io5";
 import Link from "next/link";
 import { Recipe } from "@/constants/Przepisy";
 import { useState } from "react";
+import Image from "next/image";
 
 export const RecipesGrid = ({ recipes }: { recipes: Recipe[] }) => {
     // Paginacja
@@ -57,19 +58,20 @@ export const RecipesGrid = ({ recipes }: { recipes: Recipe[] }) => {
                         <Link
                             key={index}
                             href={`/przepisy/${recipe.slug}`}
-                            className="flex items-stretch group"
+                            className="flex items-stretch group w-full"
                         >
                             <motion.div
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
-                                className="bg-white group p-2 rounded-lg shadow-lg transition-all transform border border-transparent hover:border-stone-200 text-center flex flex-col items-center justify-between"
+                                className="bg-white group p-2 rounded-lg shadow-lg transition-all transform border border-transparent hover:border-stone-200 text-center flex flex-col items-center justify-between w-full"
                             >
-                                <div>
-                                    <div className="relative ">
+                                <div className="w-full">
+                                    <div className="relative w-full">
                                         <div className="relative w-full h-48 object-cover rounded-md mb-6 overflow-hidden">
-                                            <img
+                                            <Image
                                                 src={recipe.image}
                                                 alt={recipe.title}
+                                                fill
                                                 className="w-full h-full object-cover group-hover:scale-110 duration-300 transition-transform"
                                             />
                                         </div>
@@ -78,7 +80,7 @@ export const RecipesGrid = ({ recipes }: { recipes: Recipe[] }) => {
                                             <p>{recipe.time}</p>
                                         </div>
                                     </div>
-                                    <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                                    <h3 className="text-xl px-3 font-semibold text-gray-800 mb-2">
                                         {recipe.title}
                                     </h3>
                                     <p className="text-sm text-gray-600">
