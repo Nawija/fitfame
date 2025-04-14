@@ -4,19 +4,7 @@ import { SecondBtn } from "@/components/Buttons/SecondBtn";
 import { motion } from "framer-motion";
 import { IoTime } from "react-icons/io5";
 import Link from "next/link";
-
-type Recipe = {
-    id: number;
-    slug: string;
-    title: string;
-    image: string;
-    calories: number;
-    protein: number;
-    fat: number;
-    carbs: number;
-    category: string;
-    time: string;
-};
+import { Recipe } from "@/constants/Przepisy";
 
 export const RecipesGrid = ({ recipes }: { recipes: Recipe[] }) => {
     return (

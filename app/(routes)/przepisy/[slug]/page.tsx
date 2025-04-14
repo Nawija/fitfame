@@ -62,12 +62,10 @@ export default async function Page({
                     <img
                         src={recipe.image}
                         alt={recipe.title}
-                        className="w-full object-cover rounded-xl mb-6 shadow"
+                        className="w-full object-cover rounded-xl shadow max-h-[600px]"
                     />
 
-                    <div className="mb-4 text-gray-700">
-                        <p className="text-lg mb-2">{recipe.description}</p>
-                    </div>
+                    <p className="text-lg py-6 w-full px-2">{recipe.description}</p>
 
                     <div className="grid grid-cols-4 gap-2 text-center mb-8">
                         <div className="bg-pink-200 rounded-xl py-4 shadow">
@@ -104,14 +102,11 @@ export default async function Page({
                         </div>
                     </div>
 
-                    <h2 className="text-xl font-medium text-gray-700 my-6">
-                        Składniki (kliknij, aby wykreślić):
-                    </h2>
+                    
                     <Ingredients ingredients={recipe.ingredients} />
                 </div>
 
-                <div className="sticky top-0">
-                    <div className="mb-8"></div>
+                <div className="p-8 rounded-lg border border-gray-200 bg-gray-100 mt-8 lg:mt-0 min-w-[400px]">
                     <h3 className="text-2xl font-semibold text-gray-800 mb-4">
                         Sposób przygotowania:
                     </h3>
@@ -121,7 +116,14 @@ export default async function Page({
                                 <div className="min-w-10 min-h-10 w-10 h-10 flex items-center justify-center rounded-full bg-amber-400 text-white font-bold text-lg shadow">
                                     {index + 1}
                                 </div>
-                                <p className="text-gray-700 text-lg">{step}</p>
+                                <div>
+                                    <p className="text-lg font-semibold text-gray-800 mb-1">
+                                        {step.title}
+                                    </p>
+                                    <p className="text-gray-700 text-lg">
+                                        {step.description}
+                                    </p>
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -129,7 +131,7 @@ export default async function Page({
             </div>
             <div
                 className="flex
-         items-center justify-center flex-col p-48  bg-gray-100 text-xl font-semibold text-gray-700 space-y-3"
+         items-center justify-center flex-col lg:p-48 p-24  bg-gray-100 text-xl font-semibold text-gray-700 space-y-3"
             >
                 <h3>
                     Wyślij przepis na e-mail Nasze najlepsze przepisy, prosto na

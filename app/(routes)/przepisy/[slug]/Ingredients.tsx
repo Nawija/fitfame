@@ -39,7 +39,7 @@ export default function Ingredients({ ingredients }: IngredientsProps) {
 
     return (
         <div className="bg-gray-100 border border-gray-200 rounded-lg py-4">
-            <div className="flex items-center justify-between px-6 mb-4">
+            <div className="flex flex-col items-start justify-center px-6 mb-2">
                 <div className="flex items-center gap-4">
                     <button
                         onClick={() => handlePortionChange(-1)}
@@ -58,7 +58,9 @@ export default function Ingredients({ ingredients }: IngredientsProps) {
                     </button>
                 </div>
             </div>
-
+            <h2 className="text-xl font-medium text-green-700 pt-3 px-6 pb-1">
+                Składniki (kliknij składnik, aby wykreślić):
+            </h2>
             {ingredients.map((ingredient, index) => (
                 <button
                     key={index}
