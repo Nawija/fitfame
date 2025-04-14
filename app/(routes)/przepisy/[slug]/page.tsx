@@ -65,7 +65,9 @@ export default async function Page({
                         className="w-full object-cover rounded-xl shadow max-h-[600px]"
                     />
 
-                    <p className="text-lg py-6 w-full px-2">{recipe.description}</p>
+                    <p className="text-lg py-6 w-full px-2">
+                        {recipe.description}
+                    </p>
 
                     <div className="grid grid-cols-4 gap-2 text-center mb-8">
                         <div className="bg-pink-200 rounded-xl py-4 shadow">
@@ -102,7 +104,6 @@ export default async function Page({
                         </div>
                     </div>
 
-                    
                     <Ingredients ingredients={recipe.ingredients} />
                 </div>
 
@@ -112,17 +113,19 @@ export default async function Page({
                     </h3>
                     <div className="space-y-6">
                         {recipe.steps.map((step, index) => (
-                            <div key={index} className="flex items-start gap-4">
-                                <div className="min-w-10 min-h-10 w-10 h-10 flex items-center justify-center rounded-full bg-amber-400 text-white font-bold text-lg shadow">
+                            <div key={index} className="flex items-start gap-2">
+                                <div className="min-w-7 min-h-7 w-7 h-7 flex items-center justify-center rounded-full bg-amber-400 text-white font-bold text-base shadow">
                                     {index + 1}
                                 </div>
                                 <div>
                                     <p className="text-lg font-semibold text-gray-800 mb-1">
                                         {step.title}
                                     </p>
-                                    <p className="text-gray-700 text-lg">
-                                        {step.description}
-                                    </p>
+                                    <ul className="list-disc pl-5 space-y-1 text-gray-700 text-base">
+                                        {step.description.map((line, i) => (
+                                            <li key={i}>{line}</li>
+                                        ))}
+                                    </ul>
                                 </div>
                             </div>
                         ))}

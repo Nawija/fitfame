@@ -45,28 +45,33 @@ export const recipesData = [
         steps: [
             {
                 title: "Drożdże aktywuj:",
-                description:
+                description: [
                     "Wymieszaj drożdże z 100 ml letniej wody i cukrem. Odstaw na 10 minut, aż zacznie się pienić.",
+                ],
             },
             {
                 title: "Zagnieć ciasto:",
-                description:
+                description: [
                     "Do dużej miski wsyp mąki, odżywkę białkową, sól, dodaj jajko, oliwę i zaczyn drożdżowy. Wyrabiaj ciasto przez ok. 10 minut aż będzie gładkie.",
+                ],
             },
             {
                 title: "Pozostaw do wyrośnięcia:",
-                description:
+                description: [
                     "Przykryj miskę ściereczką i odstaw na 1 godzinę w ciepłe miejsce.",
+                ],
             },
             {
                 title: "Uformuj bułki:",
-                description:
+                description: [
                     "Podziel ciasto na 4 części, uformuj bułki i ułóż na blasze wyłożonej papierem.",
+                ],
             },
             {
                 title: "Piecz:",
-                description:
+                description: [
                     "Piecz w 200°C przez 18 22 minuty, aż będą rumiane i wypieczone.",
+                ],
             },
         ],
     },
@@ -95,28 +100,33 @@ export const recipesData = [
         steps: [
             {
                 title: "Drożdże aktywuj:",
-                description:
+                description: [
                     "Wymieszaj drożdże z 100 ml letniej wody i cukrem. Odstaw na 10 minut, aż zacznie się pienić.",
+                ],
             },
             {
                 title: "Zagnieć ciasto:",
-                description:
+                description: [
                     "Do dużej miski wsyp mąki, odżywkę białkową, sól, dodaj jajko, oliwę i zaczyn drożdżowy. Wyrabiaj ciasto przez ok. 10 minut aż będzie gładkie.",
+                ],
             },
             {
                 title: "Pozostaw do wyrośnięcia:",
-                description:
+                description: [
                     "Przykryj miskę ściereczką i odstaw na 1 godzinę w ciepłe miejsce.",
+                ],
             },
             {
                 title: "Uformuj bułki:",
-                description:
+                description: [
                     "Podziel ciasto na 4 części, uformuj bułki i ułóż na blasze wyłożonej papierem.",
+                ],
             },
             {
                 title: "Piecz:",
-                description:
+                description: [
                     "Piecz w 200°C przez 18 22 minuty, aż będą rumiane i wypieczone.",
+                ],
             },
         ],
     },
@@ -147,28 +157,35 @@ export const recipesData = [
         steps: [
             {
                 title: "Drożdże aktywuj:",
-                description:
-                    "Wymieszaj drożdże z 100 ml letniej wody i cukrem. Odstaw na 10 minut, aż zacznie się pienić.",
+                description: [
+                    "Wymieszaj drożdże z 100 ml letniej wody i cukrem. ",
+                    "Odstaw na 10 minut, aż zacznie się pienić.",
+                ],
             },
             {
                 title: "Zagnieć ciasto:",
-                description:
-                    "Do dużej miski wsyp mąki, odżywkę białkową, sól, dodaj jajko, oliwę i zaczyn drożdżowy. Wyrabiaj ciasto przez ok. 10 minut aż będzie gładkie.",
+                description: [
+                    "Do dużej miski wsyp mąki, odżywkę białkową, sól, dodaj jajko, oliwę i zaczyn drożdżowy.",
+                    "Wyrabiaj ciasto przez ok. 10 minut aż będzie gładkie.",
+                ],
             },
             {
                 title: "Pozostaw do wyrośnięcia:",
-                description:
+                description: [
                     "Przykryj miskę ściereczką i odstaw na 1 godzinę w ciepłe miejsce.",
+                ],
             },
             {
                 title: "Uformuj bułki:",
-                description:
+                description: [
                     "Podziel ciasto na 4 części, uformuj bułki i ułóż na blasze wyłożonej papierem.",
+                ],
             },
             {
                 title: "Piecz:",
-                description:
+                description: [
                     "Piecz w 200°C przez 18 22 minuty, aż będą rumiane i wypieczone.",
+                ],
             },
         ],
     },
