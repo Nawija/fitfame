@@ -27,17 +27,17 @@ export default async function Page({
 
     return (
         <div className="w-full overflow-hidden relative h-full">
-            <div className="absolute-z-10 top-0 left-0 w-full h-10 lg:h-28 overflow-hidden">
+            <div className="relative -z-10 top-0 left-0 w-full h-8 lg:h-12 overflow-hidden">
                 <img
                     src={recipe.image}
                     alt={recipe.title}
-                    className="w-full object-cover mb-6 shadow"
+                    className="w-full object-cover mb-6 shadow h-8 lg:h-12"
                 />
-                <div className="absolute top-0 left-0 w-full h-10 lg:h-28 overflow-hidden bg-black/30" />
+                <div className="absolute top-0 left-0 w-full h-8 lg:h-12 overflow-hidden bg-black/30" />
             </div>
-            <div className="max-w-6xl mx-auto px-4 py-10 flex items-center justify-center lg:items-start flex-col lg:flex-row lg:space-x-7 relative">
+            <div className="max-w-6xl mx-auto px-4 py-12 flex items-center justify-center lg:items-start flex-col lg:flex-row lg:space-x-7 relative">
                 <div>
-                    <h1 className="text-4xl font-bold text-gray-800 mb-4">
+                    <h1 className="text-4xl lg:text-5xl font-bold text-gray-800 mb-4">
                         {recipe.title}
                     </h1>
 

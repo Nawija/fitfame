@@ -69,10 +69,10 @@ export default function Ingredients({ ingredients }: IngredientsProps) {
                         {index + 1}
                     </div>
                     <p
-                        className={`text-gray-700 lg:text-lg text-base font-semibold transition ${
+                        className={` lg:text-lg text-base font-semibold transition ${
                             checkedIngredients.includes(index)
-                                ? "line-through opacity-50"
-                                : ""
+                                ? "line-through decoration-red-600 text-gray-500 opacity-85"
+                                : "text-gray-800"
                         }`}
                     >
                         {scaleIngredient(ingredient)}
