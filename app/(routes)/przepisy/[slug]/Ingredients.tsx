@@ -58,7 +58,7 @@ export default function Ingredients({ ingredients }: IngredientsProps) {
                     </button>
                 </div>
             </div>
-            <h2 className="text-xl font-medium text-green-700 pt-3 px-6 pb-1">
+            <h2 className="text-lg font-medium text-yellow-700 pt-3 px-6 pb-1">
                 Składniki (kliknij składnik, aby wykreślić):
             </h2>
             {ingredients.map((ingredient, index) => (
@@ -67,13 +67,13 @@ export default function Ingredients({ ingredients }: IngredientsProps) {
                     onClick={() => toggleIngredient(index)}
                     className="w-full text-left flex items-center gap-2 cursor-pointer p-1.5 px-6"
                 >
-                    <div className="w-6 h-6 flex items-center mr-4 justify-center rounded-full bg-white text-gray-400 font-bold text-sm shadow">
+                    <div className="w-6 h-6 flex items-center mr-3 justify-center rounded-full bg-white text-gray-400 font-bold text-sm shadow">
                         {index + 1}
                     </div>
                     <p
                         className={` lg:text-lg text-base font-semibold transition ${
                             checkedIngredients.includes(index)
-                                ? "line-through decoration-red-600 text-gray-500 opacity-85"
+                                ? "line-through decoration-red-600 text-red-900/80 opacity-85"
                                 : "text-gray-800"
                         }`}
                     >

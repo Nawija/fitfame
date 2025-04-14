@@ -35,7 +35,7 @@ export default async function Page({
                 />
                 <div className="absolute top-0 left-0 w-full h-8 lg:h-12 overflow-hidden bg-black/30" />
             </div>
-            <div className="max-w-6xl mx-auto px-4 py-12 flex items-center justify-center lg:items-start flex-col lg:flex-row lg:space-x-7 relative">
+            <div className="max-w-6xl mx-auto anim-opacity px-4 py-12 flex items-center justify-center lg:items-start flex-col lg:flex-row lg:space-x-7 relative">
                 <div>
                     <h1 className="text-4xl lg:text-5xl font-bold text-gray-800 mb-4">
                         {recipe.title}
@@ -62,7 +62,7 @@ export default async function Page({
                     <img
                         src={recipe.image}
                         alt={recipe.title}
-                        className="w-full object-cover rounded-xl shadow max-h-[600px]"
+                        className="w-full object-cover rounded-xl shadow max-h-[600px] lg:min-w-[700px]"
                     />
 
                     <p className="text-lg py-6 w-full px-2">
