@@ -1,51 +1,73 @@
 "use client";
 
-import { MainBtn } from "@/components/Buttons/MainBtn";
-import { FaSearch } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import { recipesData } from "@/constants/Przepisy";
+import { RxCross2 } from "react-icons/rx";
+import { IoClose } from "react-icons/io5";
 
 type Props = {
-    filtersVisible: boolean;
-    setFiltersVisible: (v: boolean) => void;
-    searchKeywords: string;
-    setSearchKeywords: (v: string) => void;
-    selectedCategories: string[];
-    handleCategoryChange: (category: string) => void;
-    proteinRange: number;
-    setProteinRange: (v: number) => void;
-    fatRange: number;
-    setFatRange: (v: number) => void;
-    carbsRange: number;
-    setCarbsRange: (v: number) => void;
-    minCalories: number;
-    maxCalories: number;
-    handleCaloriesChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    handleFilterApply: () => void;
+    onFilterChange: (filtered: typeof recipesData) => void;
 };
 
-export function FiltersSection({
-    filtersVisible,
-    setFiltersVisible,
-    searchKeywords,
-    setSearchKeywords,
-    selectedCategories,
-    handleCategoryChange,
-    proteinRange,
-    setProteinRange,
-    fatRange,
-    setFatRange,
-    carbsRange,
-    setCarbsRange,
-    minCalories,
-    maxCalories,
-    handleCaloriesChange,
-    handleFilterApply,
-}: Props) {
-    const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter") handleFilterApply();
+export function FiltersSection({ onFilterChange }: Props) {
+    const [searchKeywords, setSearchKeywords] = useState("");
+    const [selectedCategory, setSelectedCategory] = useState("all");
+    const [proteinRange, setProteinRange] = useState(0);
+    const [fatRange, setFatRange] = useState(0);
+    const [carbsRange, setCarbsRange] = useState(0);
+    const [minCalories, setMinCalories] = useState(0);
+    const [maxCalories, setMaxCalories] = useState(3000);
+    const [filtersVisible, setFiltersVisible] = useState(false);
+
+    // Debounce function implementation
+    const debounce = (fn: Function, delay: number) => {
+        let timeout: NodeJS.Timeout;
+        return (...args: any[]) => {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => fn(...args), delay);
+        };
     };
 
+    const filterRecipes = () => {
+        const filtered = recipesData.filter((recipe) => {
+            const matchesCategory = selectedCategory === "all" || recipe.category === selectedCategory;
+            const matchesKeyword =
+                !searchKeywords || recipe.title.toLowerCase().includes(searchKeywords.toLowerCase());
+
+            return (
+                matchesCategory &&
+                recipe.calories >= minCalories &&
+                recipe.calories <= maxCalories &&
+                recipe.protein >= proteinRange &&
+                recipe.fat >= fatRange &&
+                recipe.carbs >= carbsRange &&
+                matchesKeyword
+            );
+        });
+
+        onFilterChange(filtered);
+    };
+
+    const debouncedFilter = debounce(filterRecipes, 200);
+
+    useEffect(() => {
+        debouncedFilter();
+    }, [searchKeywords, selectedCategory, proteinRange, fatRange, carbsRange, minCalories, maxCalories]);
+
+    const clearAllFilters = () => {
+        setSearchKeywords("");
+        setSelectedCategory("all");
+        setProteinRange(0);
+        setFatRange(0);
+        setCarbsRange(0);
+        setMinCalories(0);
+        setMaxCalories(3000);
+    };
+
+    const clearSearch = () => setSearchKeywords("");
+
     return (
-        <div className="lg:w-1/4 w-full bg-white p-6 rounded-lg shadow-lg">
+        <div className="w-full bg-white p-6 rounded-lg shadow-lg lg:w-[300px] lg:max-w-[300px] lg:min-w-[300px] h-max">
             <div className="lg:hidden">
                 <button
                     onClick={() => setFiltersVisible(!filtersVisible)}
@@ -57,101 +79,81 @@ export function FiltersSection({
 
             <div
                 className={`lg:block transition-all ease-in-out duration-300 ${
-                    filtersVisible
-                        ? "block h-[700px]"
-                        : "h-0 lg:h-max overflow-y-hidden"
+                    filtersVisible ? "block h-[700px]" : "h-0 lg:h-max overflow-y-hidden"
                 } lg:space-y-6`}
             >
-                <h2 className="text-2xl font-semibold text-gray-900 mb-6">
-                    Opcje filtrowania
-                </h2>
+                <h2 className="text-2xl font-semibold text-gray-900 mb-6">Opcje filtrowania</h2>
 
-                <div className="mb-6 flex items-center justify-center">
+                {/* SEARCH */}
+                <div className="mb-6 flex items-center justify-center relative">
                     <input
                         type="text"
                         value={searchKeywords}
                         onChange={(e) => setSearchKeywords(e.target.value)}
-                        onKeyDown={handleKeyPress}
                         className="w-full p-1.5 border text-sm border-gray-300 rounded-lg focus:outline-none"
                         placeholder="Wyszukaj"
                     />
-                    <button
-                        className="p-2 border rounded-lg ml-1 bg-blue-400 text-white"
-                        onClick={handleFilterApply}
-                    >
-                        <FaSearch />
-                    </button>
+                    {searchKeywords && (
+                        <button
+                            onClick={clearSearch}
+                            className="absolute right-2 text-gray-500 hover:text-gray-700"
+                        >
+                            <IoClose className="cursor-pointer" />
+                        </button>
+                    )}
                 </div>
 
+                {/* CATEGORY */}
                 <div className="mb-6">
-                    <h3 className="text-lg font-semibold text-gray-700 mb-2">
-                        Kategoria
-                    </h3>
+                    <h3 className="text-lg font-semibold text-gray-700 mb-2">Kategoria</h3>
                     <div className="space-y-2">
-                        {[
-                            "all",
-                            "Kurczak",
-                            "Masa",
-                            "Rzeźba",
-                            "Niskokaloryczne",
-                        ].map((category) => (
+                        {["all", "Kurczak", "Masa", "Rzeźba", "Niskokaloryczne"].map((category) => (
                             <div key={category} className="flex items-center">
                                 <input
-                                    type="checkbox"
+                                    type="radio"
                                     id={category}
-                                    checked={selectedCategories.includes(
-                                        category
-                                    )}
-                                    onChange={() =>
-                                        handleCategoryChange(category)
-                                    }
+                                    name="category"
+                                    checked={selectedCategory === category}
+                                    onChange={() => setSelectedCategory(category)}
                                     className="mr-2"
                                 />
-                                <label
-                                    htmlFor={category}
-                                    className="text-sm text-gray-700"
-                                >
-                                    {category === "all"
-                                        ? "Wszystkie"
-                                        : category}
+                                <label htmlFor={category} className="text-sm text-gray-700">
+                                    {category === "all" ? "Wszystkie" : category}
                                 </label>
                             </div>
                         ))}
                     </div>
                 </div>
 
+                {/* MACROS */}
                 {[
                     {
                         label: "Białko (min.)",
                         value: proteinRange,
-                        onChange: (v: number) => setProteinRange(v),
+                        set: setProteinRange,
                         max: 200,
                     },
                     {
                         label: "Tłuszcz (min.)",
                         value: fatRange,
-                        onChange: (v: number) => setFatRange(v),
+                        set: setFatRange,
                         max: 200,
                     },
                     {
                         label: "Węglowodany (min.)",
                         value: carbsRange,
-                        onChange: (v: number) => setCarbsRange(v),
+                        set: setCarbsRange,
                         max: 500,
                     },
-                ].map((item, index) => (
-                    <div key={index} className="mb-4">
+                ].map((item, i) => (
+                    <div key={i} className="mb-4">
                         <div className="flex items-center justify-between mb-2">
-                            <label className="text-sm text-gray-700">
-                                {item.label}
-                            </label>
+                            <label className="text-sm text-gray-700">{item.label}</label>
                             <input
                                 type="number"
                                 value={item.value}
-                                onChange={(e) =>
-                                    item.onChange(Number(e.target.value))
-                                }
-                                className="w-10 p-1 border border-gray-300 rounded-lg"
+                                onChange={(e) => item.set(Number(e.target.value))}
+                                className="w-12 p-1 border border-gray-300 rounded-lg text-sm"
                             />
                         </div>
                         <input
@@ -159,24 +161,21 @@ export function FiltersSection({
                             min="0"
                             max={item.max}
                             value={item.value}
-                            onChange={(e) =>
-                                item.onChange(Number(e.target.value))
-                            }
+                            onChange={(e) => item.set(Number(e.target.value))}
                             className="w-full"
                         />
                     </div>
                 ))}
 
+                {/* CALORIES */}
                 <div className="mb-6">
-                    <h3 className="text-lg font-semibold text-gray-700 mb-2">
-                        Kalorie (zakres)
-                    </h3>
+                    <h3 className="text-lg font-semibold text-gray-700 mb-2">Kalorie (zakres)</h3>
                     <div className="flex gap-4 mb-4">
                         <input
                             type="number"
                             name="minCalories"
                             value={minCalories}
-                            onChange={handleCaloriesChange}
+                            onChange={(e) => setMinCalories(Number(e.target.value))}
                             className="w-full p-3 border border-gray-300 rounded-lg"
                             placeholder="Minimalne kalorie"
                         />
@@ -184,14 +183,20 @@ export function FiltersSection({
                             type="number"
                             name="maxCalories"
                             value={maxCalories}
-                            onChange={handleCaloriesChange}
+                            onChange={(e) => setMaxCalories(Number(e.target.value))}
                             className="w-full p-3 border border-gray-300 rounded-lg"
                             placeholder="Maksymalne kalorie"
                         />
                     </div>
                 </div>
 
-                <MainBtn onClick={handleFilterApply}>Zastosuj filtry</MainBtn>
+                {/* CLEAR BUTTON */}
+                <button
+                    onClick={clearAllFilters}
+                    className="w-full py-2 px-4 mt-4 text-sm font-bold cursor-pointer bg-red-600 text-white rounded-lg hover:bg-red-500 focus:outline-none"
+                >
+                    Wyczyść filtry
+                </button>
             </div>
         </div>
     );
