@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { recipesData } from "@/constants/Przepisy";
-import { RxCross2 } from "react-icons/rx";
 import { IoClose } from "react-icons/io5";
 
 type Props = {
