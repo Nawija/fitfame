@@ -12,7 +12,10 @@ export type Recipe = {
     description: string;
     image: string;
     ingredients: string[];
-    steps: string[];
+    steps: {
+        title: string;
+        description: string[];
+    }[];
 };
 
 export const recipesData = [
@@ -83,12 +86,11 @@ export const recipesData = [
         ingredients: [
             "100 g ryżu",
             "200 g piersi z kurczaka",
-            "Brokuł",
-            "Papryka",
-            "Marchewka",
-            "Oliwa z oliwek",
+            "1 Brokuł",
+            "1 Papryka",
+            "1 Marchewka",
+            "5ml Oliwa z oliwek",
             "Sól, pieprz, curry",
-            "Sos sojowy (opcjonalnie)",
         ],
         steps: [
             {
