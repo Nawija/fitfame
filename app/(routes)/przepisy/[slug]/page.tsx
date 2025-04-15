@@ -5,6 +5,7 @@ import { RiPuzzle2Line } from "react-icons/ri";
 import Link from "next/link";
 import Ingredients from "./Ingredients";
 import Image from "next/image";
+import ShareButton from "@/components/Buttons/ShareButton";
 
 export default async function Page({
     params,
@@ -109,28 +110,36 @@ export default async function Page({
                     <Ingredients ingredients={recipe.ingredients} />
                 </div>
 
-                <div className="p-8 rounded-lg border border-gray-200 bg-gray-100 mt-8 lg:mt-0 lg:min-w-[400px] w-full">
-                    <h3 className="text-2xl font-semibold text-gray-800 mb-4">
-                        Sposób przygotowania:
-                    </h3>
-                    <div className="space-y-6">
-                        {recipe.steps.map((step, index) => (
-                            <div key={index} className="flex items-start gap-2">
-                                <div className="min-w-7 min-h-7 w-7 h-7 flex items-center justify-center rounded-full bg-amber-400 text-white font-bold text-base shadow">
-                                    {index + 1}
+                <div>
+                    <div className="mt-6 lg:mb-6 lg:mt-0 w-full flex items-center justify-end">
+                        <ShareButton title={recipe.title} />
+                    </div>
+                    <div className="p-8 rounded-lg border border-gray-200 bg-gray-100 mt-8 lg:mt-0 lg:min-w-[400px] w-full">
+                        <h3 className="text-2xl font-semibold text-gray-800 mb-4">
+                            Sposób przygotowania:
+                        </h3>
+                        <div className="space-y-6">
+                            {recipe.steps.map((step, index) => (
+                                <div
+                                    key={index}
+                                    className="flex items-start gap-2"
+                                >
+                                    <div className="min-w-7 min-h-7 w-7 h-7 flex items-center justify-center rounded-full bg-amber-400 text-white font-bold text-base shadow">
+                                        {index + 1}
+                                    </div>
+                                    <div>
+                                        <p className="text-lg font-semibold text-gray-800 mb-1">
+                                            {step.title}
+                                        </p>
+                                        <ul className="list-disc pl-5 space-y-1 text-gray-700 text-base">
+                                            {step.description.map((line, i) => (
+                                                <li key={i}>{line}</li>
+                                            ))}
+                                        </ul>
+                                    </div>
                                 </div>
-                                <div>
-                                    <p className="text-lg font-semibold text-gray-800 mb-1">
-                                        {step.title}
-                                    </p>
-                                    <ul className="list-disc pl-5 space-y-1 text-gray-700 text-base">
-                                        {step.description.map((line, i) => (
-                                            <li key={i}>{line}</li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
