@@ -2,6 +2,7 @@ import { getBlocks, type Block } from "@/lib/getBlocks";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import "./blogStyle.css";
 
 export default async function Page({
     params,
@@ -24,9 +25,11 @@ export default async function Page({
             />
             <h1 className="text-3xl font-bold mb-4">{block.title}</h1>
 
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                {block.content}
-            </ReactMarkdown>
+            <div className="blogStyle">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                    {block.content}
+                </ReactMarkdown>
+            </div>
         </section>
     );
 }

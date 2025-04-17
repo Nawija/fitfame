@@ -1,0 +1,8 @@
+.blogStyle h2 {
+    font-size: 2rem;
+}
+
+.blogStyle > ul > li {
+    list-style: disc;
+    margin-left: 22px;
+}
