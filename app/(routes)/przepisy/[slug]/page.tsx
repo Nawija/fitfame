@@ -1,4 +1,5 @@
-import { recipesData } from "@/constants/Przepisy";
+import { getRecipeBySlug } from "@/lib/recipes";
+import { getAllRecipes } from "@/lib/getAllRecipes";
 import { notFound } from "next/navigation";
 import { IoTimeOutline } from "react-icons/io5";
 import { RiPuzzle2Line } from "react-icons/ri";
@@ -7,17 +8,38 @@ import Ingredients from "./Ingredients";
 import Image from "next/image";
 import ShareButton from "@/components/Buttons/ShareButton";
 
+type Recipe = {
+    slug: string;
+    title: string;
+    category: string;
+    time: string;
+    level: string;
+    image: string;
+    calories: number;
+    protein: number;
+    fat: number;
+    carbs: number;
+    description: string;
+    ingredients: any[];
+    steps: { title: string; description: string[] }[];
+  };
+
 export default async function Page({
     params,
 }: {
     params: Promise<{ slug: string }>;
 }) {
-    const { slug } = await params;
-    const recipe = recipesData.find((r) => r.slug === slug);
+    const awaitedParams = await Promise.resolve(params);
+    const { slug } = awaitedParams;
+    const recipe: Recipe[] | null = await getRecipeBySlug(slug);
 
     if (!recipe) return notFound();
 
-    const similarRecipes = recipesData
+    // Załaduj wszystkie przepisy
+    const allRecipes = await getAllRecipes();
+
+    // Filtrowanie podobnych przepisów
+    const similarRecipes = allRecipes
         .filter(
             (r) =>
                 r.slug !== recipe.slug &&

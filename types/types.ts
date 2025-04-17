@@ -13,3 +13,19 @@ export type SearchProps = {
     price: number;
     prevPrice: number;
 };
+
+export type Recipe = {
+    title: string;
+    slug: string;
+    category: string;
+    image: string;
+    time: string;
+    level: string;
+    calories: number;
+    protein: number;
+    fat: number;
+    carbs: number;
+    description: string;
+    ingredients: string[];
+    steps: { title: string; description: string[] }[];
+};

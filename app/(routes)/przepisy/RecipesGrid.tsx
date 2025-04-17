@@ -4,7 +4,7 @@ import { SecondBtn } from "@/components/Buttons/SecondBtn";
 import { motion } from "framer-motion";
 import { IoTime } from "react-icons/io5";
 import Link from "next/link";
-import { Recipe } from "@/constants/Przepisy";
+import { Recipe } from "@/types/types";
 import { useState } from "react";
 import Image from "next/image";
 
@@ -52,7 +52,7 @@ export const RecipesGrid = ({ recipes }: { recipes: Recipe[] }) => {
 
     return (
         <div>
-            <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 {currentPageRecipes.length > 0 ? (
                     currentPageRecipes.map((recipe, index) => (
                         <Link
@@ -63,7 +63,7 @@ export const RecipesGrid = ({ recipes }: { recipes: Recipe[] }) => {
                             <motion.div
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
-                                className="bg-white group p-2 rounded-lg shadow-lg transition-all transform border border-transparent hover:border-stone-200 text-center flex flex-col items-center justify-between w-full"
+                                className="bg-white group p-2 rounded-lg shadow-lg transition-all transform text-center flex flex-col items-center justify-between w-full"
                             >
                                 <div className="w-full">
                                     <div className="relative w-full">
