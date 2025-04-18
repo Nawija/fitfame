@@ -22,6 +22,7 @@ export async function POST(req: NextRequest) {
         time,
         image,
         description,
+        content,
         ingredients,
         steps,
     } = body;
@@ -56,7 +57,7 @@ export async function POST(req: NextRequest) {
     };
 
     // Generujemy cały Markdown (frontmatter + content)
-    const fileContent = matter.stringify(description, frontmatter);
+    const fileContent = matter.stringify(content, frontmatter);
 
     // Ścieżka zapisu
     const filePath = path.join(

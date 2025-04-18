@@ -4,6 +4,8 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MdDeleteForever } from "react-icons/md";
 import { FaPlus } from "react-icons/fa";
+import { AiOutlinePicture } from "react-icons/ai";
+import { IoIosLink } from "react-icons/io";
 
 interface Step {
     title: string;
@@ -21,6 +23,7 @@ interface FormState {
     carbs: number;
     time: string;
     description: string;
+    content: string;
     ingredients: string[];
     steps: Step[];
 }
@@ -37,6 +40,7 @@ const AdminPrzepisy: React.FC = () => {
         time: "",
         image: null, // Initialize as null
         description: "",
+        content: "",
         ingredients: [""],
         steps: [{ title: "", description: [""] }],
     });
@@ -127,7 +131,7 @@ const AdminPrzepisy: React.FC = () => {
         if (file) {
             setForm((prevForm) => ({
                 ...prevForm,
-                image: file, // Store the file object temporarily
+                image: file,
             }));
         }
     };
@@ -138,17 +142,14 @@ const AdminPrzepisy: React.FC = () => {
 
         let uploadedImageUrl = "";
         if (form.image instanceof File) {
-            // Check if form.image is a File
-            // Upload the image and get the URL
             uploadedImageUrl = await uploadImage(form.image);
         } else if (typeof form.image === "string") {
-            // If it's already a string (URL), use it directly
             uploadedImageUrl = form.image;
         }
 
         const updatedForm = {
             ...form,
-            image: uploadedImageUrl, // Store the uploaded image URL (string)
+            image: uploadedImageUrl,
         };
 
         const res = await fetch("/api/admin/save-recipe", {
@@ -168,13 +169,37 @@ const AdminPrzepisy: React.FC = () => {
                 fat: 0,
                 carbs: 0,
                 time: "",
-                image: null, // Reset image after saving
+                image: null,
                 description: "",
+                content: "",
                 ingredients: [""],
                 steps: [{ title: "", description: [""] }],
             });
         } else {
             setStatus("Error ❌");
+        }
+    };
+
+    const handleInsertImage = () => {
+        const imageUrl = prompt("Podaj URL obrazka:");
+        const titleAlt = prompt("Podaj Nazwe obrazka:");
+        if (imageUrl) {
+            const markdownImage = `![${titleAlt}](${imageUrl})`;
+            setForm((prevForm) => ({
+                ...prevForm,
+                content: prevForm.content + "\n" + markdownImage,
+            }));
+        }
+    };
+    const handleInsertLink = () => {
+        const url = prompt("Podaj URL:");
+        const linkText = prompt("Podaj tekst linku:");
+        if (url && linkText) {
+            const markdownLink = `[${linkText}](${url})`;
+            setForm((prevForm) => ({
+                ...prevForm,
+                content: prevForm.content + "\n" + markdownLink,
+            }));
         }
     };
 
@@ -190,7 +215,7 @@ const AdminPrzepisy: React.FC = () => {
 
         const data = await response.json();
         if (data.url) {
-            const imageUrl = `/images/przepisy/${data.url}`
+            const imageUrl = `/images/przepisy/${data.url}`;
             return imageUrl;
         } else {
             throw new Error("Image upload failed");
@@ -452,6 +477,31 @@ const AdminPrzepisy: React.FC = () => {
                             ))}
                         </AnimatePresence>
                     </div>
+
+                    <div className="flex items-center space-x-2">
+                        <button
+                            type="button"
+                            onClick={handleInsertImage}
+                            className="text-base bg-stone-600 flex items-center cursor-pointer justify-center text-white py-1.5 px-3 rounded-lg"
+                        >
+                            <AiOutlinePicture />
+                        </button>
+
+                        <button
+                            type="button"
+                            onClick={handleInsertLink}
+                            className="text-base bg-stone-600 flex items-center cursor-pointer justify-center text-white py-1.5 px-3 rounded-lg"
+                        >
+                            <IoIosLink />
+                        </button>
+                    </div>
+                    <textarea
+                        name="content"
+                        placeholder="Treść przepisu (markdown)"
+                        value={form.content}
+                        onChange={handleChange}
+                        className="w-full p-2 border border-gray-200 h-40 rounded-lg"
+                    />
 
                     <div className="w-full flex items-end justify-end">
                         <button
