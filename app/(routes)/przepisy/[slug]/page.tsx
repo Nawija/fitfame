@@ -47,11 +47,11 @@ export default async function Page({
             </div>
             <div className="max-w-7xl mx-auto anim-opacity px-4 py-12 flex items-center justify-center lg:items-start flex-col lg:flex-row lg:space-x-7 relative">
                 <div>
-                    <h1 className="text-4xl lg:text-5xl font-bold text-gray-800 mb-4">
+                    <h1 className="text-4xl uppercase lg:text-4xl font-bold text-gray-800 mb-4">
                         {recipe.title}
                     </h1>
 
-                    <p>
+                    <p className="capitalize">
                         <strong className="font-medium">Kategoria:</strong>{" "}
                         {recipe.category}
                     </p>

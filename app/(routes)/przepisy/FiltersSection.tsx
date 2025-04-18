@@ -2,13 +2,31 @@
 
 import { useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
-import { RecipesGrid } from "./RecipesGrid";
+import dynamic from "next/dynamic"; // Importujemy dynamic
 import { motion } from "framer-motion";
 import { Recipe } from "@/types/types";
 
+// Dynamiczny import komponentu RecipesGrid
+const RecipesGrid = dynamic(
+    () => import("./RecipesGrid").then((mod) => mod.RecipesGrid),
+    {
+        ssr: false, // Disable server-side rendering for this component if necessary
+    }
+);
+
+const RecipeSkeleton = dynamic(
+    () =>
+        import("@/components/SkeletonUI/RecipeSkeleton").then(
+            (mod) => mod.RecipeSkeleton
+        ),
+    {
+        ssr: false,
+    }
+);
+
 export function FiltersSection({ allRecipes }: { allRecipes: Recipe[] }) {
     const [filteredRecipes, setFilteredRecipes] = useState(allRecipes);
-
+    const [loading, setLoading] = useState(false); // Track loading state
     const [searchKeywords, setSearchKeywords] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("all");
     const [proteinRange, setProteinRange] = useState(0);
@@ -17,6 +35,7 @@ export function FiltersSection({ allRecipes }: { allRecipes: Recipe[] }) {
     const [minCalories, setMinCalories] = useState(0);
     const [maxCalories, setMaxCalories] = useState(3000);
     const [filtersVisible, setFiltersVisible] = useState(false);
+    const [noRecipesMessage, setNoRecipesMessage] = useState(false);
 
     // Debounce function implementation
     const debounce = (fn: () => void, delay: number) => {
@@ -28,6 +47,8 @@ export function FiltersSection({ allRecipes }: { allRecipes: Recipe[] }) {
     };
 
     const filterRecipes = () => {
+        setLoading(true);
+        setNoRecipesMessage(false);
         const filtered = allRecipes.filter((recipe) => {
             const matchesCategory =
                 selectedCategory === "all" ||
@@ -50,6 +71,7 @@ export function FiltersSection({ allRecipes }: { allRecipes: Recipe[] }) {
         });
 
         setFilteredRecipes(filtered);
+        setLoading(false);
     };
 
     const debouncedFilter = debounce(filterRecipes, 200);
@@ -65,6 +87,16 @@ export function FiltersSection({ allRecipes }: { allRecipes: Recipe[] }) {
         minCalories,
         maxCalories,
     ]);
+
+    useEffect(() => {
+        // Set timeout to display message if no recipes are found after 3 seconds
+        if (filteredRecipes.length === 0 && !loading) {
+            const timer = setTimeout(() => {
+                setNoRecipesMessage(true);
+            }, 3000);
+            return () => clearTimeout(timer);
+        }
+    }, [filteredRecipes, loading]);
 
     const clearAllFilters = () => {
         setSearchKeywords("");
@@ -84,7 +116,7 @@ export function FiltersSection({ allRecipes }: { allRecipes: Recipe[] }) {
                 initial={{ translateX: -300 }}
                 animate={{ translateX: 0 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
-                className="w-full sticky top-0 bg-white p-6 rounded-lg shadow-lg lg:w-[300px] lg:max-w-[300px] lg:min-w-[300px] h-screen"
+                className="w-full sticky top-0 bg-white p-6 rounded-lg shadow-lg lg:w-[300px] lg:max-w-[300px] lg:min-w-[300px] lg:h-screen"
             >
                 <div className="lg:hidden">
                     <button
@@ -166,37 +198,18 @@ export function FiltersSection({ allRecipes }: { allRecipes: Recipe[] }) {
                     </div>
 
                     {/* MACROS */}
-                    {[
-                        {
-                            label: "Białko (min.)",
-                            value: proteinRange,
-                            set: setProteinRange,
-                            max: 200,
-                        },
-                        {
-                            label: "Tłuszcz (min.)",
-                            value: fatRange,
-                            set: setFatRange,
-                            max: 200,
-                        },
-                        {
-                            label: "Węglowodany (min.)",
-                            value: carbsRange,
-                            set: setCarbsRange,
-                            max: 500,
-                        },
+                    {[ 
+                        { label: "Białko (min.)", value: proteinRange, set: setProteinRange, max: 200 },
+                        { label: "Tłuszcz (min.)", value: fatRange, set: setFatRange, max: 200 },
+                        { label: "Węglowodany (min.)", value: carbsRange, set: setCarbsRange, max: 500 }
                     ].map((item, i) => (
                         <div key={i} className="mb-4">
                             <div className="flex items-center justify-between mb-2">
-                                <label className="text-sm text-gray-700">
-                                    {item.label}
-                                </label>
+                                <label className="text-sm text-gray-700">{item.label}</label>
                                 <input
                                     type="number"
                                     value={item.value}
-                                    onChange={(e) =>
-                                        item.set(Number(e.target.value))
-                                    }
+                                    onChange={(e) => item.set(Number(e.target.value))}
                                     className="w-12 p-1 border border-gray-300 rounded-lg text-sm"
                                 />
                             </div>
@@ -205,9 +218,7 @@ export function FiltersSection({ allRecipes }: { allRecipes: Recipe[] }) {
                                 min="0"
                                 max={item.max}
                                 value={item.value}
-                                onChange={(e) =>
-                                    item.set(Number(e.target.value))
-                                }
+                                onChange={(e) => item.set(Number(e.target.value))}
                                 className="w-full"
                             />
                         </div>
@@ -223,9 +234,7 @@ export function FiltersSection({ allRecipes }: { allRecipes: Recipe[] }) {
                                 type="number"
                                 name="minCalories"
                                 value={minCalories}
-                                onChange={(e) =>
-                                    setMinCalories(Number(e.target.value))
-                                }
+                                onChange={(e) => setMinCalories(Number(e.target.value))}
                                 className="w-full p-3 border border-gray-300 rounded-lg"
                                 placeholder="Minimalne kalorie"
                             />
@@ -233,9 +242,7 @@ export function FiltersSection({ allRecipes }: { allRecipes: Recipe[] }) {
                                 type="number"
                                 name="maxCalories"
                                 value={maxCalories}
-                                onChange={(e) =>
-                                    setMaxCalories(Number(e.target.value))
-                                }
+                                onChange={(e) => setMaxCalories(Number(e.target.value))}
                                 className="w-full p-3 border border-gray-300 rounded-lg"
                                 placeholder="Maksymalne kalorie"
                             />
@@ -252,7 +259,18 @@ export function FiltersSection({ allRecipes }: { allRecipes: Recipe[] }) {
                 </div>
             </motion.div>
             <div className="flex-1 gap-8">
-                <RecipesGrid recipes={filteredRecipes} />
+                {/* Show a "No recipes found" message after 3 seconds */}
+                {noRecipesMessage && (
+                    <p className="text-center text-lg text-gray-500">
+                        Brak potraw spełniających kryteria.
+                    </p>
+                )}
+                {/* Show RecipeSkeleton while loading */}
+                {loading ? (
+                    <RecipeSkeleton />
+                ) : (
+                    <RecipesGrid recipes={filteredRecipes} />
+                )}
             </div>
         </div>
     );

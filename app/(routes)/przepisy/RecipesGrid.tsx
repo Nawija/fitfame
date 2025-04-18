@@ -11,7 +11,7 @@ import Image from "next/image";
 export const RecipesGrid = ({ recipes }: { recipes: Recipe[] }) => {
     // Paginacja
     const [currentPage, setCurrentPage] = useState(1);
-    const recipesPerPage = 15;
+    const recipesPerPage = 12;
 
     // Obliczanie całkowitej liczby stron
     const totalPages = Math.ceil(recipes.length / recipesPerPage);
@@ -50,6 +50,12 @@ export const RecipesGrid = ({ recipes }: { recipes: Recipe[] }) => {
         return pageNumbers;
     };
 
+    // Scroll to top when page is changed
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
     return (
         <div>
             <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -63,7 +69,7 @@ export const RecipesGrid = ({ recipes }: { recipes: Recipe[] }) => {
                             <motion.div
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
-                                className="bg-white group p-2 rounded-lg shadow-lg transition-all transform text-center flex flex-col items-center justify-between w-full"
+                                className="bg-white group p-2 hover:scale-[101%] rounded-lg shadow-lg transition-all transform text-center flex flex-col items-center justify-between w-full"
                             >
                                 <div className="w-full">
                                     <div className="relative w-full">
@@ -72,7 +78,7 @@ export const RecipesGrid = ({ recipes }: { recipes: Recipe[] }) => {
                                                 src={recipe.image}
                                                 alt={recipe.title}
                                                 fill
-                                                className="w-full h-full object-cover group-hover:scale-110 duration-300 transition-transform"
+                                                className="w-full h-full object-cover group-hover:scale-[108%] duration-300 transition-transform"
                                             />
                                         </div>
                                         <div className="absolute p-2 text-sm font-semibold -bottom-1 -right-1 bg-white rounded-lg text-yellow-700 flex items-center justify-center">
@@ -80,10 +86,10 @@ export const RecipesGrid = ({ recipes }: { recipes: Recipe[] }) => {
                                             <p>{recipe.time}</p>
                                         </div>
                                     </div>
-                                    <h3 className="text-xl px-3 font-semibold text-gray-800 mb-2">
+                                    <h3 className="text-xl capitalize px-3 font-semibold text-gray-800 mb-2">
                                         {recipe.title}
                                     </h3>
-                                    <p className="text-sm text-gray-600">
+                                    <p className="text-sm capitalize text-gray-600">
                                         {recipe.category}
                                     </p>
                                     <p className="text-lg font-semibold mt-2">
@@ -114,8 +120,7 @@ export const RecipesGrid = ({ recipes }: { recipes: Recipe[] }) => {
                         <button
                             key={index}
                             onClick={() => {
-                                if (page !== "...")
-                                    setCurrentPage(page as number);
+                                if (page !== "...") handlePageChange(page as number);
                             }}
                             className={`px-4 py-2 text-sm font-semibold rounded-md cursor-pointer ${
                                 page === currentPage

@@ -1,15 +1,15 @@
 ---
-title: Fit ows
-slug: fit-ow
-category: Śniadanie
-image: /images/przepisy/ciastko.jpg
+title: Proteinowe pancakes
+slug: pancakes
+category: Rzeźba
+image: /images/przepisy/pancakes.jpg
 time: 10 minut
 level: łatwy
-calories: 350
+calories: 220
 protein: 20
 fat: 10
 carbs: 40
-description: Pyszna i szybka x na zdrowe śniadanie.
+description: Jedna bułka posiada 350 kcal
 ingredients:
     - 50g płatków owsianych
     - 200ml mleka roślinnego
@@ -19,15 +19,6 @@ steps:
     - title: Gotowanie
       description:
           - Zagotuj mleko.
-          - Dodaj płatki i gotuj 5 minut.
-    - title: Dodatki
-      description:
-          - Pokrój banana i ułóż na wierzchu.
-          - Dodaj masło orzechowe.
-    - title: Marynowanie
-      description:
-          - Zagotuj mleko.
-          - zdejmij z palikna
           - Dodaj płatki i gotuj 5 minut.
     - title: Dodatki
       description:

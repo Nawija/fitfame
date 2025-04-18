@@ -1,15 +1,15 @@
 ---
-title: Kokos
-slug: kokos
-category: Śniadanie
-image: /images/przepisy/ciastko.jpg
-time: 10 minut
+title: bulki do kebaba na grubym
+slug: bulki-do-kebaba-na-grubym
+category: Masa
+image: /images/przepisy/bulki-do-kebaba-na-grubym.jpg
+time: 10 minut (razem z pieczeniem)
 level: łatwy
 calories: 350
 protein: 20
 fat: 10
 carbs: 40
-description: Pyszna i szybka owsianka na zdrowe śniadanie.
+description: Jedna bułka posiada 350 kcal
 ingredients:
     - 50g płatków owsianych
     - 200ml mleka roślinnego
