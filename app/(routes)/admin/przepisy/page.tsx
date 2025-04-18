@@ -10,8 +10,8 @@ interface Step {
 
 interface FormState {
     title: string;
-    category: string;
-    level: string;
+    category: "all" | "Kurczak" | "Masa" | "Rzeźba" | "Niskokaloryczne";
+    level: "Łatwy" | "Średni" | "Trudny";
     calories: number;
     protein: number;
     fat: number;
@@ -23,7 +23,7 @@ interface FormState {
     steps: Step[];
 }
 
-export default function AdminPrzepisy() {
+const AdminPrzepisy: React.FC = () => {
     const [form, setForm] = useState<FormState>({
         title: "",
         category: "all",
@@ -39,7 +39,7 @@ export default function AdminPrzepisy() {
         steps: [{ title: "", description: [""] }],
     });
 
-    const [status, setStatus] = useState("");
+    const [status, setStatus] = useState<string>("");
 
     const handleChange = (
         e: React.ChangeEvent<
@@ -47,87 +47,88 @@ export default function AdminPrzepisy() {
         >,
         index?: number,
         stepIndex?: number
-    ) => {
+    ): void => {
         if (stepIndex !== undefined) {
-            // Handle changes in steps specifically
             const steps = [...form.steps];
-            const stepName = e.target.name.split(".")[1]; // Get the step's name part
+            const stepName = e.target.name.split(".")[1];
 
             if (stepName === "title") {
                 steps[stepIndex].title = e.target.value;
             } else if (stepName === "description") {
                 const descriptionIndex = Number(e.target.dataset.index);
                 if (!isNaN(descriptionIndex)) {
-                    steps[stepIndex].description[descriptionIndex] =
-                        e.target.value;
+                    steps[stepIndex].description[descriptionIndex] = e.target.value;
                 }
             }
 
-            setForm({ ...form, steps });
+            setForm((prevForm) => ({ ...prevForm, steps }));
         } else if (index !== undefined) {
-            // Handle changes in ingredients specifically
             const ingredients = [...form.ingredients];
             ingredients[index] = e.target.value;
-            setForm({ ...form, ingredients });
-        } else if (e.target instanceof HTMLSelectElement) {
-            // Handle changes in select (dropdown) specifically
-            setForm({ ...form, [e.target.name]: e.target.value });
-        } else if (e.target instanceof HTMLInputElement) {
-            // Handle changes in inputs (text or number) specifically
-            setForm({ ...form, [e.target.name]: e.target.value });
-        } else if (e.target instanceof HTMLTextAreaElement) {
-            // Handle changes in textareas
-            setForm({ ...form, [e.target.name]: e.target.value });
+            setForm((prevForm) => ({ ...prevForm, ingredients }));
+        } else {
+            setForm((prevForm) => ({
+                ...prevForm,
+                [e.target.name]: e.target.value,
+            }));
         }
     };
 
-    const handleAddIngredient = () =>
-        setForm({ ...form, ingredients: [...form.ingredients, ""] });
+    const handleAddIngredient = (): void => {
+        setForm((prevForm) => ({
+            ...prevForm,
+            ingredients: [...prevForm.ingredients, ""],
+        }));
+    };
 
-    const handleRemoveIngredient = (index: number) =>
-        setForm({
-            ...form,
-            ingredients: form.ingredients.filter((_, i) => i !== index),
-        });
+    const handleRemoveIngredient = (index: number): void => {
+        setForm((prevForm) => ({
+            ...prevForm,
+            ingredients: prevForm.ingredients.filter((_, i) => i !== index),
+        }));
+    };
 
-    const handleAddStep = () =>
-        setForm({
-            ...form,
-            steps: [...form.steps, { title: "", description: [""] }],
-        });
+    const handleAddStep = (): void => {
+        setForm((prevForm) => ({
+            ...prevForm,
+            steps: [...prevForm.steps, { title: "", description: [""] }],
+        }));
+    };
 
-    const handleRemoveStep = (index: number) =>
-        setForm({
-            ...form,
-            steps: form.steps.filter((_, i) => i !== index),
-        });
+    const handleRemoveStep = (index: number): void => {
+        setForm((prevForm) => ({
+            ...prevForm,
+            steps: prevForm.steps.filter((_, i) => i !== index),
+        }));
+    };
 
-    const handleAddStepDescription = (stepIndex: number) => {
+    const handleAddStepDescription = (stepIndex: number): void => {
         const steps = [...form.steps];
         steps[stepIndex].description.push("");
-        setForm({ ...form, steps });
+        setForm((prevForm) => ({ ...prevForm, steps }));
     };
 
     const handleRemoveStepDescription = (
         stepIndex: number,
         descriptionIndex: number
-    ) => {
+    ): void => {
         const steps = [...form.steps];
         steps[stepIndex].description = steps[stepIndex].description.filter(
             (_, i) => i !== descriptionIndex
         );
-        setForm({ ...form, steps });
+        setForm((prevForm) => ({ ...prevForm, steps }));
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent): Promise<void> => {
         e.preventDefault();
         setStatus("Saving...");
 
         const updatedForm = {
             ...form,
-            image: form.image.startsWith("/images/przepisy/")
-                ? form.image
-                : `/images/przepisy/${form.image}`,
+            image:
+                form.image.startsWith("/images/przepisy/")
+                    ? form.image
+                    : `/images/przepisy/${form.image}`,
         };
 
         const res = await fetch("/api/admin/save-recipe", {
@@ -159,9 +160,7 @@ export default function AdminPrzepisy() {
 
     return (
         <div className="max-w-4xl mx-auto px-6 py-8 bg-white rounded-2xl shadow-xl">
-            <h1 className="text-3xl font-bold mb-6 text-center">
-                Dodaj nowy przepis
-            </h1>
+            <h1 className="text-3xl font-bold mb-6 text-center">Dodaj nowy przepis</h1>
             <form onSubmit={handleSubmit} className="space-y-6">
                 <input
                     name="title"
@@ -215,7 +214,7 @@ export default function AdminPrzepisy() {
                             name={macro}
                             type="number"
                             placeholder={macro}
-                            value={(form as any)[macro]}
+                            value={form[macro as keyof FormState] as number}
                             onChange={handleChange}
                             className="p-3 border rounded-xl"
                         />
@@ -249,9 +248,7 @@ export default function AdminPrzepisy() {
                                 />
                                 <button
                                     type="button"
-                                    onClick={() =>
-                                        handleRemoveIngredient(index)
-                                    }
+                                    onClick={() => handleRemoveIngredient(index)}
                                     className="text-sm px-3 py-1 text-white bg-red-500 rounded-lg hover:bg-red-600"
                                 >
                                     Usuń
@@ -269,9 +266,7 @@ export default function AdminPrzepisy() {
                 </div>
 
                 <div>
-                    <h3 className="text-xl font-semibold mb-2">
-                        Kroki przygotowania
-                    </h3>
+                    <h3 className="text-xl font-semibold mb-2">Kroki przygotowania</h3>
                     <AnimatePresence>
                         {form.steps.map((step, stepIndex) => (
                             <motion.div
@@ -284,68 +279,44 @@ export default function AdminPrzepisy() {
                                 <input
                                     placeholder="Tytuł kroku"
                                     value={step.title}
-                                    onChange={(e) =>
-                                        handleChange(e, undefined, stepIndex)
-                                    }
+                                    onChange={(e) => handleChange(e, undefined, stepIndex)}
                                     name={`steps[${stepIndex}].title`}
                                     className="w-full p-2 border rounded-xl"
                                 />
                                 <AnimatePresence>
-                                    {step.description.map(
-                                        (desc, descriptionIndex) => (
-                                            <motion.div
-                                                key={descriptionIndex}
-                                                initial={{
-                                                    opacity: 0,
-                                                    scale: 0.9,
-                                                }}
-                                                animate={{
-                                                    opacity: 1,
-                                                    scale: 1,
-                                                }}
-                                                exit={{
-                                                    opacity: 0,
-                                                    scale: 0.9,
-                                                }}
-                                                className="flex items-start gap-2"
+                                    {step.description.map((desc, descriptionIndex) => (
+                                        <motion.div
+                                            key={descriptionIndex}
+                                            initial={{ opacity: 0, scale: 0.9 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            exit={{ opacity: 0, scale: 0.9 }}
+                                            className="flex items-start gap-2"
+                                        >
+                                            <textarea
+                                                placeholder="Opis"
+                                                name={`steps[${stepIndex}].description`}
+                                                data-index={descriptionIndex}
+                                                value={desc}
+                                                onChange={(e) =>
+                                                    handleChange(e, undefined, stepIndex)
+                                                }
+                                                className="flex-grow p-2 border h-20 rounded-xl"
+                                            />
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    handleRemoveStepDescription(stepIndex, descriptionIndex)
+                                                }
+                                                className="text-white bg-red-500 px-2 py-1 rounded-lg hover:bg-red-600"
                                             >
-                                                <textarea
-                                                    placeholder="Opis"
-                                                    name={`steps[${stepIndex}].description`}
-                                                    data-index={
-                                                        descriptionIndex
-                                                    }
-                                                    value={desc}
-                                                    onChange={(e) =>
-                                                        handleChange(
-                                                            e,
-                                                            undefined,
-                                                            stepIndex
-                                                        )
-                                                    }
-                                                    className="flex-grow p-2 border h-20 rounded-xl"
-                                                />
-                                                <button
-                                                    type="button"
-                                                    onClick={() =>
-                                                        handleRemoveStepDescription(
-                                                            stepIndex,
-                                                            descriptionIndex
-                                                        )
-                                                    }
-                                                    className="text-white bg-red-500 px-2 py-1 rounded-lg hover:bg-red-600"
-                                                >
-                                                    ❌
-                                                </button>
-                                            </motion.div>
-                                        )
-                                    )}
+                                                ❌
+                                            </button>
+                                        </motion.div>
+                                    ))}
                                 </AnimatePresence>
                                 <button
                                     type="button"
-                                    onClick={() =>
-                                        handleAddStepDescription(stepIndex)
-                                    }
+                                    onClick={() => handleAddStepDescription(stepIndex)}
                                     className="text-sm text-blue-600"
                                 >
                                     + Dodaj opis
@@ -377,11 +348,11 @@ export default function AdminPrzepisy() {
                 </button>
 
                 {status && (
-                    <p className="text-center text-sm text-gray-600 mt-2">
-                        {status}
-                    </p>
+                    <p className="text-center text-sm text-gray-600 mt-2">{status}</p>
                 )}
             </form>
         </div>
     );
-}
+};
+
+export default AdminPrzepisy;
