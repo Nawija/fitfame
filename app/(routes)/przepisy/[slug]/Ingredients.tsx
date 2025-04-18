@@ -61,7 +61,7 @@ export default function Ingredients({ ingredients }: IngredientsProps) {
             <h2 className="text-lg font-medium text-yellow-700 pt-3 px-6 pb-1">
                 Składniki (kliknij składnik, aby wykreślić):
             </h2>
-            {ingredients.map((ingredient, index) => (
+            {ingredients?.map((ingredient, index) => (
                 <button
                     key={index}
                     onClick={() => toggleIngredient(index)}

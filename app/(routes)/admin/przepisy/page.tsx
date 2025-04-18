@@ -7,39 +7,21 @@ import { FaPlus } from "react-icons/fa";
 import { AiOutlinePicture } from "react-icons/ai";
 import { IoIosLink } from "react-icons/io";
 import StatusMessage from "@/components/StatusMessage";
-
-interface Step {
-    title: string;
-    description: string[];
-}
-
-interface FormState {
-    image: File | string | null; // Can be a File or string (URL)
-    title: string;
-    category: "all" | "Kurczak" | "Masa" | "Rzeźba" | "Niskokaloryczne";
-    level: "Łatwy" | "Średni" | "Trudny";
-    calories: number;
-    protein: number;
-    fat: number;
-    carbs: number;
-    time: string;
-    description: string;
-    content: string;
-    ingredients: string[];
-    steps: Step[];
-}
+import RecipePage from "./RecipePage";
+import { FormRecipePage, FormState } from "@/types/types";
 
 const AdminPrzepisy: React.FC = () => {
-    const [form, setForm] = useState<FormState>({
+    const [form, setForm] = useState<FormRecipePage>({
         title: "",
         category: "all",
         level: "Łatwy",
+        slug: "",
         calories: 0,
         protein: 0,
         fat: 0,
         carbs: 0,
         time: "",
-        image: null, // Initialize as null
+        image: null,
         description: "",
         content: "",
         ingredients: [""],
@@ -164,6 +146,7 @@ const AdminPrzepisy: React.FC = () => {
             window.scrollTo({ top: 0, behavior: "smooth" });
             setForm({
                 title: "",
+                slug: "",
                 category: "all",
                 level: "Łatwy",
                 calories: 0,
@@ -205,7 +188,6 @@ const AdminPrzepisy: React.FC = () => {
         }
     };
 
-    // Function to upload the image
     const uploadImage = async (file: File) => {
         const formData = new FormData();
         formData.append("file", file);
@@ -225,296 +207,291 @@ const AdminPrzepisy: React.FC = () => {
     };
 
     return (
-        <div className="w-full bg-gray-50 p-12">
-            {form.image && (
-                <div className="mt-4 fixed top-32 left-20">
-                    <img
-                        src={
-                            form.image instanceof File
-                                ? URL.createObjectURL(form.image)
-                                : form.image
-                        }
-                        alt="Selected Recipe"
-                        className="w-82 h-auto rounded-md"
-                    />
-                </div>
-            )}
-
-            <div className="max-w-4xl mx-auto px-6 py-8 bg-white rounded-lg shadow-lg border border-gray-200">
-                <h1 className="text-3xl font-bold mb-6 text-center">
-                    Dodaj nowy przepis
-                </h1>
-                <form onSubmit={handleSubmit} className="space-y-3">
-                    <input
-                        name="title"
-                        placeholder="Tytuł"
-                        value={form.title}
-                        onChange={handleChange}
-                        className="w-full p-2 border border-gray-200 rounded-lg"
-                        required
-                    />
-                    <select
-                        name="category"
-                        value={form.category}
-                        onChange={handleChange}
-                        className="w-full p-2 border border-gray-200 rounded-lg"
-                    >
-                        <option value="Kurczak">Kurczak</option>
-                        <option value="Masa">Masa</option>
-                        <option value="Rzeźba">Rzeźba</option>
-                        <option value="Niskokaloryczne">Niskokaloryczne</option>
-                    </select>
-                    <select
-                        name="level"
-                        value={form.level}
-                        onChange={handleChange}
-                        className="w-full p-2 border border-gray-200 rounded-lg"
-                    >
-                        <option value="Łatwy">Łatwy</option>
-                        <option value="Średni">Średni</option>
-                        <option value="Trudny">Trudny</option>
-                    </select>
-
-                    <input
-                        name="time"
-                        placeholder="Czas przygotowania"
-                        value={form.time}
-                        onChange={handleChange}
-                        className="w-full p-2 border border-gray-200 rounded-lg"
-                    />
-
-                    <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleImageUpload}
-                        className="w-full p-2 border border-gray-200 rounded-lg"
-                    />
-
-                    <div>
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-1 px-1 text-sm text-gray-600 font-medium">
-                            <div>Kcal</div>
-                            <div>Białko</div>
-                            <div>Tłuszcze</div>
-                            <div>Węglowodany</div>
-                        </div>
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                            {["calories", "protein", "fat", "carbs"].map(
-                                (macro) => (
-                                    <input
-                                        key={macro}
-                                        name={macro}
-                                        type="number"
-                                        placeholder={macro}
-                                        value={
-                                            form[
-                                                macro as keyof FormState
-                                            ] as number
-                                        }
-                                        onChange={handleChange}
-                                        className="p-3 border border-gray-200 rounded-lg"
-                                    />
-                                )
-                            )}
-                        </div>
-                    </div>
-
-                    <textarea
-                        name="description"
-                        placeholder="Opis"
-                        value={form.description}
-                        onChange={handleChange}
-                        className="w-full p-2 border border-gray-200 h-24 rounded-lg"
-                    />
-
-                    <div>
-                        <h3 className="text-xl font-semibold mb-2">
-                            Składniki
-                        </h3>
-                        <AnimatePresence>
-                            {form.ingredients.map((ingredient, index) => (
-                                <motion.div
-                                    key={index}
-                                    initial={{ opacity: 0, scale: 0.9 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 0.9 }}
-                                    className="flex items-center gap-2 mb-2"
-                                >
-                                    <input
-                                        placeholder="Składnik"
-                                        value={ingredient}
-                                        onChange={(e) => handleChange(e, index)}
-                                        className="flex-grow p-2 border border-gray-200 rounded-lg"
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={() =>
-                                            handleRemoveIngredient(index)
-                                        }
-                                        className="text-base p-2 text-white cursor-pointer bg-red-500 rounded-lg hover:bg-red-600"
-                                    >
-                                        <MdDeleteForever />
-                                    </button>
-                                </motion.div>
-                            ))}
-                        </AnimatePresence>
-                        <button
-                            type="button"
-                            onClick={handleAddIngredient}
-                            className="text-xs bg-blue-600 flex items-center cursor-pointer justify-center text-white py-1.5 px-3 font-semibold rounded-lg"
+        <div className="flex">
+            <div className="flex-1 w-full px-12">
+                <RecipePage recipe={form} />
+            </div>
+            <div className="w-1/4 h-screen overflow-y-scroll sticky top-0">
+                <div className="max-w-4xl mx-auto px-6 py-8 bg-white rounded-lg shadow-lg border border-gray-200">
+                    <h1 className="text-3xl font-bold mb-6 text-center">
+                        Dodaj nowy przepis
+                    </h1>
+                    <form onSubmit={handleSubmit} className="space-y-3">
+                        <input
+                            name="title"
+                            placeholder="Tytuł"
+                            value={form.title}
+                            onChange={handleChange}
+                            className="w-full p-2 border border-gray-200 rounded-lg"
+                            required
+                        />
+                        <select
+                            name="category"
+                            value={form.category}
+                            onChange={handleChange}
+                            className="w-full p-2 border border-gray-200 rounded-lg"
                         >
-                            <FaPlus className="mr-2" /> Dodaj składnik
-                        </button>
-                    </div>
+                            <option value="Kurczak">Kurczak</option>
+                            <option value="Masa">Masa</option>
+                            <option value="Rzeźba">Rzeźba</option>
+                            <option value="Niskokaloryczne">
+                                Niskokaloryczne
+                            </option>
+                        </select>
+                        <select
+                            name="level"
+                            value={form.level}
+                            onChange={handleChange}
+                            className="w-full p-2 border border-gray-200 rounded-lg"
+                        >
+                            <option value="Łatwy">Łatwy</option>
+                            <option value="Średni">Średni</option>
+                            <option value="Trudny">Trudny</option>
+                        </select>
 
-                    <div>
-                        <h3 className="text-xl font-semibold mb-2">
-                            Kroki przygotowania
-                        </h3>
-                        <AnimatePresence>
-                            {form.steps.map((step, stepIndex) => (
-                                <motion.div
-                                    key={stepIndex}
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: -10 }}
-                                    className="mb-6 border-t border-blue-300 pt-4 space-y-2"
-                                >
-                                    <input
-                                        placeholder="Tytuł kroku"
-                                        value={step.title}
-                                        onChange={(e) =>
-                                            handleChange(
-                                                e,
-                                                undefined,
-                                                stepIndex
-                                            )
-                                        }
-                                        name={`steps[${stepIndex}].title`}
-                                        className="w-full p-2 border border-gray-200 rounded-lg"
-                                    />
-                                    <AnimatePresence>
-                                        {step.description.map(
-                                            (desc, descriptionIndex) => (
-                                                <motion.div
-                                                    key={descriptionIndex}
-                                                    initial={{
-                                                        opacity: 0,
-                                                        scale: 0.9,
-                                                    }}
-                                                    animate={{
-                                                        opacity: 1,
-                                                        scale: 1,
-                                                    }}
-                                                    exit={{
-                                                        opacity: 0,
-                                                        scale: 0.9,
-                                                    }}
-                                                    className="flex items-start gap-2"
-                                                >
-                                                    <textarea
-                                                        placeholder="Opis"
-                                                        name={`steps[${stepIndex}].description`}
-                                                        data-index={
-                                                            descriptionIndex
-                                                        }
-                                                        value={desc}
-                                                        onChange={(e) =>
-                                                            handleChange(
-                                                                e,
-                                                                undefined,
-                                                                stepIndex
-                                                            )
-                                                        }
-                                                        className="flex-grow p-2 border border-gray-200 h-20 rounded-lg"
-                                                    />
-                                                    <button
-                                                        type="button"
-                                                        onClick={() =>
-                                                            handleRemoveStepDescription(
-                                                                stepIndex,
-                                                                descriptionIndex
-                                                            )
-                                                        }
-                                                        className="text-white bg-red-500 cursor-pointer p-2 rounded-lg hover:bg-red-600 text-base"
-                                                    >
-                                                        <MdDeleteForever />
-                                                    </button>
-                                                </motion.div>
-                                            )
-                                        )}
-                                    </AnimatePresence>
-                                    <div className=" space-x-3 flex items-center">
+                        <input
+                            name="time"
+                            placeholder="Czas przygotowania"
+                            value={form.time}
+                            onChange={handleChange}
+                            className="w-full p-2 border border-gray-200 rounded-lg"
+                        />
+
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageUpload}
+                            className="w-full p-2 border border-gray-200 rounded-lg"
+                        />
+
+                        <div>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-1 px-1 text-sm text-gray-600 font-medium">
+                                <div>Kcal</div>
+                                <div>Białko</div>
+                                <div>Tłuszcze</div>
+                                <div>Węglowodany</div>
+                            </div>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                {["calories", "protein", "fat", "carbs"].map(
+                                    (macro) => (
+                                        <input
+                                            key={macro}
+                                            name={macro}
+                                            type="number"
+                                            placeholder={macro}
+                                            value={
+                                                form[
+                                                    macro as keyof FormState
+                                                ] as number
+                                            }
+                                            onChange={handleChange}
+                                            className="p-3 border border-gray-200 rounded-lg"
+                                        />
+                                    )
+                                )}
+                            </div>
+                        </div>
+
+                        <textarea
+                            name="description"
+                            placeholder="Opis"
+                            value={form.description}
+                            onChange={handleChange}
+                            className="w-full p-2 border border-gray-200 h-24 rounded-lg"
+                        />
+
+                        <div>
+                            <h3 className="text-xl font-semibold mb-2">
+                                Składniki
+                            </h3>
+                            <AnimatePresence>
+                                {form.ingredients.map((ingredient, index) => (
+                                    <motion.div
+                                        key={index}
+                                        initial={{ opacity: 0, scale: 0.9 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        exit={{ opacity: 0, scale: 0.9 }}
+                                        className="flex items-center gap-2 mb-2"
+                                    >
+                                        <input
+                                            placeholder="Składnik"
+                                            value={ingredient}
+                                            onChange={(e) =>
+                                                handleChange(e, index)
+                                            }
+                                            className="flex-grow p-2 border border-gray-200 rounded-lg"
+                                        />
                                         <button
                                             type="button"
                                             onClick={() =>
-                                                handleAddStepDescription(
+                                                handleRemoveIngredient(index)
+                                            }
+                                            className="text-base p-2 text-white cursor-pointer bg-red-500 rounded-lg hover:bg-red-600"
+                                        >
+                                            <MdDeleteForever />
+                                        </button>
+                                    </motion.div>
+                                ))}
+                            </AnimatePresence>
+                            <button
+                                type="button"
+                                onClick={handleAddIngredient}
+                                className="text-xs bg-blue-600 flex items-center cursor-pointer justify-center text-white py-1.5 px-3 font-semibold rounded-lg"
+                            >
+                                <FaPlus className="mr-2" /> Dodaj składnik
+                            </button>
+                        </div>
+
+                        <div>
+                            <h3 className="text-xl font-semibold mb-2">
+                                Kroki przygotowania
+                            </h3>
+                            <AnimatePresence>
+                                {form.steps.map((step, stepIndex) => (
+                                    <motion.div
+                                        key={stepIndex}
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -10 }}
+                                        className="mb-6 border-t border-blue-300 pt-4 space-y-2"
+                                    >
+                                        <input
+                                            placeholder="Tytuł kroku"
+                                            value={step.title}
+                                            onChange={(e) =>
+                                                handleChange(
+                                                    e,
+                                                    undefined,
                                                     stepIndex
                                                 )
                                             }
-                                            className="text-sm bg-blue-600 flex items-center cursor-pointer justify-center text-white py-1 px-3 font-semibold rounded-lg"
-                                        >
-                                            <FaPlus className="mr-2" /> Dodaj
-                                            opis
-                                        </button>
-                                        <button
-                                            type="button"
-                                            onClick={handleAddStep}
-                                            className="text-sm bg-yellow-600 flex items-center cursor-pointer justify-center text-white py-1 px-3 font-semibold rounded-lg"
-                                        >
-                                            <FaPlus className="mr-2" /> Nowy
-                                            krok
-                                        </button>
-                                        <button
-                                            type="button"
-                                            onClick={() =>
-                                                handleRemoveStep(stepIndex)
-                                            }
-                                            className="text-sm bg-red-600 flex items-center cursor-pointer justify-center text-white py-1 px-3 font-semibold rounded-lg"
-                                        >
-                                            <MdDeleteForever className="mr-2" />{" "}
-                                            Usuń krok
-                                        </button>
-                                    </div>
-                                </motion.div>
-                            ))}
-                        </AnimatePresence>
-                    </div>
+                                            name={`steps[${stepIndex}].title`}
+                                            className="w-full p-2 border border-gray-200 rounded-lg"
+                                        />
+                                        <AnimatePresence>
+                                            {step.description.map(
+                                                (desc, descriptionIndex) => (
+                                                    <motion.div
+                                                        key={descriptionIndex}
+                                                        initial={{
+                                                            opacity: 0,
+                                                            scale: 0.9,
+                                                        }}
+                                                        animate={{
+                                                            opacity: 1,
+                                                            scale: 1,
+                                                        }}
+                                                        exit={{
+                                                            opacity: 0,
+                                                            scale: 0.9,
+                                                        }}
+                                                        className="flex items-start gap-2"
+                                                    >
+                                                        <textarea
+                                                            placeholder="Opis"
+                                                            name={`steps[${stepIndex}].description`}
+                                                            data-index={
+                                                                descriptionIndex
+                                                            }
+                                                            value={desc}
+                                                            onChange={(e) =>
+                                                                handleChange(
+                                                                    e,
+                                                                    undefined,
+                                                                    stepIndex
+                                                                )
+                                                            }
+                                                            className="flex-grow p-2 border border-gray-200 h-20 rounded-lg"
+                                                        />
+                                                        <button
+                                                            type="button"
+                                                            onClick={() =>
+                                                                handleRemoveStepDescription(
+                                                                    stepIndex,
+                                                                    descriptionIndex
+                                                                )
+                                                            }
+                                                            className="text-white bg-red-500 cursor-pointer p-2 rounded-lg hover:bg-red-600 text-base"
+                                                        >
+                                                            <MdDeleteForever />
+                                                        </button>
+                                                    </motion.div>
+                                                )
+                                            )}
+                                        </AnimatePresence>
+                                        <div className=" space-x-3 flex items-center">
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    handleAddStepDescription(
+                                                        stepIndex
+                                                    )
+                                                }
+                                                className="text-xs bg-blue-600 flex items-center cursor-pointer justify-center text-white py-1 px-3 font-semibold rounded-lg"
+                                            >
+                                                <FaPlus className="mr-2" />{" "}
+                                                Dodaj opis
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={handleAddStep}
+                                                className="text-xs bg-yellow-600 flex items-center cursor-pointer justify-center text-white py-1 px-3 font-semibold rounded-lg"
+                                            >
+                                                <FaPlus className="mr-2" /> Nowy
+                                                krok
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    handleRemoveStep(stepIndex)
+                                                }
+                                                className="text-xs bg-red-600 flex items-center cursor-pointer justify-center text-white py-1 px-3 font-semibold rounded-lg"
+                                            >
+                                                <MdDeleteForever className="mr-2" />{" "}
+                                                Usuń krok
+                                            </button>
+                                        </div>
+                                    </motion.div>
+                                ))}
+                            </AnimatePresence>
+                        </div>
 
-                    <div className="flex items-center space-x-2">
-                        <button
-                            type="button"
-                            onClick={handleInsertImage}
-                            className="text-base bg-stone-600 flex items-center cursor-pointer justify-center text-white py-1.5 px-3 rounded-lg"
-                        >
-                            <AiOutlinePicture />
-                        </button>
+                        <div className="flex items-center space-x-2">
+                            <button
+                                type="button"
+                                onClick={handleInsertImage}
+                                className="text-base bg-stone-600 flex items-center cursor-pointer justify-center text-white py-1.5 px-3 rounded-lg"
+                            >
+                                <AiOutlinePicture />
+                            </button>
 
-                        <button
-                            type="button"
-                            onClick={handleInsertLink}
-                            className="text-base bg-stone-600 flex items-center cursor-pointer justify-center text-white py-1.5 px-3 rounded-lg"
-                        >
-                            <IoIosLink />
-                        </button>
-                    </div>
-                    <textarea
-                        name="content"
-                        placeholder="Treść przepisu (markdown)"
-                        value={form.content}
-                        onChange={handleChange}
-                        className="w-full p-2 border border-gray-200 h-40 rounded-lg"
-                    />
+                            <button
+                                type="button"
+                                onClick={handleInsertLink}
+                                className="text-base bg-stone-600 flex items-center cursor-pointer justify-center text-white py-1.5 px-3 rounded-lg"
+                            >
+                                <IoIosLink />
+                            </button>
+                        </div>
+                        <textarea
+                            name="content"
+                            placeholder="Treść przepisu (markdown)"
+                            value={form.content}
+                            onChange={handleChange}
+                            className="w-full p-2 border border-gray-200 h-40 rounded-lg"
+                        />
 
-                    <div className="w-full flex items-end justify-end">
-                        <button
-                            type="submit"
-                            className="bg-green-600 cursor-pointer w-max  text-white text-sm px-5 py-2 font-semibold rounded-lg hover:bg-green-500"
-                        >
-                            Zapisz przepis
-                        </button>
-                    </div>
-                    <StatusMessage status={status} />
-                </form>
+                        <div className="w-full flex items-end justify-end">
+                            <button
+                                type="submit"
+                                className="bg-green-600 cursor-pointer w-max  text-white text-sm px-5 py-2 font-semibold rounded-lg hover:bg-green-500"
+                            >
+                                Zapisz przepis
+                            </button>
+                        </div>
+                        <StatusMessage status={status} />
+                    </form>
+                </div>
             </div>
         </div>
     );

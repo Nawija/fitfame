@@ -48,4 +48,42 @@ export interface FilterContentProps {
     setMaxCalories: React.Dispatch<React.SetStateAction<number>>;
     clearSearch: () => void;
     clearAllFilters: () => void;
-  }
+}
+
+interface Step {
+    title: string;
+    description: string[];
+}
+
+export interface FormState {
+    image: File | string | null;
+    title: string;
+    slug: string;
+    category: "all" | "Kurczak" | "Masa" | "Rzeźba" | "Niskokaloryczne";
+    level: "Łatwy" | "Średni" | "Trudny";
+    calories: number;
+    protein: number;
+    fat: number;
+    carbs: number;
+    time: string;
+    description: string;
+    content: string;
+    ingredients: string[];
+    steps: Step[];
+}
+export interface FormRecipePage {
+    image: File | null;
+    title: string;
+    slug: string;
+    category: "all" | "Kurczak" | "Masa" | "Rzeźba" | "Niskokaloryczne";
+    level: "Łatwy" | "Średni" | "Trudny";
+    calories: number;
+    protein: number;
+    fat: number;
+    carbs: number;
+    time: string;
+    description: string;
+    content: string;
+    ingredients: string[];
+    steps: Step[];
+}
