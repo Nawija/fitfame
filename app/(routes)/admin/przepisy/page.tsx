@@ -11,6 +11,7 @@ interface Step {
 }
 
 interface FormState {
+    image: File | string | null; // Can be a File or string (URL)
     title: string;
     category: "all" | "Kurczak" | "Masa" | "Rzeźba" | "Niskokaloryczne";
     level: "Łatwy" | "Średni" | "Trudny";
@@ -19,7 +20,6 @@ interface FormState {
     fat: number;
     carbs: number;
     time: string;
-    image: string;
     description: string;
     ingredients: string[];
     steps: Step[];
@@ -35,7 +35,7 @@ const AdminPrzepisy: React.FC = () => {
         fat: 0,
         carbs: 0,
         time: "",
-        image: "",
+        image: null, // Initialize as null
         description: "",
         ingredients: [""],
         steps: [{ title: "", description: [""] }],
@@ -122,15 +122,33 @@ const AdminPrzepisy: React.FC = () => {
         setForm((prevForm) => ({ ...prevForm, steps }));
     };
 
+    const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            setForm((prevForm) => ({
+                ...prevForm,
+                image: file, // Store the file object temporarily
+            }));
+        }
+    };
+
     const handleSubmit = async (e: React.FormEvent): Promise<void> => {
         e.preventDefault();
         setStatus("Saving...");
 
+        let uploadedImageUrl = "";
+        if (form.image instanceof File) {
+            // Check if form.image is a File
+            // Upload the image and get the URL
+            uploadedImageUrl = await uploadImage(form.image);
+        } else if (typeof form.image === "string") {
+            // If it's already a string (URL), use it directly
+            uploadedImageUrl = form.image;
+        }
+
         const updatedForm = {
             ...form,
-            image: form.image.startsWith("/images/przepisy/")
-                ? form.image
-                : `/images/przepisy/${form.image}`,
+            image: uploadedImageUrl, // Store the uploaded image URL (string)
         };
 
         const res = await fetch("/api/admin/save-recipe", {
@@ -150,7 +168,7 @@ const AdminPrzepisy: React.FC = () => {
                 fat: 0,
                 carbs: 0,
                 time: "",
-                image: "",
+                image: null, // Reset image after saving
                 description: "",
                 ingredients: [""],
                 steps: [{ title: "", description: [""] }],
@@ -160,8 +178,41 @@ const AdminPrzepisy: React.FC = () => {
         }
     };
 
+    // Function to upload the image
+    const uploadImage = async (file: File) => {
+        const formData = new FormData();
+        formData.append("file", file);
+
+        const response = await fetch("/api/upload-image", {
+            method: "POST",
+            body: formData,
+        });
+
+        const data = await response.json();
+        if (data.url) {
+            const imageUrl = `/images/przepisy/${data.url}`
+            return imageUrl;
+        } else {
+            throw new Error("Image upload failed");
+        }
+    };
+
     return (
         <div className="w-full bg-gray-50 p-12">
+            {form.image && (
+                <div className="mt-4 fixed top-32 left-20">
+                    <img
+                        src={
+                            form.image instanceof File
+                                ? URL.createObjectURL(form.image)
+                                : form.image
+                        }
+                        alt="Selected Recipe"
+                        className="w-82 h-auto rounded-md"
+                    />
+                </div>
+            )}
+
             <div className="max-w-4xl mx-auto px-6 py-8 bg-white rounded-lg shadow-lg border border-gray-200">
                 <h1 className="text-3xl font-bold mb-6 text-center">
                     Dodaj nowy przepis
@@ -204,11 +255,11 @@ const AdminPrzepisy: React.FC = () => {
                         onChange={handleChange}
                         className="w-full p-2 border border-gray-200 rounded-lg"
                     />
+
                     <input
-                        name="image"
-                        placeholder="Ścieżka do obrazka"
-                        value={form.image}
-                        onChange={handleChange}
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageUpload}
                         className="w-full p-2 border border-gray-200 rounded-lg"
                     />
 
