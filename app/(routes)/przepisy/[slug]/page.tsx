@@ -215,14 +215,14 @@ export default async function Page({
                     <h4 className="text-3xl font-extrabold text-gray-800 mb-10 text-center">
                         To też może Ci zasmakować
                     </h4>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                         {similarRecipes.map((similar) => (
                             <Link
                                 key={similar.slug}
                                 href={`/przepisy/${similar.slug}`}
-                                className="group bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300 p-2 flex flex-col"
+                                className="group bg-stone-50 rounded-lg shadow-md border border-gray-100 hover:shadow-xl transition duration-300 p-2 flex flex-col"
                             >
-                                <div className="relative overflow-hidden rounded-xl">
+                                <div className="relative overflow-hidden rounded-lg">
                                     <img
                                         src={similar.image}
                                         alt={similar.title}
