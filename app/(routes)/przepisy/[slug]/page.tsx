@@ -68,7 +68,7 @@ export default async function Page({
                     ]}
                 />
             </div>
-            <div className="max-w-7xl mx-auto anim-opacity px-4 py-12 flex items-center justify-center lg:items-start flex-col lg:flex-row lg:space-x-7 relative">
+            <div className=" mx-auto anim-opacity px-4 py-12 flex items-center justify-center lg:items-start flex-col lg:flex-row lg:space-x-7 relative">
                 <div>
                     <h1 className="text-4xl uppercase lg:text-4xl font-bold text-gray-800 mb-4">
                         {recipe.title}
@@ -79,7 +79,7 @@ export default async function Page({
                         {recipe.category}
                     </p>
                     <div className="flex items-center justify-start space-x-4 py-4">
-                        <div className="flex items-center justify-center text-yellow-600">
+                        <div className="flex items-center justify-center text-yellow-600 w-max">
                             <IoTimeOutline className="mr-1 text-2xl" />
                             <p className="text-xl font-medium">{recipe.time}</p>
                         </div>
@@ -95,7 +95,7 @@ export default async function Page({
                     <img
                         src={recipe.image}
                         alt={recipe.title}
-                        className="w-full object-cover rounded-xl shadow max-h-[550px] lg:min-w-[700px]"
+                        className="w-full object-cover rounded-xl shadow max-h-[550px] lg:min-w-[850px]"
                     />
 
                     <div className="grid grid-cols-4 gap-2 text-center my-8">
@@ -136,14 +136,13 @@ export default async function Page({
                     <p className="text-lg pb-8 w-full px-2">
                         {recipe.description}
                     </p>
-
-                    <Ingredients ingredients={recipe.ingredients} />
                 </div>
 
-                <div>
-                    <div className="mt-6 lg:mb-6 lg:mt-0 w-full flex items-center justify-end">
+                <div className="space-y-6">
+                    <div className="mt-6 lg:mb-6 lg:mt-0 w-full flex items-center justify-end ">
                         <ShareButton title={recipe.title} />
                     </div>
+                    <Ingredients ingredients={recipe.ingredients} />
                     <div className="p-8 rounded-lg border border-gray-200 bg-gray-100 mt-8 lg:mt-0 lg:min-w-[400px] w-full">
                         <h3 className="text-2xl font-semibold text-gray-800 mb-4">
                             Sposób przygotowania:
@@ -173,7 +172,7 @@ export default async function Page({
                     </div>
                 </div>
             </div>
-            <div className="recipeStyle text-start max-w-7xl flex flex-col items-center justify-center mx-auto py-12">
+            <div className="recipeStyle text-start bg-gray-50 flex flex-col items-center justify-center mx-auto border border-gray-200">
                 <ReactMarkdown
                     remarkPlugins={[remarkGfm]}
                     rehypePlugins={[rehypeRaw]}

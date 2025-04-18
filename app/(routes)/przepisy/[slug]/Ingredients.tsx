@@ -38,7 +38,7 @@ export default function Ingredients({ ingredients }: IngredientsProps) {
     };
 
     return (
-        <div className="bg-gray-100 border border-gray-200 rounded-lg py-4">
+        <div className="bg-gray-100 border border-gray-200 rounded-lg py-4 sticky top-0">
             <div className="flex flex-col items-start justify-center px-6 mb-2">
                 <div className="flex items-center gap-4">
                     <button

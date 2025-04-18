@@ -7,6 +7,7 @@ import dynamic from "next/dynamic";
 import { FilterContentProps, Recipe } from "@/types/types";
 import { RecipeSkeleton } from "@/components/SkeletonUI/RecipeSkeleton";
 import { AnimatePresence, motion } from "framer-motion";
+import { IoMdArrowRoundForward } from "react-icons/io";
 
 const RecipesGrid = dynamic(
     () => import("./RecipesGrid").then((mod) => mod.RecipesGrid),
@@ -101,12 +102,14 @@ export function FiltersSection({ allRecipes }: { allRecipes: Recipe[] }) {
 
     return (
         <div className="relative bg-gray-50">
-            {/* Floating filter button on mobile */}
+
             <button
                 onClick={() => setFiltersVisible(true)}
-                className="sticky top-3 mt-2 left-2 z-40 p-3 bg-blue-500 text-white rounded-full shadow-lg lg:hidden"
+                className="sticky top-3 mt-2 left-1 z-40 p-3 bg-blue-500 text-white rounded-full shadow-lg lg:hidden flex items-center justify-center text-xs font-bold"
             >
-                <FaFilter />
+                <IoMdArrowRoundForward className="text-xs mr-1" /> <p>Filtruj</p>
+                <div className="h-3 w-3 bg-blue-600 absolute top-0 right-0 rounded-full animate-ping" />
+                <div className="h-3 w-3 bg-blue-600 absolute top-0 right-0 rounded-full" />
             </button>
 
             {/* Slide-in filters panel (mobile) */}

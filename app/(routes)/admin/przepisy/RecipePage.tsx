@@ -38,7 +38,7 @@ const RecipePage = ({ recipe }: { recipe: FormRecipePage }) => {
                     ]}
                 />
             </div>
-            <div className="max-w-7xl mx-auto anim-opacity px-4 py-12 flex items-center justify-center lg:items-start flex-col lg:flex-row lg:space-x-7 relative">
+            <div className="mx-auto anim-opacity px-4 py-12 flex items-center justify-center lg:items-start flex-col lg:flex-row lg:space-x-7 relative">
                 <div>
                     <h1 className="text-4xl uppercase lg:text-4xl font-bold text-gray-800 mb-4">
                         {recipe.title}
@@ -71,7 +71,7 @@ const RecipePage = ({ recipe }: { recipe: FormRecipePage }) => {
                                 : undefined
                         }
                         alt={recipe.title}
-                        className="w-full object-cover rounded-xl shadow max-h-[550px] lg:min-w-[700px]"
+                        className="w-full object-cover rounded-xl shadow max-h-[550px] lg:min-w-[850px]"
                     />
 
                     <div className="grid grid-cols-4 gap-2 text-center my-8">
@@ -112,14 +112,13 @@ const RecipePage = ({ recipe }: { recipe: FormRecipePage }) => {
                     <p className="text-lg pb-8 w-full px-2">
                         {recipe.description}
                     </p>
-
-                    <Ingredients ingredients={recipe.ingredients} />
                 </div>
 
-                <div>
+                <div className="space-y-6">
                     <div className="mt-6 lg:mb-6 lg:mt-0 w-full flex items-center justify-end">
                         <ShareButton title={recipe.title} />
                     </div>
+                    <Ingredients ingredients={recipe.ingredients} />
                     <div className="p-8 rounded-lg border border-gray-200 bg-gray-100 mt-8 lg:mt-0 lg:min-w-[400px] w-full">
                         <h3 className="text-2xl font-semibold text-gray-800 mb-4">
                             Sposób przygotowania:
