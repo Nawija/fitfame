@@ -3,8 +3,28 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+interface Step {
+    title: string;
+    description: string[];
+}
+
+interface FormState {
+    title: string;
+    category: string;
+    level: string;
+    calories: number;
+    protein: number;
+    fat: number;
+    carbs: number;
+    time: string;
+    image: string;
+    description: string;
+    ingredients: string[];
+    steps: Step[];
+}
+
 export default function AdminPrzepisy() {
-    const [form, setForm] = useState({
+    const [form, setForm] = useState<FormState>({
         title: "",
         category: "all",
         level: "Łatwy",
@@ -34,10 +54,8 @@ export default function AdminPrzepisy() {
             const stepName = e.target.name.split(".")[1]; // Get the step's name part
 
             if (stepName === "title") {
-                // Update the step title
                 steps[stepIndex].title = e.target.value;
             } else if (stepName === "description") {
-                // Update the step description
                 const descriptionIndex = Number(e.target.dataset.index);
                 if (!isNaN(descriptionIndex)) {
                     steps[stepIndex].description[descriptionIndex] =
