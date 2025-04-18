@@ -43,19 +43,22 @@ export default function Nav() {
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
             const target = e.target as HTMLElement;
-            // Jeśli menu jest otwarte i kliknięcie nie jest na menu ani na przycisku menu
+            const menu = document.querySelector(".mobile-menu");
+            const burger = document.querySelector(".menu-burger-button");
+
             if (
                 showMenu &&
-                !target.closest(".mobile-menu") &&
-                !target.closest(".menu-burger-button")
+                menu &&
+                burger &&
+                !menu.contains(target) &&
+                !burger.contains(target)
             ) {
                 setShowMenu(false);
             }
         };
 
-        document.addEventListener("mousedown", handleClickOutside);
-        return () =>
-            document.removeEventListener("mousedown", handleClickOutside);
+        document.addEventListener("click", handleClickOutside);
+        return () => document.removeEventListener("click", handleClickOutside);
     }, [showMenu]);
 
     return (
@@ -63,7 +66,7 @@ export default function Nav() {
             {/* Overlay do zamykania menu */}
             {showMenu && (
                 <div
-                    className="fixed inset-0 anim-opacity backdrop-blur-md z-[40] lg:hidden"
+                    className="fixed inset-0 anim-opacity backdrop-blur-md z-[10] lg:hidden"
                     onClick={() => setShowMenu(false)}
                     aria-hidden="true"
                 />
@@ -71,9 +74,7 @@ export default function Nav() {
             <header
                 className={`${
                     pathname === "/" ? "fixed top-0" : "static"
-                } z-50 w-screen transition-all ${
-                    kanit.className
-                } ${
+                } z-50 w-screen transition-all ${kanit.className} ${
                     hasShadow
                         ? "bg-white/90 backdrop-blur-md text-black"
                         : pathname === "/"
@@ -81,7 +82,7 @@ export default function Nav() {
                         : "bg-white text-black"
                 }`}
             >
-                <div className="mx-auto flex items-center justify-between max-w-screen-2xl p-4 relative w-full">
+                <div className="mx-auto flex items-center justify-between max-w-screen-2xl p-4 relative w-full z-50">
                     <Logo />
                     <MenuBurger
                         handleShowMenu={() => setShowMenu(!showMenu)}
