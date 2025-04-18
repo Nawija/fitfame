@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import dynamic from "next/dynamic"; // Importujemy dynamic
-import { motion } from "framer-motion";
 import { Recipe } from "@/types/types";
 import { RecipeSkeleton } from "@/components/SkeletonUI/RecipeSkeleton";
 

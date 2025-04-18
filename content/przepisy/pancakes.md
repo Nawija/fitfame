@@ -41,8 +41,8 @@ Podstawy dobrej diety:
 
 Warzywa i owoce
 
--   Białka (jaja, mięso, tofu)
--   Zdrowe tłuszcze (oliwa, orzechy)
+1. Białka (jaja, mięso, tofu)
+2. Zdrowe tłuszcze (oliwa, orzechy)
 
 **Unikaj** cukrów prostych i przetworzonego jedzenia.
 
