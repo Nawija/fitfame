@@ -6,6 +6,7 @@ import { MdDeleteForever } from "react-icons/md";
 import { FaPlus } from "react-icons/fa";
 import { AiOutlinePicture } from "react-icons/ai";
 import { IoIosLink } from "react-icons/io";
+import StatusMessage from "@/components/StatusMessage";
 
 interface Step {
     title: string;
@@ -160,6 +161,7 @@ const AdminPrzepisy: React.FC = () => {
 
         if (res.ok) {
             setStatus("Saved ✅");
+            window.scrollTo({ top: 0, behavior: "smooth" });
             setForm({
                 title: "",
                 category: "all",
@@ -176,7 +178,7 @@ const AdminPrzepisy: React.FC = () => {
                 steps: [{ title: "", description: [""] }],
             });
         } else {
-            setStatus("Error ❌");
+            setStatus("Error");
         }
     };
 
@@ -511,12 +513,7 @@ const AdminPrzepisy: React.FC = () => {
                             Zapisz przepis
                         </button>
                     </div>
-
-                    {status && (
-                        <p className="text-center text-sm text-gray-600 mt-2">
-                            {status}
-                        </p>
-                    )}
+                    <StatusMessage status={status} />
                 </form>
             </div>
         </div>
