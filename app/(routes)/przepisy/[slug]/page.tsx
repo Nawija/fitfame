@@ -8,6 +8,10 @@ import Ingredients from "./Ingredients";
 import Image from "next/image";
 import ShareButton from "@/components/Buttons/ShareButton";
 import { Recipe } from "@/types/types";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
+import "./recipeStyle.css";
 
 export default async function Page({
     params,
@@ -149,6 +153,14 @@ export default async function Page({
                         </div>
                     </div>
                 </div>
+            </div>
+            <div className="recipeStyle text-center max-w-7xl flex flex-col items-center justify-center mx-auto py-12">
+                <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    rehypePlugins={[rehypeRaw]}
+                >
+                    {recipe.content}
+                </ReactMarkdown>
             </div>
             <div className="flex items-center justify-center flex-col px-6 py-24 bg-gray-100 text-gray-800">
                 <div className="w-full max-w-xl bg-white p-8 rounded-2xl shadow-xl text-center space-y-6">

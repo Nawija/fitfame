@@ -1,0 +1,12 @@
+.recipeStyle h2 {
+    font-size: 2.5rem;
+}
+
+.recipeStyle > ul > li {
+    list-style: disc;
+    margin-left: 22px;
+}
+
+.recipeStyle img {
+    padding: 24px 2px;
+}

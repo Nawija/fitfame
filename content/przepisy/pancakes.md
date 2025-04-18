@@ -25,3 +25,19 @@ steps:
           - Pokrój banana i ułóż na wierzchu.
           - Dodaj masło orzechowe.
 ---
+
+## Przygotowanie Krok po kroku
+
+wymieszaj mąke
+<img src="/images/przepisy/pancakes.jpg" alt="Pancakes" width="600" />
+
+Podstawy dobrej diety:
+
+Warzywa i owoce
+
+-   Białka (jaja, mięso, tofu)
+-   Zdrowe tłuszcze (oliwa, orzechy)
+
+**Unikaj** cukrów prostych i przetworzonego jedzenia.
+
+[Więcej przepisów tutaj](/przepisy)
