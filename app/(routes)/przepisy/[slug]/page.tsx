@@ -12,6 +12,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import "./recipeStyle.css";
+import Navigation from "@/components/Navigation";
 
 export default async function Page({
     params,
@@ -29,13 +30,20 @@ export default async function Page({
 
     // Filtrowanie podobnych przepisów
     const similarRecipes = allRecipes
-        .filter(
-            (r) =>
-                r.slug !== recipe.slug &&
-                r.title
-                    .toLowerCase()
-                    .includes(recipe.title.split(" ")[0].toLowerCase())
-        )
+        .filter((r) => {
+            if (r.slug === recipe.slug) return false; // Zignoruj ten sam przepis
+
+            const recipeTitleWords = recipe.title
+                .split(" ")
+                .slice(0, 2)
+                .map((word) => word.toLowerCase());
+            const recipeTitleLower = r.title.toLowerCase();
+
+            // Sprawdzamy, czy jakiekolwiek z pierwszych dwóch słów w tytule jest dopasowane
+            return recipeTitleWords.some((word) =>
+                recipeTitleLower.includes(word)
+            );
+        })
         .slice(0, 4);
 
     return (
@@ -48,6 +56,17 @@ export default async function Page({
                     className="w-full object-cover mb-6 shadow h-8 lg:h-12"
                 />
                 <div className="absolute top-0 left-0 w-full h-8 lg:h-12 overflow-hidden bg-black/30" />
+            </div>
+            <div className="my-4 px-4 max-w-7xl mx-auto">
+                <Navigation
+                    links={[
+                        { name: "Przepisy", href: "/przepisy" },
+                        {
+                            name: recipe.title,
+                            href: `/przepisy/${recipe.slug}`,
+                        },
+                    ]}
+                />
             </div>
             <div className="max-w-7xl mx-auto anim-opacity px-4 py-12 flex items-center justify-center lg:items-start flex-col lg:flex-row lg:space-x-7 relative">
                 <div>

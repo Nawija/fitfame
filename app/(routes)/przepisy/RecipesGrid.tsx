@@ -58,7 +58,7 @@ export const RecipesGrid = ({ recipes }: { recipes: Recipe[] }) => {
 
     return (
         <div>
-            <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {currentPageRecipes.length > 0 ? (
                     currentPageRecipes.map((recipe, index) => (
                         <Link
@@ -69,7 +69,7 @@ export const RecipesGrid = ({ recipes }: { recipes: Recipe[] }) => {
                             <motion.div
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
-                                className="bg-white group p-2 hover:scale-[101%] rounded-lg shadow-lg transition-all transform text-center flex flex-col items-center justify-between w-full"
+                                className="bg-white group p-2 hover:scale-[101%] rounded-lg shadow-lg hover:shadow-xl transition-all transform text-center flex flex-col items-center justify-between w-full"
                             >
                                 <div className="w-full">
                                     <div className="relative w-full">

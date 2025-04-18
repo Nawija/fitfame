@@ -5,24 +5,17 @@ import { IoClose } from "react-icons/io5";
 import dynamic from "next/dynamic"; // Importujemy dynamic
 import { motion } from "framer-motion";
 import { Recipe } from "@/types/types";
+import { RecipeSkeleton } from "@/components/SkeletonUI/RecipeSkeleton";
+
 
 // Dynamiczny import komponentu RecipesGrid
 const RecipesGrid = dynamic(
     () => import("./RecipesGrid").then((mod) => mod.RecipesGrid),
     {
-        ssr: false, // Disable server-side rendering for this component if necessary
+        ssr: true, // Disable server-side rendering for this component if necessary
     }
 );
 
-const RecipeSkeleton = dynamic(
-    () =>
-        import("@/components/SkeletonUI/RecipeSkeleton").then(
-            (mod) => mod.RecipeSkeleton
-        ),
-    {
-        ssr: false,
-    }
-);
 
 export function FiltersSection({ allRecipes }: { allRecipes: Recipe[] }) {
     const [filteredRecipes, setFilteredRecipes] = useState(allRecipes);
@@ -111,12 +104,10 @@ export function FiltersSection({ allRecipes }: { allRecipes: Recipe[] }) {
     const clearSearch = () => setSearchKeywords("");
 
     return (
-        <div className="flex flex-col lg:flex-row gap-4 max-w-[1900px] mx-auto ">
-            <motion.div
-                initial={{ translateX: -300 }}
-                animate={{ translateX: 0 }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-                className="w-full sticky top-0 bg-white p-6 rounded-lg shadow-lg lg:w-[300px] lg:max-w-[300px] lg:min-w-[300px] lg:h-screen"
+        <div className="flex flex-col lg:flex-row max-w-[1900px] mx-auto ">
+            <div
+               
+                className="w-full lg:sticky lg:top-0 bg-white p-6 rounded-lg shadow-lg lg:w-[300px] lg:max-w-[300px] lg:min-w-[300px] lg:h-screen overflow-y-scroll"
             >
                 <div className="lg:hidden">
                     <button
@@ -257,8 +248,8 @@ export function FiltersSection({ allRecipes }: { allRecipes: Recipe[] }) {
                         Wyczyść filtry
                     </button>
                 </div>
-            </motion.div>
-            <div className="flex-1 gap-8">
+            </div>
+            <div className="flex-1 p-6 bg-gray-50 rounded-lg">
                 {/* Show a "No recipes found" message after 3 seconds */}
                 {noRecipesMessage && (
                     <p className="text-center text-lg text-gray-500">

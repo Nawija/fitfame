@@ -1,16 +1,23 @@
+.recipeStyle {
+    padding: 24px 14px;
+}
 .recipeStyle h2 {
     font-size: 2.5rem;
     font-weight: 600;
+    text-align: center;
 }
 .recipeStyle h3 {
     padding: 12px 2px;
     font-size: 1.6rem;
 }
+.recipeStyle p {
+    padding: 12px 2px;
+    font-size: 1.3rem;
+}
 
 .recipeStyle ul {
     list-style: disc;
     margin-left: 8px;
-    
 }
 
 .recipeStyle img {
