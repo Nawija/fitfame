@@ -10,7 +10,7 @@ export type Block = {
     content: string;
 };
 
-const blocksDir = path.join(process.cwd(), "/data/blocks");
+const blocksDir = path.join(process.cwd(), "/content/blocks");
 
 export async function getBlocks(): Promise<Block[]> {
     const filenames = fs.readdirSync(blocksDir)
