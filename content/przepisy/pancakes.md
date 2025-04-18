@@ -27,8 +27,8 @@ steps:
 ---
 
 ## Przygotowanie Krok po kroku
-
-wymieszaj mąke
+### Wymieszaj mąke
+- okrągłymi ruchami w lewą stronie mieszaj energicznie :D
 <img src="/images/przepisy/pancakes.jpg" alt="Pancakes" width="600" />
 
 Podstawy dobrej diety:

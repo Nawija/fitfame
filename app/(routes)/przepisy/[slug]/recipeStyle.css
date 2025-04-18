@@ -1,5 +1,10 @@
 .recipeStyle h2 {
     font-size: 2.5rem;
+    font-weight: 600;
+}
+.recipeStyle h3 {
+    padding: 12px 2px;
+    font-size: 1.6rem;
 }
 
 .recipeStyle > ul > li {
