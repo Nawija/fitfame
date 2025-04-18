@@ -30,3 +30,22 @@ export type Recipe = {
     steps: { title: string; description: string[] }[];
     content: string;
 };
+
+export interface FilterContentProps {
+    searchKeywords: string;
+    setSearchKeywords: React.Dispatch<React.SetStateAction<string>>;
+    selectedCategory: string;
+    setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
+    proteinRange: number;
+    setProteinRange: React.Dispatch<React.SetStateAction<number>>;
+    fatRange: number;
+    setFatRange: React.Dispatch<React.SetStateAction<number>>;
+    carbsRange: number;
+    setCarbsRange: React.Dispatch<React.SetStateAction<number>>;
+    minCalories: number;
+    setMinCalories: React.Dispatch<React.SetStateAction<number>>;
+    maxCalories: number;
+    setMaxCalories: React.Dispatch<React.SetStateAction<number>>;
+    clearSearch: () => void;
+    clearAllFilters: () => void;
+  }

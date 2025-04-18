@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import { FaFilter } from "react-icons/fa";
 import dynamic from "next/dynamic";
-import { Recipe } from "@/types/types";
+import { FilterContentProps, Recipe } from "@/types/types";
 import { RecipeSkeleton } from "@/components/SkeletonUI/RecipeSkeleton";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -212,7 +212,7 @@ function FilterContent({
   setMaxCalories,
   clearSearch,
   clearAllFilters,
-}: any) {
+}: FilterContentProps) {
   return (
     <div className="space-y-6">
       {/* SEARCH */}
