@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 export default function AdminPrzepisy() {
     const [form, setForm] = useState({
         title: "",
-        category: "",
+        category: "all",
         level: "Łatwy",
         calories: 0,
         protein: 0,
@@ -122,7 +122,7 @@ export default function AdminPrzepisy() {
             setStatus("Saved ✅");
             setForm({
                 title: "",
-                category: "",
+                category: "all",
                 level: "Łatwy",
                 calories: 0,
                 protein: 0,
@@ -153,13 +153,17 @@ export default function AdminPrzepisy() {
                     className="w-full p-3 border rounded-xl"
                     required
                 />
-                <input
+                <select
                     name="category"
-                    placeholder="Kategoria"
                     value={form.category}
                     onChange={handleChange}
                     className="w-full p-3 border rounded-xl"
-                />
+                >
+                    <option value="Kurczak">Kurczak</option>
+                    <option value="Masa">Masa</option>
+                    <option value="Rzeźba">Rzeźba</option>
+                    <option value="Niskokaloryczne">Niskokaloryczne</option>
+                </select>
                 <select
                     name="level"
                     value={form.level}
