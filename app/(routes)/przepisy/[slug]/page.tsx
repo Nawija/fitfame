@@ -154,7 +154,7 @@ export default async function Page({
                     </div>
                 </div>
             </div>
-            <div className="recipeStyle text-center max-w-7xl flex flex-col items-center justify-center mx-auto py-12">
+            <div className="recipeStyle text-start max-w-7xl flex flex-col items-center justify-center mx-auto py-12">
                 <ReactMarkdown
                     remarkPlugins={[remarkGfm]}
                     rehypePlugins={[rehypeRaw]}

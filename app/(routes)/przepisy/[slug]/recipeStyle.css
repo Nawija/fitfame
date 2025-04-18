@@ -7,9 +7,10 @@
     font-size: 1.6rem;
 }
 
-.recipeStyle > ul > li {
+.recipeStyle ul {
     list-style: disc;
-    margin-left: 22px;
+    margin-left: 8px;
+    
 }
 
 .recipeStyle img {
