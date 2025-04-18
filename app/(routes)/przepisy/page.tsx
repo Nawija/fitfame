@@ -1,4 +1,4 @@
-import { getAllRecipes } from "@/lib/getAllRecipes";
+import { getAllRecipes } from "@/lib/getRecipes";
 import { FiltersSection } from "./FiltersSection";
 import { Recipe } from "@/types/types";
 

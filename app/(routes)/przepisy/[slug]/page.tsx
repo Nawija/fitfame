@@ -1,5 +1,5 @@
-import { getRecipeBySlug } from "@/lib/recipes";
-import { getAllRecipes } from "@/lib/getAllRecipes";
+import { getRecipeBySlug } from "@/lib/getRecipes";
+import { getAllRecipes } from "@/lib/getRecipes";
 import { notFound } from "next/navigation";
 import { IoTimeOutline } from "react-icons/io5";
 import { RiPuzzle2Line } from "react-icons/ri";
@@ -7,22 +7,7 @@ import Link from "next/link";
 import Ingredients from "./Ingredients";
 import Image from "next/image";
 import ShareButton from "@/components/Buttons/ShareButton";
-
-type Recipe = {
-    slug: string;
-    title: string;
-    category: string;
-    time: string;
-    level: string;
-    image: string;
-    calories: number;
-    protein: number;
-    fat: number;
-    carbs: number;
-    description: string;
-    ingredients: any[];
-    steps: { title: string; description: string[] }[];
-  };
+import { Recipe } from "@/types/types";
 
 export default async function Page({
     params,
@@ -31,7 +16,7 @@ export default async function Page({
 }) {
     const awaitedParams = await Promise.resolve(params);
     const { slug } = awaitedParams;
-    const recipe: Recipe[] | null = await getRecipeBySlug(slug);
+    const recipe: Recipe | null = await getRecipeBySlug(slug);
 
     if (!recipe) return notFound();
 

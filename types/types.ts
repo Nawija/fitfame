@@ -28,4 +28,5 @@ export type Recipe = {
     description: string;
     ingredients: string[];
     steps: { title: string; description: string[] }[];
+    content: string;
 };
