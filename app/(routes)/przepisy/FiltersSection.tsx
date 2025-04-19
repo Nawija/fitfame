@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
-import { FaFilter } from "react-icons/fa";
 import dynamic from "next/dynamic";
 import { FilterContentProps, Recipe } from "@/types/types";
 import { RecipeSkeleton } from "@/components/SkeletonUI/RecipeSkeleton";
