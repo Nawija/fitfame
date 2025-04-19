@@ -176,12 +176,17 @@ export default async function Page({
                         id={s.title}
                         className="mx-auto space-y-4 flex items-start justify-center flex-col"
                     >
-                        <div className="space-y-4">
-                            <h2 className="text-2xl font-bold text-gray-800">
-                                {s?.title}
-                            </h2>
+                        <div className="space-y-4 ">
+                            <div className="relative w-max">
+                                <span className="absolute -top-5 font-bold -left-3 bg-yellow-500 py-0 px-2 text-white rounded-full">
+                                    {i + 1}
+                                </span>
+                                <h2 className="text-2xl font-bold text-gray-800">
+                                    {s?.title}
+                                </h2>
+                            </div>
 
-                            <ol className="list-decimal pl-6 text-lg text-gray-700 space-y-1">
+                            <ol className="list-decimal pl-6 text-lg font-medium text-gray-700 space-y-1">
                                 {s?.description.map((item, idx) => (
                                     <li key={idx}>{item}</li>
                                 ))}
