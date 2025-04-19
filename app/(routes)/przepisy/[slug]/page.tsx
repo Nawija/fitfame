@@ -72,12 +72,20 @@ export default async function Page({
                         {recipe.category}
                     </p>
                     <div className="flex items-center justify-start space-x-4 py-4">
-                        <div className="flex items-center justify-center text-yellow-600 w-max">
+                        <div className="flex items-center justify-center text-pink-600 w-max">
                             <IoTimeOutline className="mr-1 text-2xl" />
                             <p className="text-xl font-medium">{recipe.time}</p>
                         </div>
 
-                        <div className="flex items-center justify-center text-green-600">
+                        <div
+                            className={`flex items-center justify-center ${
+                                recipe.level.toLowerCase() === "łatwy"
+                                    ? "text-green-600"
+                                    : recipe.level.toLowerCase() === "średni"
+                                    ? "text-yellow-600"
+                                    : "text-red-600"
+                            }`}
+                        >
                             <RiPuzzle2Line className="mr-1 text-2xl" />
                             <p className="text-xl font-medium capitalize">
                                 {recipe.level}
@@ -161,12 +169,12 @@ export default async function Page({
                     </div>
                 </div>
             </div>
-            <div className="text-start bg-gray-50 flex flex-col items-center justify-center mx-auto border border-gray-200 p-6">
+            <div className="text-start bg-gray-50 flex flex-col items-center justify-center mx-auto border border-gray-200 py-12 px-4 space-y-8">
                 {recipe.steps?.map((s, i) => (
                     <div
                         key={i}
                         id={s.title}
-                        className="w-full space-y-4 flex items-center justify-center flex-col"
+                        className="mx-auto space-y-4 flex items-start justify-center flex-col"
                     >
                         <div className="space-y-4">
                             <h2 className="text-2xl font-bold text-gray-800">

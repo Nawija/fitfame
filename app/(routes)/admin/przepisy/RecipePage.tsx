@@ -142,12 +142,12 @@ const RecipePage = ({ recipe }: { recipe: FormRecipePage }) => {
                     </div>
                 </div>
             </div>
-            <div className="text-start bg-gray-50 flex flex-col items-center justify-center mx-auto border border-gray-200 p-6">
+            <div className="text-start bg-gray-50 flex flex-col items-center justify-center mx-auto border border-gray-200 py-12 px-4 space-y-8">
                 {recipe.steps?.map((s, i) => (
                     <div
                         key={i}
                         id={s.title}
-                        className="w-full space-y-4 flex items-center justify-center flex-col"
+                        className="mx-auto space-y-4 flex items-start justify-center flex-col"
                     >
                         <div className="space-y-4">
                             <h2 className="text-2xl font-bold text-gray-800">
@@ -160,7 +160,7 @@ const RecipePage = ({ recipe }: { recipe: FormRecipePage }) => {
                                 ))}
                             </ol>
                         </div>
-                        {s.image && (
+                        {s?.image && (
                             <img
                                 src={
                                     s.image

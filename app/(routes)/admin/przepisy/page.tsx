@@ -202,7 +202,7 @@ const AdminPrzepisy: React.FC = () => {
 
     return (
         <div className="flex">
-            <div className="flex-1 w-full">
+            <div className="flex-1 w-full mx-6">
                 <RecipePage recipe={form} />
             </div>
             <div className="w-1/4 h-screen overflow-y-scroll sticky top-0">
