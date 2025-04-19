@@ -6,6 +6,7 @@ import matter from "gray-matter";
 interface Step {
     title: string;
     description: string;
+    image: string;
 }
 
 export async function POST(req: NextRequest) {
@@ -53,6 +54,7 @@ export async function POST(req: NextRequest) {
         steps: steps.map((step: Step) => ({
             title: step.title,
             description: step.description,
+            image: step.image,
         })),
     };
 

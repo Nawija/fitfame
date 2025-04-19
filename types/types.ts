@@ -27,7 +27,7 @@ export type Recipe = {
     carbs: number;
     description: string;
     ingredients: string[];
-    steps: { title: string; description: string[] }[];
+    steps: { title: string; description: string[]; image: string }[];
     content: string;
 };
 
@@ -53,7 +53,9 @@ export interface FilterContentProps {
 interface Step {
     title: string;
     description: string[];
+    image: File | string | null;
 }
+
 
 export interface FormState {
     image: File | string | null;

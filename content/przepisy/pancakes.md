@@ -20,30 +20,10 @@ steps:
       description:
           - Zagotuj mleko.
           - Dodaj płatki i gotuj 5 minut.
+      image: /images/przepisy/pancakes.jpg
     - title: Dodatki
       description:
           - Pokrój banana i ułóż na wierzchu.
           - Dodaj masło orzechowe.
+      image: /images/przepisy/pancakes.jpg
 ---
-
-## Przygotowanie Krok po kroku
-### Wymieszaj mąke
-- okrągłymi ruchami w lewą stronie mieszaj energicznie :D
-
-<img src="/images/przepisy/pancakes.jpg" alt="Pancakes" width="600" />
-
-### Jednak nie mieszaj mąki
-- okrągłymi ruchami w lewą stronie mieszaj energicznie :D
-
-<img src="/images/przepisy/pancakes.jpg" alt="Pancakes" width="600" />
-
-Podstawy dobrej diety:
-
-Warzywa i owoce
-
-1. Białka (jaja, mięso, tofu)
-2. Zdrowe tłuszcze (oliwa, orzechy)
-
-**Unikaj** cukrów prostych i przetworzonego jedzenia.
-
-[Więcej przepisów tutaj](/przepisy)

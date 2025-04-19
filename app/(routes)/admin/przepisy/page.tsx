@@ -4,8 +4,6 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MdDeleteForever } from "react-icons/md";
 import { FaPlus } from "react-icons/fa";
-import { AiOutlinePicture } from "react-icons/ai";
-import { IoIosLink } from "react-icons/io";
 import StatusMessage from "@/components/StatusMessage";
 import RecipePage from "./RecipePage";
 import { FormRecipePage, FormState } from "@/types/types";
@@ -25,7 +23,7 @@ const AdminPrzepisy: React.FC = () => {
         description: "",
         content: "",
         ingredients: [""],
-        steps: [{ title: "", description: [""] }],
+        steps: [{ title: "", description: [""], image: null }],
     });
 
     const [status, setStatus] = useState<string>("");
@@ -81,7 +79,10 @@ const AdminPrzepisy: React.FC = () => {
     const handleAddStep = (): void => {
         setForm((prevForm) => ({
             ...prevForm,
-            steps: [...prevForm.steps, { title: "", description: [""] }],
+            steps: [
+                ...prevForm.steps,
+                { title: "", description: [""], image: null },
+            ],
         }));
     };
 
@@ -123,6 +124,7 @@ const AdminPrzepisy: React.FC = () => {
         e.preventDefault();
         setStatus("Saving...");
 
+        // Upload głównego obrazka
         let uploadedImageUrl = "";
         if (form.image instanceof File) {
             uploadedImageUrl = await uploadImage(form.image);
@@ -130,9 +132,24 @@ const AdminPrzepisy: React.FC = () => {
             uploadedImageUrl = form.image;
         }
 
+        // Upload obrazków w krokach
+        const stepsWithUploadedImages = await Promise.all(
+            form.steps.map(async (step) => {
+                let imageUrl = step.image;
+                if (step.image instanceof File) {
+                    imageUrl = await uploadImage(step.image);
+                }
+                return {
+                    ...step,
+                    image: imageUrl,
+                };
+            })
+        );
+
         const updatedForm = {
             ...form,
             image: uploadedImageUrl,
+            steps: stepsWithUploadedImages,
         };
 
         const res = await fetch("/api/admin/save-recipe", {
@@ -158,33 +175,10 @@ const AdminPrzepisy: React.FC = () => {
                 description: "",
                 content: "",
                 ingredients: [""],
-                steps: [{ title: "", description: [""] }],
+                steps: [{ title: "", description: [""], image: null }],
             });
         } else {
             setStatus("Error");
-        }
-    };
-
-    const handleInsertImage = () => {
-        const imageUrl = prompt("Podaj URL obrazka:");
-        const titleAlt = prompt("Podaj Nazwe obrazka:");
-        if (imageUrl) {
-            const markdownImage = `![${titleAlt}](${imageUrl})`;
-            setForm((prevForm) => ({
-                ...prevForm,
-                content: prevForm.content + "\n" + markdownImage,
-            }));
-        }
-    };
-    const handleInsertLink = () => {
-        const url = prompt("Podaj URL:");
-        const linkText = prompt("Podaj tekst linku:");
-        if (url && linkText) {
-            const markdownLink = `[${linkText}](${url})`;
-            setForm((prevForm) => ({
-                ...prevForm,
-                content: prevForm.content + "\n" + markdownLink,
-            }));
         }
     };
 
@@ -208,7 +202,7 @@ const AdminPrzepisy: React.FC = () => {
 
     return (
         <div className="flex">
-            <div className="flex-1 w-full px-12">
+            <div className="flex-1 w-full">
                 <RecipePage recipe={form} />
             </div>
             <div className="w-1/4 h-screen overflow-y-scroll sticky top-0">
@@ -432,6 +426,7 @@ const AdminPrzepisy: React.FC = () => {
                                                 <FaPlus className="mr-2" />{" "}
                                                 Dodaj opis
                                             </button>
+                                            {/* <AddStep onClick={handleAddStep} /> */}
                                             <button
                                                 type="button"
                                                 onClick={handleAddStep}
@@ -451,35 +446,54 @@ const AdminPrzepisy: React.FC = () => {
                                                 Usuń krok
                                             </button>
                                         </div>
+                                        <div>
+                                            <label className="block text-sm text-gray-700 mb-1">
+                                                Zdjęcie do kroku:
+                                            </label>
+                                            <input
+                                                type="file"
+                                                accept="image/*"
+                                                onChange={(e) => {
+                                                    const file =
+                                                        e.target.files?.[0];
+                                                    if (file) {
+                                                        const updatedSteps = [
+                                                            ...form.steps,
+                                                        ];
+                                                        updatedSteps[
+                                                            stepIndex
+                                                        ].image = file;
+                                                        setForm((prevForm) => ({
+                                                            ...prevForm,
+                                                            steps: updatedSteps,
+                                                        }));
+                                                    }
+                                                }}
+                                                className="w-full p-2 border border-gray-200 rounded-lg"
+                                            />
+                                            {step.image && (
+                                                <img
+                                                    src={
+                                                        step.image
+                                                            ? step.image instanceof
+                                                              File
+                                                                ? URL.createObjectURL(
+                                                                      step.image
+                                                                  )
+                                                                : step.image
+                                                            : undefined
+                                                    }
+                                                    alt={`Krok ${
+                                                        stepIndex + 1
+                                                    }`}
+                                                    className="mt-2 rounded-lg w-full h-auto"
+                                                />
+                                            )}
+                                        </div>
                                     </motion.div>
                                 ))}
                             </AnimatePresence>
                         </div>
-
-                        <div className="flex items-center space-x-2">
-                            <button
-                                type="button"
-                                onClick={handleInsertImage}
-                                className="text-base bg-stone-600 flex items-center cursor-pointer justify-center text-white py-1.5 px-3 rounded-lg"
-                            >
-                                <AiOutlinePicture />
-                            </button>
-
-                            <button
-                                type="button"
-                                onClick={handleInsertLink}
-                                className="text-base bg-stone-600 flex items-center cursor-pointer justify-center text-white py-1.5 px-3 rounded-lg"
-                            >
-                                <IoIosLink />
-                            </button>
-                        </div>
-                        <textarea
-                            name="content"
-                            placeholder="Treść przepisu (markdown)"
-                            value={form.content}
-                            onChange={handleChange}
-                            className="w-full p-2 border border-gray-200 h-40 rounded-lg"
-                        />
 
                         <div className="w-full flex items-end justify-end">
                             <button
@@ -498,3 +512,26 @@ const AdminPrzepisy: React.FC = () => {
 };
 
 export default AdminPrzepisy;
+
+// function AddStep(onClick: () => void) {
+//     return (
+//         <button
+//             type="button"
+//             onClick={onClick}
+//             className="text-xs bg-yellow-600 flex items-center cursor-pointer justify-center text-white py-1 px-3 font-semibold rounded-lg"
+//         >
+//             <FaPlus className="mr-2" /> Nowy krok
+//         </button>
+//     );
+// }
+// function DeleteStep(onClick) {
+//     return (
+//         <button
+//             type="button"
+//             onClick={onClick}
+//             className="text-xs bg-red-600 flex items-center cursor-pointer justify-center text-white py-1 px-3 font-semibold rounded-lg"
+//         >
+//             <MdDeleteForever className="mr-2" /> Usuń krok
+//         </button>
+//     );
+// }

@@ -8,11 +8,8 @@ import Ingredients from "./Ingredients";
 import Image from "next/image";
 import ShareButton from "@/components/Buttons/ShareButton";
 import { Recipe } from "@/types/types";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import rehypeRaw from "rehype-raw";
-import "./recipeStyle.css";
 import Navigation from "@/components/Navigation";
+import Newsletter from "@/components/Newsletter";
 
 export default async function Page({
     params,
@@ -25,21 +22,17 @@ export default async function Page({
 
     if (!recipe) return notFound();
 
-    // Załaduj wszystkie przepisy
     const allRecipes = await getAllRecipes();
 
-    // Filtrowanie podobnych przepisów
     const similarRecipes = allRecipes
         .filter((r) => {
-            if (r.slug === recipe.slug) return false; // Zignoruj ten sam przepis
+            if (r.slug === recipe.slug) return false;
 
             const recipeTitleWords = recipe.title
                 .split(" ")
                 .slice(0, 2)
                 .map((word) => word.toLowerCase());
             const recipeTitleLower = r.title.toLowerCase();
-
-            // Sprawdzamy, czy jakiekolwiek z pierwszych dwóch słów w tytule jest dopasowane
             return recipeTitleWords.some((word) =>
                 recipeTitleLower.includes(word)
             );
@@ -147,67 +140,57 @@ export default async function Page({
                         <h3 className="text-2xl font-semibold text-gray-800 mb-4">
                             Sposób przygotowania:
                         </h3>
-                        <div className="space-y-6">
+                        <div className="space-y-2">
                             {recipe.steps.map((step, index) => (
-                                <div
+                                <Link
+                                    href={`#${step.title}`}
                                     key={index}
-                                    className="flex items-start gap-2"
+                                    className="flex items-center gap-2"
                                 >
-                                    <div className="min-w-7 min-h-7 w-7 h-7 flex items-center justify-center rounded-full bg-amber-400 text-white font-bold text-base shadow">
+                                    <div className="min-w-6 min-h-6 w-6 h-6 flex items-center justify-center rounded-full bg-amber-400 text-white font-bold text-base shadow">
                                         {index + 1}
                                     </div>
                                     <div>
-                                        <p className="text-lg font-semibold text-gray-800 mb-1">
+                                        <p className="text-lg font-semibold text-gray-800">
                                             {step.title}
                                         </p>
-                                        <ul className="list-disc pl-5 space-y-1 text-gray-700 text-base">
-                                            {step.description.map((line, i) => (
-                                                <li key={i}>{line}</li>
-                                            ))}
-                                        </ul>
                                     </div>
-                                </div>
+                                </Link>
                             ))}
                         </div>
                     </div>
                 </div>
             </div>
-            <div className="recipeStyle text-start bg-gray-50 flex flex-col items-center justify-center mx-auto border border-gray-200">
-                <ReactMarkdown
-                    remarkPlugins={[remarkGfm]}
-                    rehypePlugins={[rehypeRaw]}
-                >
-                    {recipe.content}
-                </ReactMarkdown>
+            <div className="text-start bg-gray-50 flex flex-col items-center justify-center mx-auto border border-gray-200 p-6">
+                {recipe.steps?.map((s, i) => (
+                    <div
+                        key={i}
+                        id={s.title}
+                        className="w-full space-y-4 flex items-center justify-center flex-col"
+                    >
+                        <div className="space-y-4">
+                            <h2 className="text-2xl font-bold text-gray-800">
+                                {s?.title}
+                            </h2>
+
+                            <ol className="list-decimal pl-6 text-lg text-gray-700 space-y-1">
+                                {s?.description.map((item, idx) => (
+                                    <li key={idx}>{item}</li>
+                                ))}
+                            </ol>
+                        </div>
+                        {s?.image && (
+                            <img
+                                src={s.image}
+                                alt={s.title}
+                                className="w-full max-w-2xl rounded-lg shadow-md"
+                            />
+                        )}
+                    </div>
+                ))}
             </div>
-            <div className="flex items-center justify-center flex-col px-6 py-24 bg-gray-100 text-gray-800">
-                <div className="w-full max-w-xl bg-white p-8 rounded-2xl shadow-xl text-center space-y-6">
-                    <h3 className="text-3xl font-bold">
-                        Zapisz się do newslettera
-                    </h3>
-                    <p className="text-gray-600 text-base">
-                        Otrzymuj porady treningowe, przepisy i darmowe materiały
-                        bezpośrednio na maila.
-                    </p>
-                    <form className="w-full space-y-4">
-                        <input
-                            type="email"
-                            placeholder="Twój adres e-mail"
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 text-sm"
-                            required
-                        />
-                        <button
-                            type="submit"
-                            className="w-full bg-yellow-600 hover:bg-yellow-500 text-white font-semibold py-3 rounded-lg transition duration-300"
-                        >
-                            Zapisz się
-                        </button>
-                    </form>
-                    <p className="text-xs text-gray-400">
-                        Możesz wypisać się w każdej chwili.
-                    </p>
-                </div>
-            </div>
+
+            <Newsletter />
 
             {similarRecipes.length > 0 && (
                 <div className="my-20 px-4 max-w-7xl mx-auto">
