@@ -14,6 +14,15 @@ export type SearchProps = {
     prevPrice: number;
 };
 
+export interface Filters {
+    search: string;
+    category: string;
+    protein: number;
+    fat: number;
+    carbs: number;
+    calories: [number, number];
+}
+
 export type Recipe = {
     title: string;
     slug: string;
@@ -55,7 +64,6 @@ interface Step {
     description: string[];
     image: File | string | null;
 }
-
 
 export interface FormState {
     image: File | string | null;

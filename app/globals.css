@@ -1,8 +1,36 @@
 @import "tailwindcss";
 
-html{
-  scroll-behavior: smooth;
-  scroll-padding: 100px;
+html {
+    scroll-behavior: smooth;
+    scroll-padding: 100px;
+}
+
+.shimmer {
+    position: relative;
+    background-color: #dfdcd7;
+    overflow: hidden;
+}
+
+.shimmer::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.8),
+        transparent
+    );
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    100% {
+        transform: translateX(100%);
+    }
 }
 
 .anim-opacity {
@@ -11,13 +39,11 @@ html{
 @keyframes anim-opacity {
     0% {
         opacity: 0;
-        
     }
     100% {
         opacity: 1;
     }
 }
-
 
 /* :root {
   --background: #ffffff;
