@@ -1,101 +1,121 @@
 "use client";
 
-import { useEffect, useReducer, useState, useMemo } from "react";
-import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
-import { IoMdArrowRoundForward } from "react-icons/io";
-import { Filters, Recipe } from "@/types/types";
+import dynamic from "next/dynamic";
+import { FilterContentProps, Recipe } from "@/types/types";
+import { RecipeSkeleton } from "@/components/SkeletonUI/RecipeSkeleton";
 import { AnimatePresence, motion } from "framer-motion";
+import { IoMdArrowRoundForward } from "react-icons/io";
 
 const RecipesGrid = dynamic(
     () => import("./RecipesGrid").then((mod) => mod.RecipesGrid),
-    { ssr: true }
+    {
+        ssr: true,
+    }
 );
 
-const initialFilters: Filters = {
-    search: "",
-    category: "all",
-    protein: 0,
-    fat: 0,
-    carbs: 0,
-    calories: [0, 3000],
-};
-
-type Action =
-    | { type: "set"; field: keyof Filters; value: any }
-    | { type: "clearSearch" }
-    | { type: "reset" };
-
-function filtersReducer(state: Filters, action: Action): Filters {
-    switch (action.type) {
-        case "set":
-            return { ...state, [action.field]: action.value };
-        case "clearSearch":
-            return { ...state, search: "" };
-        case "reset":
-            return initialFilters;
-        default:
-            return state;
-    }
-}
-
-// Debounce hook
-function useDebounce<T>(value: T, delay = 200): T {
-    const [debounced, setDebounced] = useState(value);
-    useEffect(() => {
-        const handler = setTimeout(() => setDebounced(value), delay);
-        return () => clearTimeout(handler);
-    }, [value, delay]);
-    return debounced;
-}
-
 export function FiltersSection({ allRecipes }: { allRecipes: Recipe[] }) {
-    const [filters, dispatch] = useReducer(filtersReducer, initialFilters);
-    const [filtersVisible, setFiltersVisible] = useState(false);
+    const [filteredRecipes, setFilteredRecipes] = useState(allRecipes);
     const [loading, setLoading] = useState(false);
+    const [searchKeywords, setSearchKeywords] = useState("");
+    const [selectedCategory, setSelectedCategory] = useState("all");
+    const [proteinRange, setProteinRange] = useState(0);
+    const [fatRange, setFatRange] = useState(0);
+    const [carbsRange, setCarbsRange] = useState(0);
+    const [minCalories, setMinCalories] = useState(0);
+    const [maxCalories, setMaxCalories] = useState(3000);
+    const [filtersVisible, setFiltersVisible] = useState(false);
+    const [noRecipesMessage, setNoRecipesMessage] = useState(false);
 
-    const debouncedFilters = useDebounce(filters);
+    const debounce = (fn: () => void, delay: number) => {
+        let timeout: NodeJS.Timeout;
+        return () => {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => fn(), delay);
+        };
+    };
 
-    useEffect(() => {
+    const filterRecipes = () => {
         setLoading(true);
-    }, [filters]);
-    useEffect(() => {
-        setLoading(false);
-    }, [debouncedFilters]);
+        setNoRecipesMessage(false);
+        const filtered = allRecipes.filter((recipe) => {
+            const matchesCategory =
+                selectedCategory === "all" ||
+                recipe.category === selectedCategory;
+            const matchesKeyword =
+                !searchKeywords ||
+                recipe.title
+                    .toLowerCase()
+                    .includes(searchKeywords.toLowerCase());
 
-    const filteredRecipes = useMemo(() => {
-        const [minCal, maxCal] = debouncedFilters.calories;
-        return allRecipes.filter((r) => {
             return (
-                (debouncedFilters.category === "all" ||
-                    r.category === debouncedFilters.category) &&
-                (debouncedFilters.search === "" ||
-                    r.title
-                        .toLowerCase()
-                        .includes(debouncedFilters.search.toLowerCase())) &&
-                r.protein >= debouncedFilters.protein &&
-                r.fat >= debouncedFilters.fat &&
-                r.carbs >= debouncedFilters.carbs &&
-                r.calories >= minCal &&
-                r.calories <= maxCal
+                matchesCategory &&
+                recipe.calories >= minCalories &&
+                recipe.calories <= maxCalories &&
+                recipe.protein >= proteinRange &&
+                recipe.fat >= fatRange &&
+                recipe.carbs >= carbsRange &&
+                matchesKeyword
             );
         });
-    }, [allRecipes, debouncedFilters]);
+
+        setFilteredRecipes(filtered);
+        setLoading(false);
+    };
+
+    const debouncedFilter = debounce(filterRecipes, 200);
+
+    useEffect(() => {
+        debouncedFilter();
+    }, [
+        searchKeywords,
+        selectedCategory,
+        proteinRange,
+        fatRange,
+        carbsRange,
+        minCalories,
+        maxCalories,
+    ]);
+
+    useEffect(() => {
+        if (filteredRecipes.length === 0 && !loading) {
+            const timer = setTimeout(() => {
+                setNoRecipesMessage(true);
+            }, 3000);
+            return () => clearTimeout(timer);
+        }
+    }, [filteredRecipes, loading]);
+
+    const clearAllFilters = () => {
+        setSearchKeywords("");
+        setSelectedCategory("all");
+        setProteinRange(0);
+        setFatRange(0);
+        setCarbsRange(0);
+        setMinCalories(0);
+        setMaxCalories(3000);
+    };
+
+    const clearSearch = () => setSearchKeywords("");
 
     return (
         <div className="relative bg-gray-50">
+
             <button
                 onClick={() => setFiltersVisible(true)}
                 className="sticky top-3 mt-2 left-1 z-40 p-3 bg-blue-500 text-white rounded-full shadow-lg lg:hidden flex items-center justify-center text-xs font-bold"
             >
-                <IoMdArrowRoundForward className="text-xs mr-1" /> Filtruj
-                <span className="h-3 w-3 bg-blue-600 absolute top-0 right-0 rounded-full animate-ping" />
-                <span className="h-3 w-3 bg-blue-600 absolute top-0 right-0 rounded-full" />
+                <IoMdArrowRoundForward className="text-xs mr-1" /> <p>Filtruj</p>
+                <div className="h-3 w-3 bg-blue-600 absolute top-0 right-0 rounded-full animate-ping" />
+                <div className="h-3 w-3 bg-blue-600 absolute top-0 right-0 rounded-full" />
             </button>
 
+            {/* Slide-in filters panel (mobile) */}
             <AnimatePresence>
                 {filtersVisible && (
                     <>
+                        {/* Backdrop (ciemne tło) */}
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 0.7 }}
@@ -104,13 +124,15 @@ export function FiltersSection({ allRecipes }: { allRecipes: Recipe[] }) {
                             onClick={() => setFiltersVisible(false)}
                             className="fixed inset-0 z-40 bg-black lg:hidden backdrop-blur-xl"
                         />
+
+                        {/* Panel filtrów */}
                         <motion.div
                             initial={{ x: "-100%" }}
                             animate={{ x: 0 }}
                             exit={{ x: "-100%" }}
                             transition={{ type: "tween", duration: 0.3 }}
-                            onClick={(e) => e.stopPropagation()}
                             className="fixed inset-y-0 left-0 z-50 bg-white shadow-lg overflow-y-auto p-6 w-80 max-w-full lg:hidden"
+                            onClick={(e) => e.stopPropagation()}
                         >
                             <div className="flex justify-between items-center mb-6">
                                 <h2 className="text-2xl font-semibold text-gray-900">
@@ -123,169 +145,222 @@ export function FiltersSection({ allRecipes }: { allRecipes: Recipe[] }) {
                                 </button>
                             </div>
                             <FilterContent
-                                filters={filters}
-                                dispatch={dispatch}
+                                {...{
+                                    searchKeywords,
+                                    setSearchKeywords,
+                                    selectedCategory,
+                                    setSelectedCategory,
+                                    proteinRange,
+                                    setProteinRange,
+                                    fatRange,
+                                    setFatRange,
+                                    carbsRange,
+                                    setCarbsRange,
+                                    minCalories,
+                                    setMinCalories,
+                                    maxCalories,
+                                    setMaxCalories,
+                                    clearSearch,
+                                    clearAllFilters,
+                                }}
                             />
                         </motion.div>
                     </>
                 )}
             </AnimatePresence>
 
+            {/* Desktop layout */}
             <div className="flex flex-col lg:flex-row max-w-[1900px] mx-auto">
-                <aside className="hidden lg:block sticky top-0 h-screen overflow-y-scroll w-[300px] bg-white p-6 rounded-lg shadow-lg">
+                {/* Filters (desktop) */}
+                <div className="hidden lg:block sticky top-0 h-screen overflow-y-scroll w-[300px] bg-white p-6 rounded-lg shadow-lg">
                     <h2 className="text-2xl font-semibold text-gray-900 mb-6">
                         Opcje filtrowania
                     </h2>
-                    <FilterContent filters={filters} dispatch={dispatch} />
-                </aside>
+                    <FilterContent
+                        {...{
+                            searchKeywords,
+                            setSearchKeywords,
+                            selectedCategory,
+                            setSelectedCategory,
+                            proteinRange,
+                            setProteinRange,
+                            fatRange,
+                            setFatRange,
+                            carbsRange,
+                            setCarbsRange,
+                            minCalories,
+                            setMinCalories,
+                            maxCalories,
+                            setMaxCalories,
+                            clearSearch,
+                            clearAllFilters,
+                        }}
+                    />
+                </div>
 
-                <main className="flex-1 p-6 bg-gray-50 rounded-lg">
-                    {!loading && filteredRecipes.length === 0 && (
-                        <div className="text-center text-lg text-gray-600 font-semibold">
-                            <p>Brak potraw spełniających kryteria</p>
-                        </div>
+                {/* Recipes grid */}
+                <div className="flex-1 p-6 bg-gray-50 rounded-lg">
+                    {noRecipesMessage && (
+                        <p className="text-center text-lg text-gray-500">
+                            Brak potraw spełniających kryteria.
+                        </p>
                     )}
-                    <RecipesGrid recipes={filteredRecipes} />
-                </main>
+                    {loading ? (
+                        <RecipeSkeleton />
+                    ) : (
+                        <RecipesGrid recipes={filteredRecipes} />
+                    )}
+                </div>
             </div>
         </div>
     );
 }
 
-export function FilterContent({
-    filters,
-    dispatch,
-}: {
-    filters: Filters;
-    dispatch: React.Dispatch<Action>;
-}) {
-    const categories = ["all", "Kurczak", "Masa", "Rzeźba", "Niskokaloryczne"];
-    const macroFields = [
-        { label: "Białko (min.)", field: "protein", max: 200 },
-        { label: "Tłuszcz (min.)", field: "fat", max: 200 },
-        { label: "Węglowodany (min.)", field: "carbs", max: 500 },
-    ] as const;
-
+function FilterContent({
+    searchKeywords,
+    setSearchKeywords,
+    selectedCategory,
+    setSelectedCategory,
+    proteinRange,
+    setProteinRange,
+    fatRange,
+    setFatRange,
+    carbsRange,
+    setCarbsRange,
+    minCalories,
+    setMinCalories,
+    maxCalories,
+    setMaxCalories,
+    clearSearch,
+    clearAllFilters,
+}: FilterContentProps) {
     return (
         <div className="space-y-6">
-            <div className="mb-6 relative">
+            {/* SEARCH */}
+            <div className="mb-6 flex items-center justify-center relative">
                 <input
                     type="text"
-                    value={filters.search}
-                    onChange={(e) =>
-                        dispatch({
-                            type: "set",
-                            field: "search",
-                            value: e.target.value,
-                        })
-                    }
-                    placeholder="Wyszukaj"
+                    value={searchKeywords}
+                    onChange={(e) => setSearchKeywords(e.target.value)}
                     className="w-full p-2 border text-sm border-gray-300 rounded-lg focus:outline-none"
+                    placeholder="Wyszukaj"
                 />
-                {filters.search && (
+                {searchKeywords && (
                     <button
-                        onClick={() => dispatch({ type: "clearSearch" })}
-                        className="absolute right-2 top-2 text-gray-500 hover:text-gray-700"
+                        onClick={clearSearch}
+                        className="absolute right-2 text-gray-500 hover:text-gray-700"
                     >
-                        <IoClose />
+                        <IoClose className="cursor-pointer" />
                     </button>
                 )}
             </div>
 
-            <div>
+            {/* CATEGORY */}
+            <div className="mb-6">
                 <h3 className="text-lg font-semibold text-gray-700 mb-2">
                     Kategoria
                 </h3>
                 <div className="space-y-2">
-                    {categories.map((cat) => (
-                        <label
-                            key={cat}
-                            className="flex items-center text-sm text-gray-700"
-                        >
+                    {[
+                        "all",
+                        "Kurczak",
+                        "Masa",
+                        "Rzeźba",
+                        "Niskokaloryczne",
+                    ].map((category) => (
+                        <div key={category} className="flex items-center">
                             <input
                                 type="radio"
+                                id={category}
+                                name="category"
+                                checked={selectedCategory === category}
+                                onChange={() => setSelectedCategory(category)}
                                 className="mr-2"
-                                checked={filters.category === cat}
-                                onChange={() =>
-                                    dispatch({
-                                        type: "set",
-                                        field: "category",
-                                        value: cat,
-                                    })
-                                }
                             />
-                            {cat === "all" ? "Wszystkie" : cat}
-                        </label>
+                            <label
+                                htmlFor={category}
+                                className="text-sm text-gray-700"
+                            >
+                                {category === "all" ? "Wszystkie" : category}
+                            </label>
+                        </div>
                     ))}
                 </div>
             </div>
 
-            {macroFields.map(({ label, field, max }) => (
-                <div key={field}>
+            {/* MACROS */}
+            {[
+                {
+                    label: "Białko (min.)",
+                    value: proteinRange,
+                    set: setProteinRange,
+                    max: 200,
+                },
+                {
+                    label: "Tłuszcz (min.)",
+                    value: fatRange,
+                    set: setFatRange,
+                    max: 200,
+                },
+                {
+                    label: "Węglowodany (min.)",
+                    value: carbsRange,
+                    set: setCarbsRange,
+                    max: 500,
+                },
+            ].map((item, i) => (
+                <div key={i} className="mb-4">
                     <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm text-gray-700">{label}</span>
+                        <label className="text-sm text-gray-700">
+                            {item.label}
+                        </label>
                         <input
                             type="number"
+                            value={item.value}
+                            onChange={(e) => item.set(Number(e.target.value))}
                             className="w-12 p-1 border border-gray-300 rounded-lg text-sm"
-                            value={filters[field]}
-                            onChange={(e) =>
-                                dispatch({
-                                    type: "set",
-                                    field,
-                                    value: Number(e.target.value),
-                                })
-                            }
                         />
                     </div>
                     <input
                         type="range"
-                        min={0}
-                        max={max}
-                        value={filters[field]}
-                        onChange={(e) =>
-                            dispatch({
-                                type: "set",
-                                field,
-                                value: Number(e.target.value),
-                            })
-                        }
+                        min="0"
+                        max={item.max}
+                        value={item.value}
+                        onChange={(e) => item.set(Number(e.target.value))}
                         className="w-full"
                     />
                 </div>
             ))}
 
-            <div>
+            {/* CALORIES */}
+            <div className="mb-6">
                 <h3 className="text-lg font-semibold text-gray-700 mb-2">
                     Kalorie (zakres)
                 </h3>
                 <div className="flex gap-4 mb-4">
-                    {[0, 1].map((idx) => (
-                        <input
-                            key={idx}
-                            type="number"
-                            className="w-full p-3 border border-gray-300 rounded-lg"
-                            placeholder={idx === 0 ? "Minimalne" : "Maksymalne"}
-                            value={filters.calories[idx]}
-                            onChange={(e) => {
-                                const val = Number(e.target.value);
-                                const newCalories: [number, number] = [
-                                    ...filters.calories,
-                                ] as [number, number];
-                                newCalories[idx] = val;
-                                dispatch({
-                                    type: "set",
-                                    field: "calories",
-                                    value: newCalories,
-                                });
-                            }}
-                        />
-                    ))}
+                    <input
+                        type="number"
+                        name="minCalories"
+                        value={minCalories}
+                        onChange={(e) => setMinCalories(Number(e.target.value))}
+                        className="w-full p-3 border border-gray-300 rounded-lg"
+                        placeholder="Minimalne"
+                    />
+                    <input
+                        type="number"
+                        name="maxCalories"
+                        value={maxCalories}
+                        onChange={(e) => setMaxCalories(Number(e.target.value))}
+                        className="w-full p-3 border border-gray-300 rounded-lg"
+                        placeholder="Maksymalne"
+                    />
                 </div>
             </div>
 
+            {/* CLEAR BUTTON */}
             <button
-                onClick={() => dispatch({ type: "reset" })}
-                className="w-full py-2 px-4 text-sm font-bold bg-red-600 text-white rounded-lg hover:bg-red-500"
+                onClick={clearAllFilters}
+                className="w-full py-2 px-4 text-sm font-bold cursor-pointer bg-red-600 text-white rounded-lg hover:bg-red-500 focus:outline-none"
             >
                 Wyczyść filtry
             </button>

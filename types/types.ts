@@ -36,6 +36,7 @@ export type Recipe = {
     carbs: number;
     description: string;
     ingredients: string[];
+    filter: string;
     steps: { title: string; description: string[]; image: string }[];
     content: string;
 };

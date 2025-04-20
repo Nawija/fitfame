@@ -39,7 +39,7 @@ export const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
     return (
         <Link
             href={`/przepisy/${recipe.slug}`}
-            className="flex items-stretch group w-full"
+            className="flex items-stretch group w-full anim-opacity"
         >
             <div
                 ref={cardRef}
@@ -63,11 +63,7 @@ export const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
                                     onLoadingComplete={() =>
                                         setImageLoaded(true)
                                     }
-                                    className={`w-full h-full object-cover transition-transform duration-300 group-hover:scale-[108%] ${
-                                        imageLoaded
-                                            ? "opacity-100"
-                                            : "opacity-0"
-                                    }`}
+                                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[108%]"
                                 />
                             )}
                         </div>
