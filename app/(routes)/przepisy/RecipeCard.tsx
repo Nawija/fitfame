@@ -39,7 +39,7 @@ export const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
     return (
         <Link
             href={`/przepisy/${recipe.slug}`}
-            className="flex items-stretch group w-full anim-opacity"
+            className="flex items-stretch group w-full"
         >
             <div
                 ref={cardRef}
