@@ -6,6 +6,7 @@ import { IoTime } from "react-icons/io5";
 import Link from "next/link";
 import Image from "next/image";
 import { Recipe } from "@/types/types";
+import Shimmer from "@/components/Shimmer";
 
 export const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
     const [imageLoaded, setImageLoaded] = useState(false);
@@ -43,16 +44,12 @@ export const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
         >
             <div
                 ref={cardRef}
-                className="bg-white group p-2 hover:scale-[101%] rounded-lg shadow-lg hover:shadow-xl transition-all transform text-center flex flex-col items-center justify-between w-full"
+                className="bg-white group p-2 rounded-lg shadow-lg hover:shadow-xl transition-all transform text-center flex flex-col items-center justify-between w-full"
             >
                 <div className="w-full">
                     <div className="relative w-full">
-                        <div className="relative w-full h-44 object-cover rounded-md mb-6 overflow-hidden">
-                            {!imageLoaded && (
-                                <div className="absolute inset-0 bg-stone-50 rounded-md overflow-hidden">
-                                    <div className="w-full h-full shimmer" />
-                                </div>
-                            )}
+                        <div className="relative w-full h-44 object-cover rounded-md mb-3 overflow-hidden">
+                            <Shimmer imageLoaded={imageLoaded} />
 
                             {isVisible && (
                                 <Image
@@ -63,7 +60,7 @@ export const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
                                     onLoadingComplete={() =>
                                         setImageLoaded(true)
                                     }
-                                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[108%]"
+                                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[107%]"
                                 />
                             )}
                         </div>
@@ -74,7 +71,7 @@ export const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
                         </div>
                     </div>
 
-                    <h3 className="text-lg px-3 font-semibold text-gray-800 mb-2">
+                    <h3 className="text-lg px-1 font-semibold text-gray-800 mb-2">
                         {recipe.title.charAt(0).toUpperCase() +
                             recipe.title.slice(1).toLowerCase()}
                     </h3>

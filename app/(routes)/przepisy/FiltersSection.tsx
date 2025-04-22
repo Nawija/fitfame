@@ -4,20 +4,20 @@ import { useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import dynamic from "next/dynamic";
 import { FilterContentProps, Recipe } from "@/types/types";
-import { RecipeSkeleton } from "@/components/SkeletonUI/RecipeSkeleton";
 import { AnimatePresence, motion } from "framer-motion";
 import { IoMdArrowRoundForward } from "react-icons/io";
+import { SpinerLoading } from "@/components/SkeletonUI/SpinerLoading";
 
 const RecipesGrid = dynamic(
     () => import("./RecipesGrid").then((mod) => mod.RecipesGrid),
     {
+        loading: () => <SpinerLoading />,
         ssr: true,
     }
 );
 
 export function FiltersSection({ allRecipes }: { allRecipes: Recipe[] }) {
     const [filteredRecipes, setFilteredRecipes] = useState(allRecipes);
-    const [loading, setLoading] = useState(false);
     const [searchKeywords, setSearchKeywords] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("all");
     const [proteinRange, setProteinRange] = useState(0);
@@ -26,7 +26,6 @@ export function FiltersSection({ allRecipes }: { allRecipes: Recipe[] }) {
     const [minCalories, setMinCalories] = useState(0);
     const [maxCalories, setMaxCalories] = useState(3000);
     const [filtersVisible, setFiltersVisible] = useState(false);
-    const [noRecipesMessage, setNoRecipesMessage] = useState(false);
 
     const debounce = (fn: () => void, delay: number) => {
         let timeout: NodeJS.Timeout;
@@ -37,8 +36,6 @@ export function FiltersSection({ allRecipes }: { allRecipes: Recipe[] }) {
     };
 
     const filterRecipes = () => {
-        setLoading(true);
-        setNoRecipesMessage(false);
         const filtered = allRecipes.filter((recipe) => {
             const matchesCategory =
                 selectedCategory === "all" ||
@@ -61,7 +58,6 @@ export function FiltersSection({ allRecipes }: { allRecipes: Recipe[] }) {
         });
 
         setFilteredRecipes(filtered);
-        setLoading(false);
     };
 
     const debouncedFilter = debounce(filterRecipes, 200);
@@ -78,14 +74,6 @@ export function FiltersSection({ allRecipes }: { allRecipes: Recipe[] }) {
         maxCalories,
     ]);
 
-    useEffect(() => {
-        if (filteredRecipes.length === 0 && !loading) {
-            const timer = setTimeout(() => {
-                setNoRecipesMessage(true);
-            }, 3000);
-            return () => clearTimeout(timer);
-        }
-    }, [filteredRecipes, loading]);
 
     const clearAllFilters = () => {
         setSearchKeywords("");
@@ -101,12 +89,12 @@ export function FiltersSection({ allRecipes }: { allRecipes: Recipe[] }) {
 
     return (
         <div className="relative bg-gray-50">
-
             <button
                 onClick={() => setFiltersVisible(true)}
                 className="sticky top-3 mt-2 left-1 z-40 p-3 bg-blue-500 text-white rounded-full shadow-lg lg:hidden flex items-center justify-center text-xs font-bold"
             >
-                <IoMdArrowRoundForward className="text-xs mr-1" /> <p>Filtruj</p>
+                <IoMdArrowRoundForward className="text-xs mr-1" />{" "}
+                <p>Filtruj</p>
                 <div className="h-3 w-3 bg-blue-600 absolute top-0 right-0 rounded-full animate-ping" />
                 <div className="h-3 w-3 bg-blue-600 absolute top-0 right-0 rounded-full" />
             </button>
@@ -199,17 +187,9 @@ export function FiltersSection({ allRecipes }: { allRecipes: Recipe[] }) {
                 </div>
 
                 {/* Recipes grid */}
-                <div className="flex-1 p-6 bg-gray-50 rounded-lg">
-                    {noRecipesMessage && (
-                        <p className="text-center text-lg text-gray-500">
-                            Brak potraw spełniających kryteria.
-                        </p>
-                    )}
-                    {loading ? (
-                        <RecipeSkeleton />
-                    ) : (
-                        <RecipesGrid recipes={filteredRecipes} />
-                    )}
+                <div className="flex-1 p-3 bg-gray-50 rounded-lg">
+
+                    <RecipesGrid recipes={filteredRecipes} />
                 </div>
             </div>
         </div>
