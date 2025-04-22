@@ -9,6 +9,28 @@ interface Step {
     image: string;
 }
 
+function removePolishChars(str: string): string {
+    return str
+        .replace(/ą/g, "a")
+        .replace(/ć/g, "c")
+        .replace(/ę/g, "e")
+        .replace(/ł/g, "l")
+        .replace(/ń/g, "n")
+        .replace(/ó/g, "o")
+        .replace(/ś/g, "s")
+        .replace(/ź/g, "z")
+        .replace(/ż/g, "z")
+        .replace(/Ą/g, "A")
+        .replace(/Ć/g, "C")
+        .replace(/Ę/g, "E")
+        .replace(/Ł/g, "L")
+        .replace(/Ń/g, "N")
+        .replace(/Ó/g, "O")
+        .replace(/Ś/g, "S")
+        .replace(/Ź/g, "Z")
+        .replace(/Ż/g, "Z");
+}
+
 export async function POST(req: NextRequest) {
     const body = await req.json();
 
@@ -33,12 +55,10 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: "Missing fields" }, { status: 400 });
     }
 
-    const slug = title
-        .normalize("NFD") // Rozdziela litery i znaki diakrytyczne
-        .replace(/[\u0300-\u036f]/g, "") // Usuwa znaki diakrytyczne
+    const slug = removePolishChars(title)
         .toLowerCase()
         .replace(/\s+/g, "-")
-        .replace(/[^a-z0-9\-]/g, ""); // Usuwa pozostałe niedozwolone znaki
+        .replace(/[^a-z0-9\-]/g, "");
 
     // Konstruujemy frontmatter jako obiekt JS
     const frontmatter = {
