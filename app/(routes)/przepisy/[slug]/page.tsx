@@ -14,46 +14,6 @@ import { FaBurn, FaMoneyBillWave, FaStar } from "react-icons/fa";
 import { GiKnifeFork } from "react-icons/gi";
 import { Metadata } from "next";
 
-export async function generateMetadata({
-    params,
-}: {
-    params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-    const awaitedParams = await Promise.resolve(params);
-    const { slug } = awaitedParams;
-    const recipe = await getRecipeBySlug(slug);
-
-    if (!recipe) return {};
-
-    return {
-        title: recipe.title + " | FameFit",
-        description:
-            recipe.description || `Sprawdź przepis na ${recipe.title}!`,
-        openGraph: {
-            title: recipe.title,
-            description:
-                recipe.description || `Sprawdź przepis na ${recipe.title}!`,
-            images: recipe.image
-                ? [
-                      {
-                          url: recipe.image,
-                          width: 800,
-                          height: 600,
-                          alt: recipe.title,
-                      },
-                  ]
-                : [],
-        },
-        twitter: {
-            card: "summary_large_image",
-            title: recipe.title,
-            description:
-                recipe.description || `Sprawdź przepis na ${recipe.title}!`,
-            images: recipe.image ? [recipe.image] : [],
-        },
-    };
-}
-
 export default async function Page({
     params,
 }: {
@@ -360,4 +320,44 @@ export default async function Page({
             )}
         </div>
     );
+}
+
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+    const awaitedParams = await Promise.resolve(params);
+    const { slug } = awaitedParams;
+    const recipe = await getRecipeBySlug(slug);
+
+    if (!recipe) return {};
+
+    return {
+        title: recipe.title + " | FameFit",
+        description:
+            recipe.description || `Sprawdź przepis na ${recipe.title}!`,
+        openGraph: {
+            title: recipe.title,
+            description:
+                recipe.description || `Sprawdź przepis na ${recipe.title}!`,
+            images: recipe.image
+                ? [
+                      {
+                          url: recipe.image,
+                          width: 800,
+                          height: 600,
+                          alt: recipe.title,
+                      },
+                  ]
+                : [],
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: recipe.title,
+            description:
+                recipe.description || `Sprawdź przepis na ${recipe.title}!`,
+            images: recipe.image ? [recipe.image] : [],
+        },
+    };
 }
