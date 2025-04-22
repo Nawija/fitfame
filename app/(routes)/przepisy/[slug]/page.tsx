@@ -2,7 +2,7 @@ import { getRecipeBySlug } from "@/lib/getRecipes";
 import { getAllRecipes } from "@/lib/getRecipes";
 import { notFound } from "next/navigation";
 import { IoExtensionPuzzleSharp, IoTimeOutline } from "react-icons/io5";
-import { RiPuzzle2Line, RiTimeFill } from "react-icons/ri";
+import { RiTimeFill } from "react-icons/ri";
 import Link from "next/link";
 import Ingredients from "./Ingredients";
 import Image from "next/image";
@@ -12,6 +12,44 @@ import Navigation from "@/components/Navigation";
 import Newsletter from "@/components/Newsletter";
 import { FaBurn, FaMoneyBillWave, FaStar } from "react-icons/fa";
 import { GiKnifeFork } from "react-icons/gi";
+import { Metadata } from "next";
+
+
+// DYNAMICZNE METADANE DLA STRONY
+export async function generateMetadata({
+    params,
+}: {
+    params: { slug: string };
+}): Promise<Metadata> {
+    const recipe = await getRecipeBySlug(params.slug);
+
+    if (!recipe) return {};
+
+    return {
+        title: recipe.title + " | FameFit",
+        description: recipe.description || `Sprawdź przepis na ${recipe.title}!`,
+        openGraph: {
+            title: recipe.title,
+            description: recipe.description || `Sprawdź przepis na ${recipe.title}!`,
+            images: recipe.image
+                ? [
+                      {
+                          url: recipe.image,
+                          width: 800,
+                          height: 600,
+                          alt: recipe.title,
+                      },
+                  ]
+                : [],
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: recipe.title,
+            description: recipe.description || `Sprawdź przepis na ${recipe.title}!`,
+            images: recipe.image ? [recipe.image] : [],
+        },
+    };
+}
 
 export default async function Page({
     params,
