@@ -81,7 +81,7 @@ export default async function Page({
                         <ShareButton title={recipe.title} />
                     </div>
 
-                    <p className="text-sm w-full px-2">{recipe.description}</p>
+                    <p className="text-sm w-full px-2 py-3">{recipe.description}</p>
 
                     {/* <p className="capitalize">
                         <strong className="font-medium">Kategoria:</strong>{" "}
