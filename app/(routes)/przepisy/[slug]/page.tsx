@@ -81,12 +81,9 @@ export default async function Page({
                         <ShareButton title={recipe.title} />
                     </div>
 
-                    <p className="text-sm w-full px-2 py-3">{recipe.description}</p>
-
-                    {/* <p className="capitalize">
-                        <strong className="font-medium">Kategoria:</strong>{" "}
-                        {recipe.category}
-                    </p> */}
+                    <p className="text-sm w-full px-2 py-3">
+                        {recipe.description}
+                    </p>
 
                     <div className="flex items-center justify-start space-x-1 py-4">
                         <div className="flex flex-col items-center justify-center p-2 bg-white rounded-lg border border-gray-100">
@@ -129,41 +126,6 @@ export default async function Page({
                             </p>
                         </div>
                     </div>
-
-                    {/* <div className="grid grid-cols-4 gap-2 text-center my-8">
-                        <div className="bg-pink-200 rounded-xl py-4 shadow">
-                            <p className="text-xs md:text-sm text-gray-700 font-semibold">
-                                Kalorie
-                            </p>
-                            <p className="text-base lg:text-xl font-bold">
-                                {recipe.calories} kcal
-                            </p>
-                        </div>
-                        <div className="bg-blue-200 rounded-xl py-4 shadow">
-                            <p className="text-xs md:text-sm text-gray-700 font-semibold">
-                                Białko
-                            </p>
-                            <p className="text-base lg:text-xl font-bold">
-                                {recipe.protein} g
-                            </p>
-                        </div>
-                        <div className="bg-yellow-200 rounded-xl py-4 shadow">
-                            <p className="text-xs md:text-sm text-gray-700 font-semibold">
-                                Tłuszcz
-                            </p>
-                            <p className="text-base lg:text-xl font-bold">
-                                {recipe.fat} g
-                            </p>
-                        </div>
-                        <div className="bg-violet-200 rounded-xl py-4 shadow">
-                            <p className="text-xs md:text-sm text-gray-700 font-semibold">
-                                Węglowodany
-                            </p>
-                            <p className="text-base lg:text-xl font-bold">
-                                {recipe.carbs} g
-                            </p>
-                        </div>
-                    </div> */}
                 </div>
             </div>
 
@@ -322,42 +284,42 @@ export default async function Page({
     );
 }
 
-export async function generateMetadata({
-    params,
-}: {
-    params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-    const awaitedParams = await Promise.resolve(params);
-    const { slug } = awaitedParams;
-    const recipe = await getRecipeBySlug(slug);
+// export async function generateMetadata({
+//     params,
+// }: {
+//     params: Promise<{ slug: string }>;
+// }): Promise<Metadata> {
+//     const awaitedParams = await Promise.resolve(params);
+//     const { slug } = awaitedParams;
+//     const recipe = await getRecipeBySlug(slug);
 
-    if (!recipe) return {};
+//     if (!recipe) return {};
 
-    return {
-        title: recipe.title + " | FameFit",
-        description:
-            recipe.description || `Sprawdź przepis na ${recipe.title}!`,
-        openGraph: {
-            title: recipe.title,
-            description:
-                recipe.description || `Sprawdź przepis na ${recipe.title}!`,
-            images: recipe.image
-                ? [
-                      {
-                          url: recipe.image,
-                          width: 800,
-                          height: 600,
-                          alt: recipe.title,
-                      },
-                  ]
-                : [],
-        },
-        twitter: {
-            card: "summary_large_image",
-            title: recipe.title,
-            description:
-                recipe.description || `Sprawdź przepis na ${recipe.title}!`,
-            images: recipe.image ? [recipe.image] : [],
-        },
-    };
-}
+//     return {
+//         title: recipe.title + " | FameFit",
+//         description:
+//             recipe.description || `Sprawdź przepis na ${recipe.title}!`,
+//         openGraph: {
+//             title: recipe.title,
+//             description:
+//                 recipe.description || `Sprawdź przepis na ${recipe.title}!`,
+//             images: recipe.image
+//                 ? [
+//                       {
+//                           url: recipe.image,
+//                           width: 800,
+//                           height: 600,
+//                           alt: recipe.title,
+//                       },
+//                   ]
+//                 : [],
+//         },
+//         twitter: {
+//             card: "summary_large_image",
+//             title: recipe.title,
+//             description:
+//                 recipe.description || `Sprawdź przepis na ${recipe.title}!`,
+//             images: recipe.image ? [recipe.image] : [],
+//         },
+//     };
+// }
