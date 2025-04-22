@@ -31,7 +31,7 @@ export const RecipesGrid = ({ recipes }: { recipes: Recipe[] }) => {
 
     return (
         <div>
-            <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 -mt-12 lg:mt-0">
+            <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3">
                 {currentPageRecipes.map((recipe, index) => (
                     <RecipeCard key={index} recipe={recipe} />
                 ))}

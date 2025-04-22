@@ -5,7 +5,7 @@ import { IoClose } from "react-icons/io5";
 import dynamic from "next/dynamic";
 import { FilterContentProps, Recipe } from "@/types/types";
 import { AnimatePresence, motion } from "framer-motion";
-import { IoMdArrowRoundForward } from "react-icons/io";
+import { IoMdOptions } from "react-icons/io";
 import { SpinerLoading } from "@/components/SkeletonUI/SpinerLoading";
 
 const RecipesGrid = dynamic(
@@ -74,7 +74,6 @@ export function FiltersSection({ allRecipes }: { allRecipes: Recipe[] }) {
         maxCalories,
     ]);
 
-
     const clearAllFilters = () => {
         setSearchKeywords("");
         setSelectedCategory("all");
@@ -89,15 +88,29 @@ export function FiltersSection({ allRecipes }: { allRecipes: Recipe[] }) {
 
     return (
         <div className="relative bg-gray-50">
-            <button
-                onClick={() => setFiltersVisible(true)}
-                className="sticky top-3 mt-2 left-1 z-40 p-3 bg-blue-500 text-white rounded-full shadow-lg lg:hidden flex items-center justify-center text-xs font-bold"
-            >
-                <IoMdArrowRoundForward className="text-xs mr-1" />{" "}
-                <p>Filtruj</p>
-                <div className="h-3 w-3 bg-blue-600 absolute top-0 right-0 rounded-full animate-ping" />
-                <div className="h-3 w-3 bg-blue-600 absolute top-0 right-0 rounded-full" />
-            </button>
+            <div className="flex items-center justify-center relative px-4 space-x-4 max-w-xl mx-auto py-4 lg:hidden">
+                <input
+                    type="text"
+                    value={searchKeywords}
+                    onChange={(e) => setSearchKeywords(e.target.value)}
+                    className="w-full p-2 border text-sm border-gray-300 rounded-lg focus:outline-none bg-white"
+                    placeholder="Wyszukaj przepis"
+                />
+                <button
+                    onClick={() => setFiltersVisible(true)}
+                    className="z-40 p-2 bg-blue-500 text-white rounded-lg"
+                >
+                    <IoMdOptions className="text-xl" />
+                </button>
+                {searchKeywords && (
+                    <button
+                        onClick={clearSearch}
+                        className="absolute right-2 text-gray-500 hover:text-gray-700"
+                    >
+                        <IoClose className="cursor-pointer" />
+                    </button>
+                )}
+            </div>
 
             {/* Slide-in filters panel (mobile) */}
             <AnimatePresence>
@@ -187,8 +200,7 @@ export function FiltersSection({ allRecipes }: { allRecipes: Recipe[] }) {
                 </div>
 
                 {/* Recipes grid */}
-                <div className="flex-1 p-3 bg-gray-50 rounded-lg">
-
+                <div className="flex-1 px-2 lg:p-3 bg-gray-50 rounded-lg">
                     <RecipesGrid recipes={filteredRecipes} />
                 </div>
             </div>
