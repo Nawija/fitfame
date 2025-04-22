@@ -23,7 +23,7 @@ export const RecipesGrid = ({ recipes }: { recipes: Recipe[] }) => {
 
     return (
         <div>
-            <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 -mt-12 lg:mt-0">
+            <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 -mt-12 lg:mt-0">
                 {recipes.length === 0
                     ? Array.from({ length: currentPageRecipes.length }).map(
                           (_, idx) => <RecipeSkeleton key={idx} />

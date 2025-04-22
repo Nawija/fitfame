@@ -76,10 +76,10 @@ export default function Nav() {
                     pathname === "/" ? "fixed top-0" : "static"
                 } z-50 w-screen transition-all ${kanit.className} ${
                     hasShadow
-                        ? "bg-white/90 backdrop-blur-md text-black"
+                        ? "bg-white/90 backdrop-blur-md text-gray-700"
                         : pathname === "/"
                         ? "bg-transparent text-white"
-                        : "bg-white text-black"
+                        : "bg-white text-gray-700"
                 }`}
             >
                 <div className="mx-auto flex items-center justify-between max-w-screen-2xl px-3 py-1.5 relative w-full z-50">
@@ -163,7 +163,7 @@ export default function Nav() {
                     <nav className="hidden lg:block w-full">
                         <ul className="flex items-center justify-center xl:space-x-4 space-x-2 absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
                             {NAVLINKS.map((link) => (
-                                <li key={link.label} className="relative w-max">
+                                <li key={link.label} className="relative w-max font-medium">
                                     <Link
                                         href={link.href}
                                         className={` py-4 px-1 uppercase lg:text-sm transition-all hover:text-[#a58b34] ${

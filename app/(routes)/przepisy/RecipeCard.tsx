@@ -47,7 +47,7 @@ export const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
             >
                 <div className="w-full">
                     <div className="relative w-full">
-                        <div className="relative w-full h-48 object-cover rounded-md mb-6 overflow-hidden">
+                        <div className="relative w-full h-44 object-cover rounded-md mb-6 overflow-hidden">
                             {!imageLoaded && (
                                 <div className="absolute inset-0 bg-stone-50 rounded-md overflow-hidden">
                                     <div className="w-full h-full shimmer" />
@@ -74,16 +74,17 @@ export const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
                         </div>
                     </div>
 
-                    <h3 className="text-xl capitalize px-3 font-semibold text-gray-800 mb-2">
-                        {recipe.title}
+                    <h3 className="text-lg px-3 font-semibold text-gray-800 mb-2">
+                        {recipe.title.charAt(0).toUpperCase() +
+                            recipe.title.slice(1).toLowerCase()}
                     </h3>
-                    <p className="text-sm capitalize text-gray-600">
+                    <p className="text-sm capitalize text-gray-700">
                         {recipe.category}
                     </p>
-                    <p className="text-lg font-semibold mt-2">
+                    <p className="text-lg font-semibold">
                         {recipe.calories} kcal
                     </p>
-                    <p className="text-sm text-gray-600 mt-1">
+                    <p className="text-sm text-gray-700 mt-1">
                         B: {recipe.protein}g T: {recipe.fat}g W: {recipe.carbs}g
                     </p>
                 </div>
