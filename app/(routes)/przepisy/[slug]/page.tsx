@@ -130,57 +130,55 @@ export default async function Page({
             </div>
 
             <section className="max-w-6xl mx-auto mb-6 flex items-start justify-center flex-col lg:flex-row space-y-8">
-                <div className=" w-full lg:w-1/2 px-2 space-y-6">
-                    {/* <div className="mt-6 lg:mb-6 lg:mt-0 w-full flex items-center justify-end ">
-                        <ShareButton title={recipe.title} />
-                    </div> */}
+                <div className=" w-full lg:w-[70%] px-2 space-y-6">
                     <Ingredients ingredients={recipe.ingredients} />
-                    <div className="p-8 rounded-lg border border-gray-100 bg-white mt-8 lg:mt-0 w-full">
-                        <h3 className="text-2xl font-semibold text-gray-800 mb-4">
+                    <div className="p-6 rounded-lg border border-gray-100 bg-white mt-8 lg:mt-0 w-full">
+                        <h3 className="text-xl font-semibold text-gray-800 mb-4">
                             Wartości odżywcze:
                         </h3>
 
-                        <div className="text-sm text-gray-700 border border-gray-200 rounded-lg overflow-hidden">
-                            <div className="flex justify-between bg-gray-50 px-4 py-2 font-medium">
-                                <span>Kategoria</span>
-                                <span className="text-gray-900">
-                                    Niskokaloryczne
-                                </span>
-                            </div>
-
-                            <div className="flex justify-between px-4 py-2 border-t border-gray-200">
-                                <span>Wartość energetyczna</span>
-                                <span>
-                                    <strong>{recipe.calories}</strong> kcal
-                                </span>
-                            </div>
-
-                            <div className="flex justify-between px-4 py-2 border-t border-gray-200">
-                                <span>Białko</span>
-                                <span>
-                                    <strong>{recipe.protein}</strong> g
-                                </span>
-                            </div>
-
-                            <div className="flex justify-between px-4 py-2 border-t border-gray-200">
-                                <span>Tłuszcze</span>
-                                <span>
-                                    <strong>{recipe.fat}</strong> g
-                                </span>
-                            </div>
-
-                            <div className="flex justify-between px-4 py-2 border-t border-gray-200">
-                                <span>Węglowodany</span>
-                                <span>
-                                    <strong>{recipe.carbs}</strong> g
-                                </span>
-                            </div>
-                            <div className="flex justify-between px-4 py-2 border-t border-gray-200">
-                                <span>Błonnik</span>
-                                <span>
-                                    <strong>{recipe.fiber}</strong> g
-                                </span>
-                            </div>
+                        <div className="text-sm text-gray-700 overflow-hidden">
+                            {[
+                                {
+                                    label: "Kategoria",
+                                    value: "Niskokaloryczne",
+                                },
+                                {
+                                    label: "Wartość energetyczna",
+                                    value: `${recipe.calories} kcal`,
+                                },
+                                {
+                                    label: "Białko",
+                                    value: `${recipe.protein} g`,
+                                },
+                                { label: "Tłuszcze", value: `${recipe.fat} g` },
+                                {
+                                    label: "Węglowodany",
+                                    value: `${recipe.carbs} g`,
+                                },
+                                {
+                                    label: "Błonnik",
+                                    value: `${recipe.fiber} g`,
+                                },
+                            ].map((item, index) => (
+                                <div
+                                    key={index}
+                                    className={`flex justify-between px-4 py-2 border-t border-gray-200 ${
+                                        index % 2 === 0
+                                            ? "bg-white"
+                                            : "bg-gray-50"
+                                    } ${index === 0 ? "font-medium" : ""}`}
+                                >
+                                    <span>{item.label}</span>
+                                    <span
+                                        className={
+                                            index === 0 ? "text-gray-900" : ""
+                                        }
+                                    >
+                                        {item.value}
+                                    </span>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>

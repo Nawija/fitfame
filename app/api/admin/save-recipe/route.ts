@@ -34,9 +34,11 @@ export async function POST(req: NextRequest) {
     }
 
     const slug = title
+        .normalize("NFD") // Rozdziela litery i znaki diakrytyczne
+        .replace(/[\u0300-\u036f]/g, "") // Usuwa znaki diakrytyczne
         .toLowerCase()
         .replace(/\s+/g, "-")
-        .replace(/[^a-z0-9\-]/g, "");
+        .replace(/[^a-z0-9\-]/g, ""); // Usuwa pozostałe niedozwolone znaki
 
     // Konstruujemy frontmatter jako obiekt JS
     const frontmatter = {
