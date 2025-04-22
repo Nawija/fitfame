@@ -82,7 +82,7 @@ export default function Nav() {
                         : "bg-white text-black"
                 }`}
             >
-                <div className="mx-auto flex items-center justify-between max-w-screen-2xl p-4 relative w-full z-50">
+                <div className="mx-auto flex items-center justify-between max-w-screen-2xl px-3 py-1.5 relative w-full z-50">
                     <Logo />
                     <MenuBurger
                         handleShowMenu={() => setShowMenu(!showMenu)}

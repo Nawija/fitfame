@@ -34,6 +34,7 @@ export type Recipe = {
     protein: number;
     fat: number;
     carbs: number;
+    fiber: number;
     description: string;
     ingredients: string[];
     filter?: string;
@@ -76,6 +77,7 @@ export interface FormState {
     protein: number;
     fat: number;
     carbs: number;
+    fiber: number;
     time: string;
     description: string;
     content: string;
@@ -92,6 +94,7 @@ export interface FormRecipePage {
     protein: number;
     fat: number;
     carbs: number;
+    fiber: number;
     time: string;
     description: string;
     content: string;

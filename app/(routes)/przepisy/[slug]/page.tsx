@@ -1,8 +1,8 @@
 import { getRecipeBySlug } from "@/lib/getRecipes";
 import { getAllRecipes } from "@/lib/getRecipes";
 import { notFound } from "next/navigation";
-import { IoTimeOutline } from "react-icons/io5";
-import { RiPuzzle2Line } from "react-icons/ri";
+import { IoExtensionPuzzleSharp, IoTimeOutline } from "react-icons/io5";
+import { RiPuzzle2Line, RiTimeFill } from "react-icons/ri";
 import Link from "next/link";
 import Ingredients from "./Ingredients";
 import Image from "next/image";
@@ -10,6 +10,8 @@ import ShareButton from "@/components/Buttons/ShareButton";
 import { Recipe } from "@/types/types";
 import Navigation from "@/components/Navigation";
 import Newsletter from "@/components/Newsletter";
+import { FaBurn, FaMoneyBillWave, FaStar } from "react-icons/fa";
+import { GiKnifeFork } from "react-icons/gi";
 
 export default async function Page({
     params,
@@ -41,16 +43,7 @@ export default async function Page({
 
     return (
         <div className="w-full overflow-hidden relative h-full">
-            <div className="relative -z-10 top-0 left-0 w-full h-8 lg:h-12 overflow-hidden">
-                <Image
-                    fill
-                    src={recipe.image}
-                    alt={recipe.title}
-                    className="w-full object-cover mb-6 shadow h-8 lg:h-12"
-                />
-                <div className="absolute top-0 left-0 w-full h-8 lg:h-12 overflow-hidden bg-black/30" />
-            </div>
-            <div className="my-4 px-4 max-w-7xl mx-auto">
+            <div className="my-3 px-4 max-w-6xl mx-auto">
                 <Navigation
                     links={[
                         { name: "Przepisy", href: "/przepisy" },
@@ -61,45 +54,82 @@ export default async function Page({
                     ]}
                 />
             </div>
-            <div className=" mx-auto anim-opacity px-4 py-12 flex items-center justify-center lg:items-start flex-col lg:flex-row lg:space-x-7 relative">
-                <div>
-                    <h1 className="text-4xl uppercase lg:text-4xl font-bold text-gray-800 mb-4">
+            <div className="max-w-6xl mx-auto anim-opacity px-2 py-2 flex items-center justify-center lg:items-start flex-col lg:space-x-7 relative">
+                <div className="w-full h-full">
+                    <div className="w-full overflow-hidden h-62 lg:min-h-[500px] relative">
+                        <Image
+                            fill
+                            src={recipe.image}
+                            alt={recipe.title}
+                            className="w-full object-cover rounded-xl shadow"
+                        />
+                    </div>
+                    <h1 className="text-2xl lg:text-4xl font-bold text-gray-800 py-4">
                         {recipe.title}
                     </h1>
 
-                    <p className="capitalize">
+                    <div className="flex items-center justify-between space-x-1 font-medium">
+                        <div className="flex items-center justify-start space-x-1">
+                            <FaStar className="text-yellow-500" />{" "}
+                            <span>4.7</span>{" "}
+                            <span className="text-yellow-600">|</span>
+                            <p className="text-yellow-600">
+                                {recipe.steps.length} Kroki
+                            </p>
+                        </div>
+                        <ShareButton title={recipe.title} />
+                    </div>
+
+                    <p className="text-sm w-full px-2">{recipe.description}</p>
+
+                    {/* <p className="capitalize">
                         <strong className="font-medium">Kategoria:</strong>{" "}
                         {recipe.category}
-                    </p>
-                    <div className="flex items-center justify-start space-x-4 py-4">
-                        <div className="flex items-center justify-center text-pink-600 w-max">
-                            <IoTimeOutline className="mr-1 text-2xl" />
-                            <p className="text-xl font-medium">{recipe.time}</p>
+                    </p> */}
+
+                    <div className="flex items-center justify-start space-x-1 py-4">
+                        <div className="flex flex-col items-center justify-center p-2 bg-white rounded-lg border border-gray-100">
+                            <div className="py-2 px-3 bg-yellow-100 rounded-lg">
+                                <RiTimeFill className="text-2xl text-yellow-500" />
+                            </div>
+                            <p className="text-xs font-semibold mt-1">
+                                {recipe.time}
+                            </p>
                         </div>
 
-                        <div
-                            className={`flex items-center justify-center ${
-                                recipe.level.toLowerCase() === "łatwy"
-                                    ? "text-green-600"
-                                    : recipe.level.toLowerCase() === "średni"
-                                    ? "text-yellow-600"
-                                    : "text-red-600"
-                            }`}
-                        >
-                            <RiPuzzle2Line className="mr-1 text-2xl" />
-                            <p className="text-xl font-medium capitalize">
+                        <div className="flex flex-col items-center justify-center p-2 bg-white rounded-lg border border-gray-100">
+                            <div className="py-2 px-3 bg-yellow-100 rounded-lg">
+                                <GiKnifeFork className="text-2xl text-yellow-500" />
+                            </div>
+                            <p className="text-xs font-semibold mt-1">
+                                4 porcje
+                            </p>
+                        </div>
+                        <div className="flex flex-col items-center justify-center p-2 bg-white rounded-lg border border-gray-100">
+                            <div className="py-2 px-3 bg-yellow-100 rounded-lg">
+                                <FaMoneyBillWave className="text-2xl text-yellow-500" />
+                            </div>
+                            <p className="text-xs font-semibold mt-1">Tani</p>
+                        </div>
+                        <div className="flex flex-col items-center justify-center p-2 bg-white rounded-lg border border-gray-100">
+                            <div className="py-2 px-3 bg-yellow-100 rounded-lg">
+                                <IoExtensionPuzzleSharp className="text-2xl text-yellow-500" />
+                            </div>
+                            <p className="text-xs font-semibold mt-1">
                                 {recipe.level}
+                            </p>
+                        </div>
+                        <div className="flex flex-col items-center justify-center p-2 bg-white rounded-lg border border-gray-100">
+                            <div className="py-2 px-3 bg-yellow-100 rounded-lg">
+                                <FaBurn className="text-2xl text-yellow-500" />
+                            </div>
+                            <p className="text-xs font-semibold mt-1">
+                                {recipe.calories} kcal
                             </p>
                         </div>
                     </div>
 
-                    <img
-                        src={recipe.image}
-                        alt={recipe.title}
-                        className="w-full object-cover rounded-xl shadow max-h-[550px] lg:min-w-[850px]"
-                    />
-
-                    <div className="grid grid-cols-4 gap-2 text-center my-8">
+                    {/* <div className="grid grid-cols-4 gap-2 text-center my-8">
                         <div className="bg-pink-200 rounded-xl py-4 shadow">
                             <p className="text-xs md:text-sm text-gray-700 font-semibold">
                                 Kalorie
@@ -132,76 +162,99 @@ export default async function Page({
                                 {recipe.carbs} g
                             </p>
                         </div>
-                    </div>
-
-                    <p className="text-lg pb-8 w-full px-2">
-                        {recipe.description}
-                    </p>
-                </div>
-
-                <div className="space-y-6">
-                    <div className="mt-6 lg:mb-6 lg:mt-0 w-full flex items-center justify-end ">
-                        <ShareButton title={recipe.title} />
-                    </div>
-                    <Ingredients ingredients={recipe.ingredients} />
-                    <div className="p-8 rounded-lg border border-gray-200 bg-gray-100 mt-8 lg:mt-0 lg:min-w-[400px] w-full">
-                        <h3 className="text-2xl font-semibold text-gray-800 mb-4">
-                            Sposób przygotowania:
-                        </h3>
-                        <div className="space-y-2">
-                            {recipe.steps.map((step, index) => (
-                                <Link
-                                    href={`#${step.title}`}
-                                    key={index}
-                                    className="flex items-center gap-2"
-                                >
-                                    <div className="min-w-6 min-h-6 w-6 h-6 flex items-center justify-center rounded-full bg-amber-400 text-white font-bold text-base shadow">
-                                        {index + 1}
-                                    </div>
-                                    <div>
-                                        <p className="text-lg font-semibold text-gray-800">
-                                            {step.title}
-                                        </p>
-                                    </div>
-                                </Link>
-                            ))}
-                        </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
-            <div className="text-start bg-gray-50 flex flex-col items-center justify-center mx-auto border border-gray-200 py-12 px-4 space-y-8">
-                {recipe.steps?.map((s, i) => (
-                    <div
-                        key={i}
-                        id={s.title}
-                        className="mx-auto space-y-4 flex items-start justify-center flex-col"
-                    >
-                        <div className="space-y-4 ">
-                            <div className="relative w-max">
-                                <span className="absolute -top-5 font-bold -left-3 bg-yellow-500 py-0 px-2 text-white rounded-full">
-                                    {i + 1}
+
+            <section className="max-w-6xl mx-auto mb-6 flex items-start justify-center flex-col lg:flex-row space-y-8">
+                <div className=" w-full lg:w-1/2 px-2 space-y-6">
+                    {/* <div className="mt-6 lg:mb-6 lg:mt-0 w-full flex items-center justify-end ">
+                        <ShareButton title={recipe.title} />
+                    </div> */}
+                    <Ingredients ingredients={recipe.ingredients} />
+                    <div className="p-8 rounded-lg border border-gray-100 bg-white mt-8 lg:mt-0 w-full">
+                        <h3 className="text-2xl font-semibold text-gray-800 mb-4">
+                            Wartości odżywcze:
+                        </h3>
+
+                        <div className="text-sm text-gray-700 border border-gray-200 rounded-lg overflow-hidden">
+                            <div className="flex justify-between bg-gray-50 px-4 py-2 font-medium">
+                                <span>Kategoria</span>
+                                <span className="text-gray-900">
+                                    Niskokaloryczne
                                 </span>
-                                <h2 className="text-2xl font-bold text-gray-800">
-                                    {s?.title}
-                                </h2>
                             </div>
 
-                            <ol className="list-decimal pl-6 text-lg font-medium text-gray-700 space-y-1">
-                                {s?.description.map((item, idx) => (
-                                    <li key={idx}>{item}</li>
-                                ))}
-                            </ol>
+                            <div className="flex justify-between px-4 py-2 border-t border-gray-200">
+                                <span>Wartość energetyczna</span>
+                                <span>
+                                    <strong>{recipe.calories}</strong> kcal
+                                </span>
+                            </div>
+
+                            <div className="flex justify-between px-4 py-2 border-t border-gray-200">
+                                <span>Białko</span>
+                                <span>
+                                    <strong>{recipe.protein}</strong> g
+                                </span>
+                            </div>
+
+                            <div className="flex justify-between px-4 py-2 border-t border-gray-200">
+                                <span>Tłuszcze</span>
+                                <span>
+                                    <strong>{recipe.fat}</strong> g
+                                </span>
+                            </div>
+
+                            <div className="flex justify-between px-4 py-2 border-t border-gray-200">
+                                <span>Węglowodany</span>
+                                <span>
+                                    <strong>{recipe.carbs}</strong> g
+                                </span>
+                            </div>
+                            <div className="flex justify-between px-4 py-2 border-t border-gray-200">
+                                <span>Błonnik</span>
+                                <span>
+                                    <strong>{recipe.fiber}</strong> g
+                                </span>
+                            </div>
                         </div>
-                        {s?.image && (
-                            <img
-                                src={s.image}
-                                alt={s.title}
-                                className="w-full max-w-2xl rounded-lg shadow-md"
-                            />
-                        )}
                     </div>
-                ))}
-            </div>
+                </div>
+                <div className="text-start bg-white flex flex-col items-center justify-center mx-3 px-2 rounded-lg border border-gray-100 py-12 space-y-20">
+                    {recipe.steps?.map((s, i) => (
+                        <div
+                            key={i}
+                            id={s.title}
+                            className="space-y-4 mx-4 flex items-center justify-center flex-col"
+                        >
+                            <div className="space-y-4 ">
+                                <div className="relative w-max">
+                                    <span className="absolute -top-4 font-bold text-xs -left-1 bg-yellow-500 py-0 px-2 text-white rounded-full">
+                                        Krok {i + 1}
+                                    </span>
+                                    <h2 className="text-2xl font-bold text-gray-800">
+                                        {s?.title}
+                                    </h2>
+                                </div>
+
+                                <ul className="list-disc pl-6 text-base max-w-11/12 font-medium text-gray-700 space-y-1">
+                                    {s?.description.map((item, idx) => (
+                                        <li key={idx}>{item}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                            {s?.image && (
+                                <img
+                                    src={s.image}
+                                    alt={s.title}
+                                    className="w-full max-w-2xl rounded-lg shadow-md"
+                                />
+                            )}
+                        </div>
+                    ))}
+                </div>
+            </section>
 
             <Newsletter />
 

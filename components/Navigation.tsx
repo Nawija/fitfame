@@ -8,16 +8,19 @@ const Navigation = ({ links }: { links: { name: string; href: string }[] }) => {
     };
 
     return (
-        <div className="flex items-center text-xs w-full">
+        <div className="flex items-center text-[9px] lg:text-xs w-full">
             <button
                 onClick={handleBack}
-                className="flex items-center justify-center cursor-pointer font-semibold text-gray-800 hover:text-gray-900 mr-6"
+                className="flex items-center justify-center cursor-pointer font-semibold text-gray-800 hover:text-gray-900 mr-3"
             >
-                <IoArrowBack className="mr-2" />
+                <IoArrowBack className="mr-1" />
                 <span>Powrót</span>
             </button>
             {links.map((link, index) => (
-                <span key={index} className="flex items-center justify-center uppercase">
+                <span
+                    key={index}
+                    className="flex items-center justify-center font-semibold"
+                >
                     <Link
                         href={link.href}
                         className="text-gray-600 hover:text-gray-800"
@@ -26,7 +29,9 @@ const Navigation = ({ links }: { links: { name: string; href: string }[] }) => {
                     </Link>
                     {/* Separator | lub / */}
                     {index < links.length - 1 && (
-                        <span className="mx-2 text-gray-700 font-medium">/</span>
+                        <span className="mx-2 text-gray-700">
+                            /
+                        </span>
                     )}
                 </span>
             ))}
