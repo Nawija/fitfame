@@ -12,7 +12,7 @@ import Navigation from "@/components/Navigation";
 import Newsletter from "@/components/Newsletter";
 import { FaBurn, FaMoneyBillWave, FaStar } from "react-icons/fa";
 import { GiKnifeFork } from "react-icons/gi";
-import { Metadata } from "next";
+// import { Metadata } from "next";
 
 export default async function Page({
     params,
