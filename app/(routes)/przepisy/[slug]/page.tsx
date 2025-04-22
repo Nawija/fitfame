@@ -14,23 +14,25 @@ import { FaBurn, FaMoneyBillWave, FaStar } from "react-icons/fa";
 import { GiKnifeFork } from "react-icons/gi";
 import { Metadata } from "next";
 
-
-// DYNAMICZNE METADANE DLA STRONY
 export async function generateMetadata({
     params,
 }: {
-    params: { slug: string };
+    params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-    const recipe = await getRecipeBySlug(params.slug);
+    const awaitedParams = await Promise.resolve(params);
+    const { slug } = awaitedParams;
+    const recipe = await getRecipeBySlug(slug);
 
     if (!recipe) return {};
 
     return {
         title: recipe.title + " | FameFit",
-        description: recipe.description || `Sprawdź przepis na ${recipe.title}!`,
+        description:
+            recipe.description || `Sprawdź przepis na ${recipe.title}!`,
         openGraph: {
             title: recipe.title,
-            description: recipe.description || `Sprawdź przepis na ${recipe.title}!`,
+            description:
+                recipe.description || `Sprawdź przepis na ${recipe.title}!`,
             images: recipe.image
                 ? [
                       {
@@ -45,7 +47,8 @@ export async function generateMetadata({
         twitter: {
             card: "summary_large_image",
             title: recipe.title,
-            description: recipe.description || `Sprawdź przepis na ${recipe.title}!`,
+            description:
+                recipe.description || `Sprawdź przepis na ${recipe.title}!`,
             images: recipe.image ? [recipe.image] : [],
         },
     };
