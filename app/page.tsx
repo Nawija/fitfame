@@ -29,7 +29,7 @@ export default function Home() {
                 </svg>
 
                 <div className="absolute inset-0 bg-black/60 -z-20" />
-                <h1 className="font-bold uppercase text-5xl lg:text-9xl z-20 h-full w-3/4 mx-auto text-center flex items-center justify-center text-white">
+                <h1 className="font-bold uppercase text-5xl acce lg:text-9xl z-20 h-full w-3/4 mx-auto text-center flex items-center justify-center text-white">
                     Zmień swoje ciało już dziś!
                 </h1>
             </div>
