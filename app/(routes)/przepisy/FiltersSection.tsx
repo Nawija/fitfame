@@ -26,6 +26,7 @@ export function FiltersSection({ allRecipes }: { allRecipes: Recipe[] }) {
     const [minCalories, setMinCalories] = useState(0);
     const [maxCalories, setMaxCalories] = useState(3000);
     const [filtersVisible, setFiltersVisible] = useState(false);
+    
 
     const debounce = (fn: () => void, delay: number) => {
         let timeout: NodeJS.Timeout;
@@ -76,7 +77,7 @@ export function FiltersSection({ allRecipes }: { allRecipes: Recipe[] }) {
 
     const clearAllFilters = () => {
         setSearchKeywords("");
-        setSelectedCategory("all");
+        setSelectedCategory("");
         setProteinRange(0);
         setFatRange(0);
         setCarbsRange(0);
@@ -89,27 +90,29 @@ export function FiltersSection({ allRecipes }: { allRecipes: Recipe[] }) {
     return (
         <div className="relative bg-gray-50">
             <div className="flex items-center justify-center relative px-4 space-x-4 max-w-xl mx-auto py-4 lg:hidden">
-                <input
-                    type="text"
-                    value={searchKeywords}
-                    onChange={(e) => setSearchKeywords(e.target.value)}
-                    className="w-full p-2 border text-[16px] border-gray-300 rounded-lg focus:outline-none bg-white"
-                    placeholder="Wyszukaj przepis"
-                />
+                <div className="relative w-full">
+                    <input
+                        type="text"
+                        value={searchKeywords}
+                        onChange={(e) => setSearchKeywords(e.target.value)}
+                        className="w-full p-2 border text-[16px] border-gray-300 rounded-lg focus:outline-none bg-white"
+                        placeholder="Wyszukaj przepis"
+                    />
+                    {searchKeywords && (
+                        <button
+                            onClick={clearSearch}
+                            className="absolute top-1/2 -translate-y-1/2 right-1 p-2 text-gray-500 hover:text-gray-700"
+                        >
+                            <IoClose className="cursor-pointer" />
+                        </button>
+                    )}
+                </div>
                 <button
                     onClick={() => setFiltersVisible(true)}
                     className="z-40 p-2 bg-blue-500 text-white rounded-lg"
                 >
                     <IoMdOptions className="text-xl" />
                 </button>
-                {searchKeywords && (
-                    <button
-                        onClick={clearSearch}
-                        className="absolute right-2 text-gray-500 hover:text-gray-700"
-                    >
-                        <IoClose className="cursor-pointer" />
-                    </button>
-                )}
             </div>
 
             {/* Slide-in filters panel (mobile) */}
@@ -240,7 +243,7 @@ function FilterContent({
                 {searchKeywords && (
                     <button
                         onClick={clearSearch}
-                        className="absolute right-2 text-gray-500 hover:text-gray-700"
+                        className="absolute right-1 p-2 text-gray-500 hover:text-gray-700"
                     >
                         <IoClose className="cursor-pointer" />
                     </button>
