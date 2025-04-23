@@ -93,7 +93,7 @@ export function FiltersSection({ allRecipes }: { allRecipes: Recipe[] }) {
                     type="text"
                     value={searchKeywords}
                     onChange={(e) => setSearchKeywords(e.target.value)}
-                    className="w-full p-2 border text-sm border-gray-300 rounded-lg focus:outline-none bg-white"
+                    className="w-full p-2 border text-[16px] border-gray-300 rounded-lg focus:outline-none bg-white"
                     placeholder="Wyszukaj przepis"
                 />
                 <button
@@ -234,7 +234,7 @@ function FilterContent({
                     type="text"
                     value={searchKeywords}
                     onChange={(e) => setSearchKeywords(e.target.value)}
-                    className="w-full p-2 border text-sm border-gray-300 rounded-lg focus:outline-none"
+                    className="w-full p-2 border text-[16px] border-gray-300 rounded-lg focus:outline-none"
                     placeholder="Wyszukaj"
                 />
                 {searchKeywords && (
