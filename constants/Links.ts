@@ -19,10 +19,7 @@ export const NAVLINKS = [
         label: "Kalkulatory",
         href: "/kalkulatory",
     },
-    {
-        label: "Biblioteka ćwiczeń",
-        href: "/biblioteka-cwiczen",
-    },
+
     {
         label: "Przepisy",
         href: "/przepisy",
@@ -30,5 +27,9 @@ export const NAVLINKS = [
     {
         label: "Kontakt",
         href: "/kontakt",
+    },
+    {
+        label: "Sklep",
+        href: "/sklep",
     },
 ];
