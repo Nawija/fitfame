@@ -1,22 +1,9 @@
-import { Metadata } from "next";
-import { LunchboxProduct } from "./LunchboxProduct";
-
-export const metadata: Metadata = {
-    title: "Lunchbox premium",
-    description:
-        "Stylowy i praktyczny lunchbox do pracy, szkoły lub natrening. Trzyma temperaturę i wygląda świetnie",
-    openGraph: {
-        title: "Lunchbox premium",
-        description:
-            " Stylowy i praktyczny lunchbox do pracy, szkoły lub natrening. Trzyma temperaturę i wygląda świetnie",
-        images: "/images/sklep/lunchbox1.avif",
-    },
-};
-
 export default function Sklep() {
     return (
-        <div className="max-w-5xl mx-auto px-4 lg:py-20 py-6">
-            <LunchboxProduct />
+        <div className="grid grid-cols-4 w-full relative max-w-7xl mx-auto py-12">
+            <div className="bg-red-300 w-full h-full p-4 flex items-center justify-center flex-col">
+                <p>Title</p>
+            </div>
         </div>
     );
 }

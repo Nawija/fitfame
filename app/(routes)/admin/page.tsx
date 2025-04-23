@@ -9,6 +9,9 @@ export default function page() {
                 <Link href="/admin/przepisy">
                     <MainBtn>Przepisy</MainBtn>
                 </Link>
+                <Link href="/admin/produkty">
+                    <MainBtn>Produkty</MainBtn>
+                </Link>
                 <Link href="/admin/blog">
                     <MainBtn>Blog</MainBtn>
                 </Link>

@@ -1,0 +1,26 @@
+import { Metadata } from "next";
+import { LunchboxProduct } from "./LunchboxProduct";
+
+export const metadata: Metadata = {
+    title: "Lunchbox premium",
+    description:
+        "Stylowy i praktyczny lunchbox do pracy, szkoły lub natrening. Trzyma temperaturę i wygląda świetnie",
+    openGraph: {
+        title: "Lunchbox premium",
+        description:
+            " Stylowy i praktyczny lunchbox do pracy, szkoły lub natrening. Trzyma temperaturę i wygląda świetnie",
+        images: "/images/sklep/lunchbox1.avif",
+    },
+};
+
+export default function Sklep() {
+    return (
+        <div className="max-w-5xl mx-auto px-4 lg:py-20 py-6">
+            <LunchboxProduct
+                title={"Lunchbox premium"}
+                price={49.99}
+                image={"/images/sklep/lunchbox1.avif"}
+            />
+        </div>
+    );
+}

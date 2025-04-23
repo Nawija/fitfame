@@ -3,9 +3,16 @@
 import ShareButton from "@/components/Buttons/ShareButton";
 import Image from "next/image";
 import { useState } from "react";
+
+type LunchboxProductProps = {
+    title: string;
+    price: number;
+    image: string | File | null;
+};
+
 const sizes = ["500ml", "800ml", "1000ml", "1500ml"];
 
-export function LunchboxProduct() {
+export function LunchboxProduct({ title, price, image }: LunchboxProductProps) {
     const [selectedSize, setSelectedSize] = useState("500ml");
 
     return (
@@ -14,50 +21,35 @@ export function LunchboxProduct() {
             <div className="space-y-4">
                 <div className="relative w-full aspect-square bg-gray-100 rounded-lg overflow-hidden">
                     <Image
-                        src="/images/sklep/lunchbox1.avif"
-                        alt="Lunchbox"
+                        src={
+                            typeof image === "string"
+                                ? image
+                                : image
+                                ? URL.createObjectURL(image)
+                                : "/placeholder.jpg"
+                        }
+                        alt={title}
                         fill
                         className="object-cover"
                     />
                 </div>
-                <div className="flex gap-4">
-                    {[
-                        "/images/sklep/lunchbox2.avif",
-                        "/images/sklep/lunchbox3.avif",
-                        "/images/sklep/lunchbox4.avif",
-                    ].map((img, i) => (
-                        <div
-                            key={i}
-                            className="relative w-1/3 aspect-square bg-gray-100 rounded-lg overflow-hidden"
-                        >
-                            <Image
-                                src={img}
-                                alt={`Lunchbox ${i + 1}`}
-                                fill
-                                className="object-cover"
-                            />
-                        </div>
-                    ))}
-                </div>
+                {/* Galeria miniatur można pominąć lub dostosować jeśli chcesz tylko 1 zdjęcie */}
             </div>
 
             {/* Szczegóły produktu */}
             <div className="space-y-6">
-                <h1 className="text-3xl font-bold text-gray-900">
-                    Lunchbox premium
-                </h1>
+                <h1 className="text-3xl font-bold text-gray-900">{title}</h1>
                 <p className="text-gray-600">
                     Stylowy i praktyczny lunchbox do pracy, szkoły lub na
                     trening. Trzyma temperaturę i wygląda świetnie.
                 </p>
 
-                {/* Rozmiary */}
                 <div>
                     <div className="mb-4 flex items-center justify-between">
-                        <h3 className="text-sm font-semibold text-gray-700 ">
+                        <h3 className="text-sm font-semibold text-gray-700">
                             Rozmiar
                         </h3>
-                        <ShareButton title="sklep" />
+                        <ShareButton title={title} />
                     </div>
                     <div className="flex gap-2">
                         {sizes.map((size) => (
@@ -76,10 +68,10 @@ export function LunchboxProduct() {
                     </div>
                 </div>
 
-                {/* Cena */}
-                <div className="text-2xl font-bold text-blue-600">49,99 zł</div>
+                <div className="text-2xl font-bold text-blue-600">
+                    {price.toFixed(2)} zł
+                </div>
 
-                {/* Przycisk */}
                 <button
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200"
                     onClick={() => alert("Dodałeś do koszyka (symulacja)")}

@@ -101,3 +101,14 @@ export interface FormRecipePage {
     ingredients: string[];
     steps: Step[];
 }
+
+
+export interface FormProduktyPage {
+    image: File | null;
+    title: string;
+    slug: string;
+    category: "LunchBox" | "TShirt" | "Akcesoria" ;
+    price: number;
+    description: string;
+    content: string;
+}
