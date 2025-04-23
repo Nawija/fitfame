@@ -1,5 +1,6 @@
 "use client";
 
+import ShareButton from "@/components/Buttons/ShareButton";
 import Image from "next/image";
 import { useState } from "react";
 const sizes = ["500ml", "800ml", "1000ml", "1500ml"];
@@ -20,21 +21,23 @@ export function LunchboxProduct() {
                     />
                 </div>
                 <div className="flex gap-4">
-                    {["/images/sklep/lunchbox2.avif", "/images/sklep/lunchbox3.avif", "/images/sklep/lunchbox4.avif"].map(
-                        (img, i) => (
-                            <div
-                                key={i}
-                                className="relative w-1/3 aspect-square bg-gray-100 rounded-lg overflow-hidden"
-                            >
-                                <Image
-                                    src={img}
-                                    alt={`Lunchbox ${i + 1}`}
-                                    fill
-                                    className="object-cover"
-                                />
-                            </div>
-                        )
-                    )}
+                    {[
+                        "/images/sklep/lunchbox2.avif",
+                        "/images/sklep/lunchbox3.avif",
+                        "/images/sklep/lunchbox4.avif",
+                    ].map((img, i) => (
+                        <div
+                            key={i}
+                            className="relative w-1/3 aspect-square bg-gray-100 rounded-lg overflow-hidden"
+                        >
+                            <Image
+                                src={img}
+                                alt={`Lunchbox ${i + 1}`}
+                                fill
+                                className="object-cover"
+                            />
+                        </div>
+                    ))}
                 </div>
             </div>
 
@@ -50,9 +53,12 @@ export function LunchboxProduct() {
 
                 {/* Rozmiary */}
                 <div>
-                    <h3 className="text-sm font-semibold text-gray-700 mb-2">
-                        Rozmiar
-                    </h3>
+                    <div className="mb-4 flex items-center justify-between">
+                        <h3 className="text-sm font-semibold text-gray-700 ">
+                            Rozmiar
+                        </h3>
+                        <ShareButton title="sklep" />
+                    </div>
                     <div className="flex gap-2">
                         {sizes.map((size) => (
                             <button
