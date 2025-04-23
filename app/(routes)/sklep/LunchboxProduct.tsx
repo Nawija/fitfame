@@ -13,14 +13,14 @@ export function LunchboxProduct() {
             <div className="space-y-4">
                 <div className="relative w-full aspect-square bg-gray-100 rounded-lg overflow-hidden">
                     <Image
-                        src="/lunchbox1.jpg"
+                        src="/images/sklep/lunchbox1.avif"
                         alt="Lunchbox"
                         fill
                         className="object-cover"
                     />
                 </div>
                 <div className="flex gap-4">
-                    {["/lunchbox1.jpg", "/lunchbox2.jpg", "/lunchbox3.jpg"].map(
+                    {["/images/sklep/lunchbox2.avif", "/images/sklep/lunchbox3.avif", "/images/sklep/lunchbox4.avif"].map(
                         (img, i) => (
                             <div
                                 key={i}
