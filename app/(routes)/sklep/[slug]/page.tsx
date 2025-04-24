@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { LunchboxProduct } from "./LunchboxProduct";
+// import { LunchboxProduct } from "./LunchboxProduct";
 
 export const metadata: Metadata = {
     title: "Lunchbox premium",
@@ -16,11 +16,11 @@ export const metadata: Metadata = {
 export default function Sklep() {
     return (
         <div className="max-w-5xl mx-auto px-4 lg:py-20 py-6">
-            <LunchboxProduct
+            {/* <LunchboxProduct
                 title={"Lunchbox premium"}
                 price={49.99}
                 image={"/images/sklep/lunchbox1.avif"}
-            />
+            /> */}
         </div>
     );
 }

@@ -7,6 +7,7 @@ import { LunchboxProduct } from "@/app/(routes)/sklep/[slug]/LunchboxProduct";
 
 const uploadImage = async (file: File) => {
     const formData = new FormData();
+    formData.append("folder", "produkty")
     formData.append("file", file);
 
     const response = await fetch("/api/upload-image", {
@@ -16,7 +17,7 @@ const uploadImage = async (file: File) => {
 
     const data = await response.json();
     if (data.url) {
-        const imageUrl = `/images/produkty/${data.url}`;
+        const imageUrl = `images/produkty/${data.url}`;
         return imageUrl;
     } else {
         throw new Error("Image upload failed");

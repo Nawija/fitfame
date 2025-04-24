@@ -7,7 +7,6 @@ import { FaPlus } from "react-icons/fa";
 import StatusMessage from "@/components/StatusMessage";
 import RecipePage from "./RecipePage";
 import { FormRecipePage, FormState } from "@/types/types";
-import { uploadImage } from "@/utils/uploadImage";
 
 const AdminPrzepisy: React.FC = () => {
     const [form, setForm] = useState<FormRecipePage>({
@@ -61,6 +60,25 @@ const AdminPrzepisy: React.FC = () => {
                 ...prevForm,
                 [e.target.name]: e.target.value,
             }));
+        }
+    };
+
+    const uploadImage = async (file: File) => {
+        const formData = new FormData();
+        formData.append("folder", "przepisy");
+        formData.append("file", file);
+
+        const response = await fetch("/api/upload-image", {
+            method: "POST",
+            body: formData,
+        });
+
+        const data = await response.json();
+        if (data.url) {
+            const imageUrl = `${data.url}`;
+            return imageUrl;
+        } else {
+            throw new Error("Image upload failed");
         }
     };
 

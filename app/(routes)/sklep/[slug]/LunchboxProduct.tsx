@@ -1,13 +1,12 @@
 "use client";
 
 import ShareButton from "@/components/Buttons/ShareButton";
-import Image from "next/image";
 import { useState } from "react";
 
 type LunchboxProductProps = {
     title: string;
     price: number;
-    image: string | File | null;
+    image: File | null;
 };
 
 const sizes = ["500ml", "800ml", "1000ml", "1500ml"];
@@ -20,14 +19,15 @@ export function LunchboxProduct({ title, price, image }: LunchboxProductProps) {
             {/* Galeria zdjęć */}
             <div className="space-y-4">
                 <div className="relative w-full aspect-square bg-gray-100 rounded-lg overflow-hidden">
-                    <Image
+                    <img
                         src={
-                            typeof image === "string"
-                                ? image
-                                : URL.createObjectURL(image as File)
+                            image
+                                ? image instanceof File
+                                    ? URL.createObjectURL(image)
+                                    : image
+                                : undefined
                         }
                         alt={title}
-                        fill
                         className="object-cover"
                     />
                 </div>
