@@ -3,8 +3,25 @@
 import { useState } from "react";
 import StatusMessage from "@/components/StatusMessage";
 import { FormProduktyPage } from "@/types/types";
-import { uploadImage } from "@/utils/uploadImage";
 import { LunchboxProduct } from "@/app/(routes)/sklep/[slug]/LunchboxProduct";
+
+const uploadImage = async (file: File) => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const response = await fetch("/api/upload-image", {
+        method: "POST",
+        body: formData,
+    });
+
+    const data = await response.json();
+    if (data.url) {
+        const imageUrl = `/images/produkty/${data.url}`;
+        return imageUrl;
+    } else {
+        throw new Error("Image upload failed");
+    }
+};
 
 const AdminProdukty: React.FC = () => {
     const defaultForm: FormProduktyPage = {
@@ -88,7 +105,7 @@ const AdminProdukty: React.FC = () => {
             image: uploadedImageUrl,
         };
 
-        const res = await fetch("/api/produkty/dodaj-produkt", {
+        const res = await fetch("/api/admin/produkty/dodaj-produkt", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(updatedForm),
@@ -162,12 +179,20 @@ const AdminProdukty: React.FC = () => {
                             className="w-full p-2 border border-gray-200 h-24 rounded-lg"
                         />
 
+                        <textarea
+                            name="content"
+                            placeholder="Treść / dodatkowe info"
+                            value={form.content}
+                            onChange={handleChange}
+                            className="w-full p-2 border border-gray-200 h-32 rounded-lg"
+                        />
+
                         <div className="w-full flex items-end justify-end">
                             <button
                                 type="submit"
                                 className="bg-green-600 cursor-pointer w-max  text-white text-sm px-5 py-2 font-semibold rounded-lg hover:bg-green-500"
                             >
-                                Zapisz przepis
+                                Zapisz produkt
                             </button>
                         </div>
                         <StatusMessage status={status} />

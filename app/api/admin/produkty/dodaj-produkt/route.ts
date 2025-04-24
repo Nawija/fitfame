@@ -28,16 +28,9 @@ function removePolishChars(str: string): string {
 export async function POST(req: NextRequest) {
     const body = await req.json();
 
-    const {
-        title,
-        category,
-        price,
-        image,
-        description,
-        content,
-    } = body;
+    const { title, category, price, image, description, content } = body;
 
-    if (!title || !description) {
+    if (!title) {
         return NextResponse.json({ error: "Missing fields" }, { status: 400 });
     }
 
@@ -67,7 +60,14 @@ export async function POST(req: NextRequest) {
         `${slug}.md`
     );
 
-    fs.writeFileSync(filePath, fileContent, "utf8");
-
-    return NextResponse.json({ message: "Recipe saved successfully" });
+    try {
+        fs.writeFileSync(filePath, fileContent, "utf8");
+        return NextResponse.json({ message: "Produkt zapisany" });
+    } catch (error) {
+        console.error("File write error:", error);
+        return NextResponse.json(
+            { error: "Błąd zapisu pliku" },
+            { status: 500 }
+        );
+    }
 }

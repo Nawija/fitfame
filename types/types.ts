@@ -41,6 +41,15 @@ export type Recipe = {
     steps: { title: string; description: string[]; image: string }[];
     content: string;
 };
+export type Product = {
+    title: string;
+    slug: string;
+    category: string;
+    image: string;
+    price: number;
+    description: string;
+    content: string;
+};
 
 export interface FilterContentProps {
     searchKeywords: string;
