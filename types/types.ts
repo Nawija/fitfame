@@ -41,12 +41,18 @@ export type Recipe = {
     steps: { title: string; description: string[]; image: string }[];
     content: string;
 };
+export type SizeAndPrice = {
+    size: string;
+    price: number;
+};
+
 export type Product = {
     title: string;
     slug: string;
     category: string;
     image: string;
     additionalImages: string[];
+    sizesAndPrices: SizeAndPrice[]; // ← poprawka tutaj
     price: number;
     description: string;
     content: string;

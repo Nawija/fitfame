@@ -21,6 +21,7 @@ export async function getProducktBySlug(slug: string): Promise<Product | null> {
         category: data.category,
         price: data.price,
         description: data.description,
+        sizesAndPrices: data.sizesAndPrices,
         content,
     } as Product;
 }
@@ -49,6 +50,7 @@ export function parseProduct(filePath: string): Product {
         category: data.category,
         price: data.price,
         description: data.description,
+        sizesAndPrices: data.sizesAndPrices,
         content,
     };
 }

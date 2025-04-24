@@ -38,6 +38,9 @@ const AdminProdukty: React.FC = () => {
     const [uploadedAdditionalImages, setUploadedAdditionalImages] = useState<
         string[]
     >([]);
+    const [sizesAndPrices, setSizesAndPrices] = useState<
+        { size: string; price: number }[]
+    >([]);
 
     const handleAdditionalImageUpload = async (
         e: React.ChangeEvent<HTMLInputElement>,
@@ -132,6 +135,7 @@ const AdminProdukty: React.FC = () => {
             ...form,
             image: uploadedImageUrl,
             additionalImages: uploadedAdditionalImages.filter(Boolean),
+            sizesAndPrices, // <--- Dodajemy rozmiary i ceny
         };
 
         const res = await fetch("/api/admin/produkty/dodaj-produkt", {
@@ -174,15 +178,63 @@ const AdminProdukty: React.FC = () => {
                             required
                         />
 
-                        <input
-                            name="price"
-                            placeholder="Cena"
-                            value={form.price}
-                            type="number"
-                            onChange={handleChange}
-                            className="w-full p-2 border border-gray-200 rounded-lg"
-                            required
-                        />
+                        <label className="font-semibold mt-4 block">
+                            Rozmiary i ceny:
+                        </label>
+                        {sizesAndPrices.map((item, index) => (
+                            <div key={index} className="flex gap-2 mb-2">
+                                <input
+                                    type="text"
+                                    placeholder="Rozmiar (np. M, L, XL)"
+                                    value={item.size}
+                                    onChange={(e) => {
+                                        const updated = [...sizesAndPrices];
+                                        updated[index].size = e.target.value;
+                                        setSizesAndPrices(updated);
+                                    }}
+                                    className="flex-1 p-2 border border-gray-200 rounded-lg"
+                                />
+                                <input
+                                    type="number"
+                                    placeholder="Cena"
+                                    value={item.price}
+                                    onChange={(e) => {
+                                        const updated = [...sizesAndPrices];
+                                        updated[index].price = parseFloat(
+                                            e.target.value
+                                        );
+                                        setSizesAndPrices(updated);
+                                    }}
+                                    className="w-[100px] p-2 border border-gray-200 rounded-lg"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        const updated = sizesAndPrices.filter(
+                                            (_, i) => i !== index
+                                        );
+                                        setSizesAndPrices(updated);
+                                    }}
+                                    className="bg-red-500 text-white px-3 py-2 rounded hover:bg-red-400"
+                                >
+                                    Usuń
+                                </button>
+                            </div>
+                        ))}
+
+                        <button
+                            type="button"
+                            onClick={() =>
+                                setSizesAndPrices([
+                                    ...sizesAndPrices,
+                                    { size: "", price: 0 },
+                                ])
+                            }
+                            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500"
+                        >
+                            Dodaj rozmiar
+                        </button>
+
                         <select
                             name="category"
                             value={form.category}

@@ -8,20 +8,22 @@ export default function ProduktyPage() {
 
     return (
         <div className="p-4 py-8 max-w-7xl mx-auto">
-            <h1 className="text-3xl font-bold mb-6 text-gray-800">Nasze Produkty</h1>
+            <h1 className="text-3xl font-bold mb-6 text-gray-800">
+                Nasze Produkty
+            </h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {products.map((produkt) => (
                     <Link
                         href={`/sklep/${produkt.slug}`}
                         key={produkt.slug}
-                        className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+                        className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow p-2"
                     >
                         <Image
                             src={produkt.image}
                             alt={produkt.title}
                             width={400}
                             height={300}
-                            className="w-full h-48 object-cover"
+                            className="w-full h-48 object-contain"
                         />
                         <div className="p-4">
                             <h2 className="text-lg font-semibold">
@@ -34,7 +36,8 @@ export default function ProduktyPage() {
                                 {produkt.description}
                             </p>
                             <div className="mt-3 font-bold text-green-600">
-                                {produkt.price.toFixed(2)} zł
+                                {produkt.sizesAndPrices?.[0]?.price.toFixed(2)}{" "}
+                                zł
                             </div>
                         </div>
                     </Link>

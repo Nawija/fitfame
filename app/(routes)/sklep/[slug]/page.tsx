@@ -34,6 +34,7 @@ export default async function Page({
                     price={product.price}
                     image={product.image}
                     additionalImages={product.additionalImages}
+                    sizesAndPrices={product.sizesAndPrices}
                 />
             </div>
         </>

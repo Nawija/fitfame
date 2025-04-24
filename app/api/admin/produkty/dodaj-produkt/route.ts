@@ -36,6 +36,7 @@ export async function POST(req: NextRequest) {
         description,
         content,
         additionalImages = [],
+        sizesAndPrices = [],
     } = body;
 
     if (!title) {
@@ -56,6 +57,7 @@ export async function POST(req: NextRequest) {
         image,
         additionalImages,
         description,
+        sizesAndPrices,
     };
 
     // Generujemy cały Markdown (frontmatter + content)
