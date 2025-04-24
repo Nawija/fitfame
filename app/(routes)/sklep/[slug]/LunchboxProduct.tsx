@@ -24,9 +24,7 @@ export function LunchboxProduct({ title, price, image }: LunchboxProductProps) {
                         src={
                             typeof image === "string"
                                 ? image
-                                : image
-                                ? URL.createObjectURL(image)
-                                : "/placeholder.jpg"
+                                : URL.createObjectURL(image as File)
                         }
                         alt={title}
                         fill
