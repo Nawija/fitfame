@@ -7,11 +7,17 @@ type LunchboxProductProps = {
     title: string;
     price: number;
     image: string | File | null;
+    additionalImages?: string[]; // ← dodaj to
 };
 
 const sizes = ["500ml", "800ml", "1000ml", "1500ml"];
 
-export function LunchboxProduct({ title, price, image }: LunchboxProductProps) {
+export function LunchboxProduct({
+    title,
+    price,
+    image,
+    additionalImages,
+}: LunchboxProductProps) {
     const [selectedSize, setSelectedSize] = useState("500ml");
 
     return (
@@ -28,9 +34,24 @@ export function LunchboxProduct({ title, price, image }: LunchboxProductProps) {
                                 : undefined
                         }
                         alt={title}
-                        className="object-cover"
+                        className="object-cover h-full w-full"
                     />
                 </div>
+
+                {Array.isArray(additionalImages) &&
+                    additionalImages.length > 0 && (
+                        <div className="flex gap-2 flex-wrap relative">
+                            {additionalImages?.map((img, i) => (
+                                <img
+                                    key={i}
+                                    src={img}
+                                    alt={`Dodatkowe zdjęcie ${i + 1}`}
+                                    className="w-20 h-20 object-cover rounded border"
+                                />
+                            ))}
+                        </div>
+                    )}
+
                 {/* Galeria miniatur można pominąć lub dostosować jeśli chcesz tylko 1 zdjęcie */}
             </div>
 

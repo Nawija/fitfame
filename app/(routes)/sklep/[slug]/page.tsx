@@ -1,9 +1,7 @@
 import { getProducktBySlug } from "@/lib/getProducts";
 import { Product } from "@/types/types";
-import { Metadata } from "next";
 import { LunchboxProduct } from "./LunchboxProduct";
 import Navigation from "@/components/Navigation";
-
 
 export default async function Page({
     params,
@@ -35,6 +33,7 @@ export default async function Page({
                     title={product.title}
                     price={product.price}
                     image={product.image}
+                    additionalImages={product.additionalImages}
                 />
             </div>
         </>

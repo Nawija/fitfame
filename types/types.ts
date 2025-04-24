@@ -46,6 +46,7 @@ export type Product = {
     slug: string;
     category: string;
     image: string;
+    additionalImages: string[];
     price: number;
     description: string;
     content: string;
@@ -111,12 +112,12 @@ export interface FormRecipePage {
     steps: Step[];
 }
 
-
 export interface FormProduktyPage {
     image: File | null;
+    additionalImages?: string[];
     title: string;
     slug: string;
-    category: "LunchBox" | "TShirt" | "Akcesoria" ;
+    category: string;
     price: number;
     description: string;
     content: string;

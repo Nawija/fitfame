@@ -7,7 +7,7 @@ import { LunchboxProduct } from "@/app/(routes)/sklep/[slug]/LunchboxProduct";
 
 const uploadImage = async (file: File) => {
     const formData = new FormData();
-    formData.append("folder", "produkty")
+    formData.append("folder", "produkty");
     formData.append("file", file);
 
     const response = await fetch("/api/upload-image", {
@@ -34,6 +34,33 @@ const AdminProdukty: React.FC = () => {
         price: 0,
         content: "",
     };
+    const [additionalFiles, setAdditionalFiles] = useState<File[]>([]);
+    const [uploadedAdditionalImages, setUploadedAdditionalImages] = useState<
+        string[]
+    >([]);
+
+    const handleAdditionalImageUpload = async (
+        e: React.ChangeEvent<HTMLInputElement>,
+        index: number
+    ) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        const url = await uploadImage(file);
+
+        setUploadedAdditionalImages((prev) => {
+            const updated = [...prev];
+            updated[index] = url;
+            return updated;
+        });
+
+        setAdditionalFiles((prev) => {
+            const updated = [...prev];
+            updated[index] = file;
+            return updated;
+        });
+    };
+
     const [form, setForm] = useState<FormProduktyPage>(defaultForm);
 
     const [status, setStatus] = useState<string>("");
@@ -104,6 +131,7 @@ const AdminProdukty: React.FC = () => {
         const updatedForm = {
             ...form,
             image: uploadedImageUrl,
+            additionalImages: uploadedAdditionalImages.filter(Boolean),
         };
 
         const res = await fetch("/api/admin/produkty/dodaj-produkt", {
@@ -125,6 +153,7 @@ const AdminProdukty: React.FC = () => {
         <div className="flex items-start justify-center py-12">
             <div className="flex-1 w-full mx-6 max-w-4xl">
                 <LunchboxProduct
+                    uploadedAdditionalImages={uploadedAdditionalImages}
                     title={form.title}
                     price={form.price}
                     image={form.image}
@@ -165,12 +194,47 @@ const AdminProdukty: React.FC = () => {
                             <option value="Akcesoria">Akcesoria</option>
                         </select>
 
+                        {/* Główne zdjęcie */}
+                        <label className="font-semibold">Główne zdjęcie:</label>
                         <input
                             type="file"
                             accept="image/*"
                             onChange={handleImageUpload}
                             className="w-full p-2 border border-gray-200 rounded-lg"
                         />
+
+                        {/* Dodatkowe zdjęcia */}
+                        <label className="font-semibold mt-4 block">
+                            Dodatkowe zdjęcia:
+                        </label>
+                        {additionalFiles.map((_, index) => (
+                            <input
+                                key={index}
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) =>
+                                    handleAdditionalImageUpload(e, index)
+                                }
+                                className="w-full p-2 border border-gray-200 rounded-lg my-2"
+                            />
+                        ))}
+
+                        <button
+                            type="button"
+                            onClick={() => {
+                                setAdditionalFiles((prev) => [
+                                    ...prev,
+                                    new File([], ""),
+                                ]);
+                                setUploadedAdditionalImages((prev) => [
+                                    ...prev,
+                                    "",
+                                ]);
+                            }}
+                            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500"
+                        >
+                            Dodaj kolejne zdjęcie
+                        </button>
 
                         <textarea
                             name="description"

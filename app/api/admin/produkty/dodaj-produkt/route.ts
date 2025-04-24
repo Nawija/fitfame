@@ -28,7 +28,15 @@ function removePolishChars(str: string): string {
 export async function POST(req: NextRequest) {
     const body = await req.json();
 
-    const { title, category, price, image, description, content } = body;
+    const {
+        title,
+        category,
+        price,
+        image,
+        description,
+        content,
+        additionalImages = [],
+    } = body;
 
     if (!title) {
         return NextResponse.json({ error: "Missing fields" }, { status: 400 });
@@ -46,6 +54,7 @@ export async function POST(req: NextRequest) {
         category,
         price,
         image,
+        additionalImages,
         description,
     };
 
