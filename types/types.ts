@@ -121,6 +121,7 @@ export interface FormRecipePage {
 export interface FormProduktyPage {
     image: File | null;
     additionalImages?: string[];
+    uploadedAdditionalImages?: string[];
     title: string;
     slug: string;
     category: string;

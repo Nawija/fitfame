@@ -1,6 +1,7 @@
 "use client";
 
 import ShareButton from "@/components/Buttons/ShareButton";
+import Image from "next/image";
 import { useState } from "react";
 
 type SizeAndPrice = {
@@ -11,49 +12,73 @@ type SizeAndPrice = {
 type LunchboxProductProps = {
     title: string;
     price: number;
-    image: string | File | null;
-    additionalImages?: string[];
-    sizesAndPrices?: SizeAndPrice[];
+    description: string;
+    image: string | File | null; // Image can be a URL (string) or an uploaded file (File)
+    additionalImages?: string[]; // Optional array of additional image URLs
+    sizesAndPrices?: SizeAndPrice[]; // Optional array of SizeAndPrice objects
 };
 
 export function LunchboxProduct({
     title,
     price,
     image,
+    description,
     additionalImages,
-    sizesAndPrices = [],
+    sizesAndPrices = [], // Default empty array for sizes and prices
 }: LunchboxProductProps) {
     const [selectedSizeAndPrice, setSelectedSizeAndPrice] =
         useState<SizeAndPrice | null>(
             sizesAndPrices?.length ? sizesAndPrices[0] : null
         );
+    const [selectedImage, setSelectedImage] = useState<string | File | null>(
+        image
+    );
+    const [hoverImage, setHoverImage] = useState<string | null>(null);
+
+    const handleClickOutside = (e: React.MouseEvent) => {
+        const imageContainer = e.target as HTMLElement;
+        if (!imageContainer.closest(".image-container")) {
+            setSelectedImage(image);
+        }
+    };
 
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div
+            className="grid grid-cols-1 lg:grid-cols-2 gap-8"
+            onClick={handleClickOutside}
+        >
             {/* Galeria zdjęć */}
             <div className="space-y-4">
-                <div className="relative w-full aspect-square bg-gray-100 rounded-lg overflow-hidden">
-                    <img
-                        src={
-                            image
-                                ? image instanceof File
-                                    ? URL.createObjectURL(image)
-                                    : image
-                                : undefined
-                        }
+                <div className="relative w-full aspect-square bg-gray-100 rounded-lg overflow-hidden image-container">
+                    <Image
+                        src={hoverImage || (selectedImage instanceof File ? URL.createObjectURL(selectedImage) : selectedImage) || ""}
                         alt={title}
+                        fill
                         className="object-cover h-full w-full"
                     />
                 </div>
 
-                {additionalImages?.length > 0 && (
+                {(additionalImages?.length ?? 0) > 0 && (
                     <div className="flex gap-2 flex-wrap relative">
-                        {additionalImages.map((img, i) => (
-                            <img
+                        <Image
+                            src={image as string}
+                            alt={title}
+                            width={80}
+                            height={80}
+                            className="object-cover rounded border cursor-pointer"
+                            onClick={() => setSelectedImage(image as string)}
+                            onMouseEnter={() => setHoverImage(image as string)}
+                        />
+                        {additionalImages?.map((img, i) => (
+                            <Image
                                 key={i}
                                 src={img}
                                 alt={`Dodatkowe zdjęcie ${i + 1}`}
-                                className="w-20 h-20 object-cover rounded border"
+                                width={80}
+                                height={80}
+                                className="object-cover rounded border cursor-pointer"
+                                onClick={() => setSelectedImage(img)}
+                                onMouseEnter={() => setHoverImage(img)}
                             />
                         ))}
                     </div>
@@ -63,16 +88,13 @@ export function LunchboxProduct({
             {/* Szczegóły produktu */}
             <div className="space-y-6">
                 <h1 className="text-3xl font-bold text-gray-900">{title}</h1>
-                <p className="text-gray-600">
-                    Stylowy i praktyczny lunchbox do pracy, szkoły lub na
-                    trening. Trzyma temperaturę i wygląda świetnie.
-                </p>
+                <p className="text-gray-600">{description}</p>
 
                 {sizesAndPrices.length > 0 && (
                     <div>
                         <div className="mb-4 flex items-center justify-between">
                             <h3 className="text-sm font-semibold text-gray-700">
-                                Rozmiar i cena
+                                Rozmiar:
                             </h3>
                             <ShareButton title={title} />
                         </div>
@@ -103,7 +125,7 @@ export function LunchboxProduct({
                 </div>
 
                 <button
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200"
+                    className="w-full cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200"
                     onClick={() => alert("Dodałeś do koszyka (symulacja)")}
                 >
                     Kup teraz

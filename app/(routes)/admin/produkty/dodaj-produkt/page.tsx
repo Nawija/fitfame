@@ -3,7 +3,8 @@
 import { useState } from "react";
 import StatusMessage from "@/components/StatusMessage";
 import { FormProduktyPage } from "@/types/types";
-import { LunchboxProduct } from "@/app/(routes)/sklep/[slug]/LunchboxProduct";
+import { MdDelete } from "react-icons/md";
+import { FaPlus } from "react-icons/fa";
 
 const uploadImage = async (file: File) => {
     const formData = new FormData();
@@ -35,27 +36,16 @@ const AdminProdukty: React.FC = () => {
         content: "",
     };
     const [additionalFiles, setAdditionalFiles] = useState<File[]>([]);
-    const [uploadedAdditionalImages, setUploadedAdditionalImages] = useState<
-        string[]
-    >([]);
     const [sizesAndPrices, setSizesAndPrices] = useState<
         { size: string; price: number }[]
     >([]);
 
-    const handleAdditionalImageUpload = async (
+    const handleAdditionalImageUpload = (
         e: React.ChangeEvent<HTMLInputElement>,
         index: number
     ) => {
         const file = e.target.files?.[0];
         if (!file) return;
-
-        const url = await uploadImage(file);
-
-        setUploadedAdditionalImages((prev) => {
-            const updated = [...prev];
-            updated[index] = url;
-            return updated;
-        });
 
         setAdditionalFiles((prev) => {
             const updated = [...prev];
@@ -119,6 +109,13 @@ const AdminProdukty: React.FC = () => {
             }));
         }
     };
+    const handleDeleteImage = (index: number) => {
+        setAdditionalFiles((prev) => {
+            const updated = [...prev];
+            updated.splice(index, 1);
+            return updated;
+        });
+    };
 
     const handleSubmit = async (e: React.FormEvent): Promise<void> => {
         e.preventDefault();
@@ -131,11 +128,20 @@ const AdminProdukty: React.FC = () => {
             uploadedImageUrl = form.image;
         }
 
+        const uploadedAdditionalImageUrls = await Promise.all(
+            additionalFiles.map(async (file) => {
+                if (file instanceof File && file.name !== "") {
+                    return await uploadImage(file);
+                }
+                return "";
+            })
+        );
+
         const updatedForm = {
             ...form,
             image: uploadedImageUrl,
-            additionalImages: uploadedAdditionalImages.filter(Boolean),
-            sizesAndPrices, // <--- Dodajemy rozmiary i ceny
+            additionalImages: uploadedAdditionalImageUrls.filter(Boolean),
+            sizesAndPrices,
         };
 
         const res = await fetch("/api/admin/produkty/dodaj-produkt", {
@@ -148,6 +154,7 @@ const AdminProdukty: React.FC = () => {
             setStatus("Saved ✅");
             window.scrollTo({ top: 0, behavior: "smooth" });
             setForm(defaultForm);
+            setAdditionalFiles([]);
         } else {
             setStatus("Error");
         }
@@ -155,20 +162,15 @@ const AdminProdukty: React.FC = () => {
 
     return (
         <div className="flex items-start justify-center py-12">
-            <div className="flex-1 w-full mx-6 max-w-4xl">
-                <LunchboxProduct
-                    uploadedAdditionalImages={uploadedAdditionalImages}
-                    title={form.title}
-                    price={form.price}
-                    image={form.image}
-                />
-            </div>
             <div className="w-1/4 h-screen overflow-y-scroll sticky top-0">
                 <div className="max-w-4xl mx-auto px-6 py-8 bg-white rounded-lg shadow-lg border border-gray-200">
-                    <h1 className="text-3xl font-bold mb-6 text-center">
+                    <h1 className="text-3xl font-bold mb-10 text-center">
                         Dodaj nowy produkt
                     </h1>
                     <form onSubmit={handleSubmit} className="space-y-3">
+                        <label className="font-semibold mt-4 block">
+                            Tytuł:
+                        </label>
                         <input
                             name="title"
                             placeholder="Tytuł"
@@ -179,13 +181,13 @@ const AdminProdukty: React.FC = () => {
                         />
 
                         <label className="font-semibold mt-4 block">
-                            Rozmiary i ceny:
+                            Rozmiar:
                         </label>
                         {sizesAndPrices.map((item, index) => (
                             <div key={index} className="flex gap-2 mb-2">
                                 <input
                                     type="text"
-                                    placeholder="Rozmiar (np. M, L, XL)"
+                                    placeholder="Rozmiar"
                                     value={item.size}
                                     onChange={(e) => {
                                         const updated = [...sizesAndPrices];
@@ -217,7 +219,7 @@ const AdminProdukty: React.FC = () => {
                                     }}
                                     className="bg-red-500 text-white px-3 py-2 rounded hover:bg-red-400"
                                 >
-                                    Usuń
+                                    <MdDelete className="text-xl" />
                                 </button>
                             </div>
                         ))}
@@ -230,11 +232,15 @@ const AdminProdukty: React.FC = () => {
                                     { size: "", price: 0 },
                                 ])
                             }
-                            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500"
+                            className="bg-blue-600 text-white px-3 py-2 rounded hover:bg-blue-500 font-semibold text-xs flex items-center justify-center"
                         >
-                            Dodaj rozmiar
+                            <FaPlus className="mr-2" />
+                            <span>Wariant</span>
                         </button>
 
+                        <label className="font-semibold mt-4 block">
+                            Kategoria:
+                        </label>
                         <select
                             name="category"
                             value={form.category}
@@ -247,7 +253,10 @@ const AdminProdukty: React.FC = () => {
                         </select>
 
                         {/* Główne zdjęcie */}
-                        <label className="font-semibold">Główne zdjęcie:</label>
+
+                        <label className="font-semibold mt-4 block">
+                            Zdjęcie:
+                        </label>
                         <input
                             type="file"
                             accept="image/*"
@@ -270,6 +279,29 @@ const AdminProdukty: React.FC = () => {
                                 className="w-full p-2 border border-gray-200 rounded-lg my-2"
                             />
                         ))}
+                        {additionalFiles.map((file, index) => (
+                            <div
+                                key={index}
+                                className="flex items-center space-x-2 mb-2"
+                            >
+                                <img
+                                    src={
+                                        file instanceof File && file.name
+                                            ? URL.createObjectURL(file)
+                                            : ""
+                                    }
+                                    alt={`Image ${index}`}
+                                    className="w-16 h-16 object-cover rounded"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => handleDeleteImage(index)}
+                                    className="text-red-500"
+                                >
+                                    <MdDelete className="text-xl" />
+                                </button>
+                            </div>
+                        ))}
 
                         <button
                             type="button"
@@ -278,30 +310,23 @@ const AdminProdukty: React.FC = () => {
                                     ...prev,
                                     new File([], ""),
                                 ]);
-                                setUploadedAdditionalImages((prev) => [
-                                    ...prev,
-                                    "",
-                                ]);
                             }}
-                            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500"
+                            className="bg-blue-600 text-white px-3 py-2 rounded flex items-center justify-center text-xs font-semibold hover:bg-blue-500"
                         >
-                            Dodaj kolejne zdjęcie
+                            <FaPlus className="mr-2" />{" "}
+                            <span>Dodaj zdjęcie</span>
                         </button>
+
+                        <label className="font-semibold mt-4 block">
+                            Opis:
+                        </label>
 
                         <textarea
                             name="description"
-                            placeholder="Opis"
+                            placeholder="Opis produktu"
                             value={form.description}
                             onChange={handleChange}
                             className="w-full p-2 border border-gray-200 h-24 rounded-lg"
-                        />
-
-                        <textarea
-                            name="content"
-                            placeholder="Treść / dodatkowe info"
-                            value={form.content}
-                            onChange={handleChange}
-                            className="w-full p-2 border border-gray-200 h-32 rounded-lg"
                         />
 
                         <div className="w-full flex items-end justify-end">

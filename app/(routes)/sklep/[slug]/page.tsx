@@ -3,6 +3,7 @@ import { Product } from "@/types/types";
 import { LunchboxProduct } from "./LunchboxProduct";
 import Navigation from "@/components/Navigation";
 
+
 export default async function Page({
     params,
 }: {
@@ -32,6 +33,7 @@ export default async function Page({
                 <LunchboxProduct
                     title={product.title}
                     price={product.price}
+                    description={product.description}
                     image={product.image}
                     additionalImages={product.additionalImages}
                     sizesAndPrices={product.sizesAndPrices}

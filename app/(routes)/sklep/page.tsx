@@ -1,7 +1,6 @@
-import Image from "next/image";
 import { Product } from "@/types/types";
 import { getAllProducts } from "@/lib/getProducts";
-import Link from "next/link";
+import { ProductCard } from "@/components/Porducts/ProductCard";
 
 export default function ProduktyPage() {
     const products: Product[] = getAllProducts();
@@ -13,34 +12,7 @@ export default function ProduktyPage() {
             </h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {products.map((produkt) => (
-                    <Link
-                        href={`/sklep/${produkt.slug}`}
-                        key={produkt.slug}
-                        className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow p-2"
-                    >
-                        <Image
-                            src={produkt.image}
-                            alt={produkt.title}
-                            width={400}
-                            height={300}
-                            className="w-full h-48 object-contain"
-                        />
-                        <div className="p-4">
-                            <h2 className="text-lg font-semibold">
-                                {produkt.title}
-                            </h2>
-                            <p className="text-sm text-gray-500 mb-2">
-                                {produkt.category}
-                            </p>
-                            <p className="text-sm text-gray-700 line-clamp-2">
-                                {produkt.description}
-                            </p>
-                            <div className="mt-3 font-bold text-green-600">
-                                {produkt.sizesAndPrices?.[0]?.price.toFixed(2)}{" "}
-                                zł
-                            </div>
-                        </div>
-                    </Link>
+                    <ProductCard produkt={produkt} />
                 ))}
             </div>
         </div>
