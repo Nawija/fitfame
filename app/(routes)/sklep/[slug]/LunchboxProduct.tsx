@@ -6,7 +6,7 @@ import { useState } from "react";
 type LunchboxProductProps = {
     title: string;
     price: number;
-    image: File | null;
+    image: string;
 };
 
 const sizes = ["500ml", "800ml", "1000ml", "1500ml"];
@@ -19,17 +19,7 @@ export function LunchboxProduct({ title, price, image }: LunchboxProductProps) {
             {/* Galeria zdjęć */}
             <div className="space-y-4">
                 <div className="relative w-full aspect-square bg-gray-100 rounded-lg overflow-hidden">
-                    <img
-                        src={
-                            image
-                                ? image instanceof File
-                                    ? URL.createObjectURL(image)
-                                    : image
-                                : undefined
-                        }
-                        alt={title}
-                        className="object-cover"
-                    />
+                    <img src={image} alt={title} className="object-cover" />
                 </div>
                 {/* Galeria miniatur można pominąć lub dostosować jeśli chcesz tylko 1 zdjęcie */}
             </div>

@@ -1,21 +1,23 @@
 import Image from "next/image";
 import { Product } from "@/types/types";
 import { getAllProducts } from "@/lib/getProducts";
+import Link from "next/link";
 
 export default function ProduktyPage() {
     const products: Product[] = getAllProducts();
 
     return (
-        <div className="p-4 max-w-7xl mx-auto">
-            <h1 className="text-3xl font-bold mb-6">Nasze Produkty</h1>
+        <div className="p-4 py-8 max-w-7xl mx-auto">
+            <h1 className="text-3xl font-bold mb-6 text-gray-800">Nasze Produkty</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {products.map((produkt) => (
-                    <div
+                    <Link
+                        href={`/sklep/${produkt.slug}`}
                         key={produkt.slug}
-                        className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+                        className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
                     >
                         <Image
-                            src={`/images/produkty/${produkt.image}`}
+                            src={produkt.image}
                             alt={produkt.title}
                             width={400}
                             height={300}
@@ -35,7 +37,7 @@ export default function ProduktyPage() {
                                 {produkt.price.toFixed(2)} zł
                             </div>
                         </div>
-                    </div>
+                    </Link>
                 ))}
             </div>
         </div>
