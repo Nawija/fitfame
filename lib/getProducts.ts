@@ -25,7 +25,7 @@ export async function getProducktBySlug(slug: string): Promise<Product | null> {
 }
 
 export function getAllProducts(): Product[] {
-    const dir = path.join(process.cwd(), "content", "przepisy");
+    const dir = path.join(process.cwd(), "content", "produkty");
     const files = fs.readdirSync(dir);
 
     const products = files
