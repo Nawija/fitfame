@@ -54,3 +54,26 @@ export function parseProduct(filePath: string): Product {
         content,
     };
 }
+
+export function getSimilarProducts(currentProductSlug: string): Product[] {
+    // Fetch all products
+    const allProducts = getAllProducts();
+
+    // Find the current product
+    const currentProduct = allProducts.find(
+        (product) => product.slug === currentProductSlug
+    );
+
+    if (!currentProduct) {
+        return []; // If the product isn't found, return an empty array
+    }
+
+    // Filter products by category, excluding the current product
+    const similarProducts = allProducts.filter(
+        (product) =>
+            product.category === currentProduct.category &&
+            product.slug !== currentProductSlug
+    );
+
+    return similarProducts;
+}

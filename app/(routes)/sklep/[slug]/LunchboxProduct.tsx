@@ -44,14 +44,20 @@ export function LunchboxProduct({
 
     return (
         <div
-            className="grid grid-cols-1 lg:grid-cols-2 gap-8"
+            className="grid grid-cols-1 lg:grid-cols-5 gap-8"
             onClick={handleClickOutside}
         >
             {/* Galeria zdjęć */}
-            <div className="space-y-4">
+            <div className="space-y-4 w-full lg:col-span-3">
                 <div className="relative w-full aspect-square bg-gray-100 rounded-lg overflow-hidden image-container">
                     <Image
-                        src={hoverImage || (selectedImage instanceof File ? URL.createObjectURL(selectedImage) : selectedImage) || ""}
+                        src={
+                            hoverImage ||
+                            (selectedImage instanceof File
+                                ? URL.createObjectURL(selectedImage)
+                                : selectedImage) ||
+                            ""
+                        }
                         alt={title}
                         fill
                         className="object-cover h-full w-full"
@@ -86,7 +92,7 @@ export function LunchboxProduct({
             </div>
 
             {/* Szczegóły produktu */}
-            <div className="space-y-6">
+            <div className="space-y-6 lg:col-span-2">
                 <h1 className="text-3xl font-bold text-gray-900">{title}</h1>
                 <p className="text-gray-600">{description}</p>
 

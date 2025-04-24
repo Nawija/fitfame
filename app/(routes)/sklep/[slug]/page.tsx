@@ -1,8 +1,8 @@
-import { getProducktBySlug } from "@/lib/getProducts";
+import { getProducktBySlug, getAllProducts } from "@/lib/getProducts";
 import { Product } from "@/types/types";
 import { LunchboxProduct } from "./LunchboxProduct";
 import Navigation from "@/components/Navigation";
-
+import { ProductCard } from "@/components/Porducts/ProductCard";
 
 export default async function Page({
     params,
@@ -16,9 +16,26 @@ export default async function Page({
     if (!product) {
         return <div>Produkt nie został znaleziony.</div>;
     }
+    const allProducts = await getAllProducts();
+    // Fetch similar products based on title or category
+    const similarProducts = allProducts
+        .filter((p) => {
+            if (p.slug === product.slug) return false;
+
+            const productTitleWords = product.title
+                .split(" ")
+                .slice(0, 2)
+                .map((word) => word.toLowerCase());
+            const productTitleLower = p.title.toLowerCase();
+            return productTitleWords.some((word) =>
+                productTitleLower.includes(word)
+            );
+        })
+        .slice(0, 4);
+
     return (
         <>
-            <div className="max-w-5xl mx-auto p-2">
+            <div className="max-w-6xl mx-auto p-2 px-4">
                 <Navigation
                     links={[
                         { name: "Sklep", href: "/sklep" },
@@ -29,7 +46,7 @@ export default async function Page({
                     ]}
                 />
             </div>
-            <div className="max-w-5xl mx-auto px-4 lg:py-10 py-4">
+            <div className="max-w-6xl mx-auto px-4 lg:py-10 py-4">
                 <LunchboxProduct
                     title={product.title}
                     price={product.price}
@@ -39,6 +56,23 @@ export default async function Page({
                     sizesAndPrices={product.sizesAndPrices}
                 />
             </div>
+
+            {/* Recommendations Section */}
+            {similarProducts.length > 0 && (
+                <div className="max-w-6xl mx-auto px-4 lg:py-10 py-4">
+                    <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+                        Proponowane
+                    </h2>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                        {similarProducts.map((product) => (
+                            <ProductCard
+                                key={product.slug} 
+                                produkt={product}
+                            />
+                        ))}
+                    </div>
+                </div>
+            )}
         </>
     );
 }
