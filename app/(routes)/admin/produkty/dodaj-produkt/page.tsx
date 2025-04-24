@@ -17,7 +17,7 @@ const uploadImage = async (file: File) => {
 
     const data = await response.json();
     if (data.url) {
-        const imageUrl = `images/produkty/${data.url}`;
+        const imageUrl = `${data.url}`;
         return imageUrl;
     } else {
         throw new Error("Image upload failed");

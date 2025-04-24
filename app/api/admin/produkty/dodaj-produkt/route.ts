@@ -38,14 +38,14 @@ export async function POST(req: NextRequest) {
         .toLowerCase()
         .replace(/\s+/g, "-")
         .replace(/[^a-z0-9\-]/g, "");
-    const fileNameOnly = image?.split("/").pop(); // pobiera tylko nazwę pliku
+
     // Konstruujemy frontmatter jako obiekt JS
     const frontmatter = {
         title,
         slug,
         category,
         price,
-        image: fileNameOnly,
+        image,
         description,
     };
 

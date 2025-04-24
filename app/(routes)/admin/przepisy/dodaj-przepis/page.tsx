@@ -513,26 +513,3 @@ const AdminPrzepisy: React.FC = () => {
 };
 
 export default AdminPrzepisy;
-
-// function AddStep(onClick: () => void) {
-//     return (
-//         <button
-//             type="button"
-//             onClick={onClick}
-//             className="text-xs bg-yellow-600 flex items-center cursor-pointer justify-center text-white py-1 px-3 font-semibold rounded-lg"
-//         >
-//             <FaPlus className="mr-2" /> Nowy krok
-//         </button>
-//     );
-// }
-// function DeleteStep(onClick) {
-//     return (
-//         <button
-//             type="button"
-//             onClick={onClick}
-//             className="text-xs bg-red-600 flex items-center cursor-pointer justify-center text-white py-1 px-3 font-semibold rounded-lg"
-//         >
-//             <MdDeleteForever className="mr-2" /> Usuń krok
-//         </button>
-//     );
-// }

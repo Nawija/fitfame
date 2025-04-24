@@ -3,19 +3,7 @@ import { Product } from "@/types/types";
 import { Metadata } from "next";
 import { LunchboxProduct } from "./LunchboxProduct";
 import Navigation from "@/components/Navigation";
-// import { LunchboxProduct } from "./LunchboxProduct";
 
-export const metadata: Metadata = {
-    title: "Lunchbox premium",
-    description:
-        "Stylowy i praktyczny lunchbox do pracy, szkoły lub natrening. Trzyma temperaturę i wygląda świetnie",
-    openGraph: {
-        title: "Lunchbox premium",
-        description:
-            " Stylowy i praktyczny lunchbox do pracy, szkoły lub natrening. Trzyma temperaturę i wygląda świetnie",
-        images: "/images/sklep/lunchbox1.avif",
-    },
-};
 
 export default async function Page({
     params,
