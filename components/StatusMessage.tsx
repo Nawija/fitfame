@@ -23,7 +23,7 @@ export default function StatusMessage({ status }: StatusMessageProps) {
 
     return (
         <div
-            className={`transition-all duration-500 ease-in-out transform rounded-xl fixed right-2 top-2 z-50 h-20 w-80 flex items-center justify-center text-white
+            className={`transition-all duration-500 ease-in-out z-[99999] transform rounded-xl fixed right-2 top-2 h-20 w-80 flex items-center justify-center text-white
             ${isError ? "bg-red-500" : "bg-green-500"}
             ${
                 visible
