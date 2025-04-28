@@ -47,7 +47,7 @@ export default async function Page({
                 />
             </div>
 
-            <div className="max-w-6xl mx-auto px-4 lg:py-10 py-4">
+            <div className="max-w-6xl mx-auto px-4 lg:py-10 py-4 anim-opacity">
                 <LunchboxProduct
                     title={product.title}
                     price={product.price}
