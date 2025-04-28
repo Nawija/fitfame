@@ -85,45 +85,49 @@ export default async function Page({
                         {recipe.description}
                     </p>
 
-                    <div className="flex items-center justify-start space-x-1 py-4">
-                        <div className="flex flex-col items-center justify-center p-2 bg-white rounded-lg border border-gray-100">
-                            <div className="py-2 px-3 bg-yellow-100 rounded-lg">
-                                <RiTimeFill className="text-2xl text-yellow-500" />
+                    <div className="py-4 w-full overflow-x-scroll">
+                        <div className="flex items-center justify-start space-x-1 w-max">
+                            <div className="flex flex-col items-center justify-center p-2 bg-white rounded-lg border border-gray-100">
+                                <div className="py-2 px-3 bg-yellow-100 rounded-lg">
+                                    <RiTimeFill className="text-2xl text-yellow-500" />
+                                </div>
+                                <p className="text-xs font-semibold mt-1">
+                                    {recipe.time}
+                                </p>
                             </div>
-                            <p className="text-xs font-semibold mt-1">
-                                {recipe.time}
-                            </p>
-                        </div>
 
-                        <div className="flex flex-col items-center justify-center p-2 bg-white rounded-lg border border-gray-100">
-                            <div className="py-2 px-3 bg-yellow-100 rounded-lg">
-                                <GiKnifeFork className="text-2xl text-yellow-500" />
+                            <div className="flex flex-col items-center justify-center p-2 bg-white rounded-lg border border-gray-100">
+                                <div className="py-2 px-3 bg-yellow-100 rounded-lg">
+                                    <GiKnifeFork className="text-2xl text-yellow-500" />
+                                </div>
+                                <p className="text-xs font-semibold mt-1">
+                                    4 porcje
+                                </p>
                             </div>
-                            <p className="text-xs font-semibold mt-1">
-                                4 porcje
-                            </p>
-                        </div>
-                        <div className="flex flex-col items-center justify-center p-2 bg-white rounded-lg border border-gray-100">
-                            <div className="py-2 px-3 bg-yellow-100 rounded-lg">
-                                <FaMoneyBillWave className="text-2xl text-yellow-500" />
+                            <div className="flex flex-col items-center justify-center p-2 bg-white rounded-lg border border-gray-100">
+                                <div className="py-2 px-3 bg-yellow-100 rounded-lg">
+                                    <FaMoneyBillWave className="text-2xl text-yellow-500" />
+                                </div>
+                                <p className="text-xs font-semibold mt-1">
+                                    Tani
+                                </p>
                             </div>
-                            <p className="text-xs font-semibold mt-1">Tani</p>
-                        </div>
-                        <div className="flex flex-col items-center justify-center p-2 bg-white rounded-lg border border-gray-100">
-                            <div className="py-2 px-3 bg-yellow-100 rounded-lg">
-                                <IoExtensionPuzzleSharp className="text-2xl text-yellow-500" />
+                            <div className="flex flex-col items-center justify-center p-2 bg-white rounded-lg border border-gray-100">
+                                <div className="py-2 px-3 bg-yellow-100 rounded-lg">
+                                    <IoExtensionPuzzleSharp className="text-2xl text-yellow-500" />
+                                </div>
+                                <p className="text-xs font-semibold mt-1">
+                                    {recipe.level}
+                                </p>
                             </div>
-                            <p className="text-xs font-semibold mt-1">
-                                {recipe.level}
-                            </p>
-                        </div>
-                        <div className="flex flex-col items-center justify-center p-2 bg-white rounded-lg border border-gray-100">
-                            <div className="py-2 px-3 bg-yellow-100 rounded-lg">
-                                <FaBurn className="text-2xl text-yellow-500" />
+                            <div className="flex flex-col items-center justify-center p-2 bg-white rounded-lg border border-gray-100">
+                                <div className="py-2 px-3 bg-yellow-100 rounded-lg">
+                                    <FaBurn className="text-2xl text-yellow-500" />
+                                </div>
+                                <p className="text-xs font-semibold mt-1">
+                                    {recipe.calories} kcal
+                                </p>
                             </div>
-                            <p className="text-xs font-semibold mt-1">
-                                {recipe.calories} kcal
-                            </p>
                         </div>
                     </div>
                 </div>
