@@ -15,7 +15,7 @@ export function ProductCard({ produkt }: { produkt: Product }) {
                     src={produkt.image}
                     alt={produkt.title}
                     fill
-                    className="object-cover rounded-xl transition-opacity duration-300 group-hover:opacity-0"
+                    className="object-contain rounded-xl transition-opacity duration-300 group-hover:opacity-0"
                 />
                 {/* Drugie zdjęcie, które pokaże się na hover */}
                 {produkt.additionalImages?.[0] && (
@@ -23,7 +23,7 @@ export function ProductCard({ produkt }: { produkt: Product }) {
                         src={produkt.additionalImages[0]}
                         alt={produkt.title + " - podgląd"}
                         fill
-                        className="object-cover rounded-xl transition-opacity duration-300 opacity-0 group-hover:opacity-100 absolute top-0 left-0"
+                        className="object-contain rounded-xl transition-opacity duration-300 opacity-0 group-hover:opacity-100 absolute top-0 left-0"
                     />
                 )}
             </div>

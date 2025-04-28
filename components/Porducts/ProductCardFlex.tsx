@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 export function ProductCardFlex({ produkt }: { produkt: Product }) {
-   
     return (
         <Link
             href={`/sklep/${produkt.slug}`}
@@ -21,14 +20,16 @@ export function ProductCardFlex({ produkt }: { produkt: Product }) {
                         src={produkt.additionalImages[0]}
                         alt={produkt.title + " - podgląd"}
                         fill
-                        className="object-cover rounded-xl transition-opacity duration-300 opacity-0 group-hover:opacity-100 absolute top-0 left-0"
+                        className="object-contain rounded-xl transition-opacity duration-300 opacity-0 group-hover:opacity-100 absolute top-0 left-0"
                     />
                 )}
             </div>
             {/* TAGI */}
-            
+
             <div className="p-2 w-52">
-                <h2 className="text-base font-semibold line-clamp-3">{produkt.title}</h2>
+                <h2 className="text-base font-semibold line-clamp-3">
+                    {produkt.title}
+                </h2>
                 <p className="text-sm text-gray-500 mb-2">{produkt.category}</p>
                 <div className="flex items-center justify-between w-full mt-1">
                     <div className="font-bold text-green-600 ml-auto">
