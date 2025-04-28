@@ -5,12 +5,9 @@ import { ProductCardFlex } from "@/components/Porducts/ProductCardFlex";
 
 export default function ProduktyPage() {
     const products: Product[] = getAllProducts();
-    const similarProducts = products
+    const akcesoriaProducts = products
         .filter((p) => {
-            if (p.slug === products.slug) return false; // Pomijamy bieżący produkt
-
-            // Sprawdzamy, czy produkt należy do kategorii "promo"
-            if (p.category !== "Tshirt") return false;
+            if (p.category === "Akcesoria") return true;
         })
         .slice(0, 4);
 
@@ -24,9 +21,9 @@ export default function ProduktyPage() {
                     <ProductCardFlex produkt={produkt} />
                 ))}
             </div>
-            <h2 className="text-3xl font-bold my-6 text-gray-800">Koszuli</h2>
+            <h2 className="text-3xl font-bold my-6 text-gray-800">Akcesoria</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
-                {products.map((produkt) => (
+                {akcesoriaProducts.map((produkt) => (
                     <ProductCard produkt={produkt} />
                 ))}
             </div>
