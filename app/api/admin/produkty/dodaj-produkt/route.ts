@@ -45,8 +45,10 @@ export async function POST(req: NextRequest) {
 
     const slug = removePolishChars(title)
         .toLowerCase()
-        .replace(/\s+/g, "-")
-        .replace(/[^a-z0-9\-]/g, "");
+        .replace(/\s+/g, "-") // Replace all spaces with a single hyphen
+        .replace(/[^a-z0-9\-]/g, "") // Remove all non-alphanumeric characters except hyphens
+        .replace(/-+/g, "-") // Replace multiple hyphens with a single one
+        .replace(/^-|-$/g, ""); // Remove hyphen at the start or end
 
     // Konstruujemy frontmatter jako obiekt JS
     const frontmatter = {

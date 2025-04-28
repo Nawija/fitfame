@@ -3,6 +3,7 @@ import { Product } from "@/types/types";
 import { LunchboxProduct } from "./LunchboxProduct";
 import Navigation from "@/components/Navigation";
 import { ProductCard } from "@/components/Porducts/ProductCard";
+import { Metadata } from "next";
 
 export default async function Page({
     params,
@@ -17,7 +18,7 @@ export default async function Page({
         return <div>Produkt nie został znaleziony.</div>;
     }
     const allProducts = await getAllProducts();
-    
+
     const similarProducts = allProducts
         .filter((p) => {
             if (p.slug === product.slug) return false;
@@ -74,4 +75,44 @@ export default async function Page({
             )}
         </>
     );
+}
+
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+    const awaitedParams = await Promise.resolve(params);
+    const { slug } = awaitedParams;
+    const product = await getProducktBySlug(slug);
+
+    if (!product) return {};
+
+    return {
+        title: product.title + " | GramFit",
+        description:
+            product.description || `Sprawdź produkt na ${product.title}!`,
+        openGraph: {
+            title: product.title,
+            description:
+                product.description || `Sprawdź produkt na ${product.title}!`,
+            images: product.image
+                ? [
+                      {
+                          url: product.image,
+                          width: 800,
+                          height: 600,
+                          alt: product.title,
+                      },
+                  ]
+                : [],
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: product.title,
+            description:
+                product.description || `Sprawdź produkt na ${product.title}!`,
+            images: product.image ? [product.image] : [],
+        },
+    };
 }

@@ -27,7 +27,7 @@ function ShareButton({ title }: { title: string }) {
     return (
         <button
             onClick={handleShare}
-            className="relative tracking-wide bg-blue-500 hover:bg-blue-600 rounded-lg duration-300 cursor-pointer transition-all px-3 py-1.5 text-[11px] font-medium text-white flex items-center justify-center"
+            className="relative tracking-wide bg-gradient-to-bl from-violet-500 to-blue-500 rounded-lg duration-300 cursor-pointer transition-all px-3 py-1.5 text-[11px] font-medium text-white flex items-center justify-center"
         >
             Udostępnij <FaShare className="ml-2" />
         </button>

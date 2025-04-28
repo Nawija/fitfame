@@ -65,7 +65,9 @@ export default async function Page({
                             alt={recipe.title}
                             className="w-full object-cover rounded-xl shadow"
                         />
+                        
                     </div>
+                    
                     <h1 className="text-2xl lg:text-4xl font-bold text-gray-800 py-4">
                         {recipe.title}
                     </h1>
@@ -85,12 +87,12 @@ export default async function Page({
                     <p className="text-sm w-full px-2 py-3">
                         {recipe.description}
                     </p>
-                    {tags.length > 1 && (
+                    {tags.length > 0 && (
                         <div className="flex flex-wrap gap-1 mb-2">
                             {tags.map((tag, index) => (
                                 <span
                                     key={index}
-                                    className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full"
+                                    className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded-full"
                                 >
                                     {tag}
                                 </span>
@@ -148,8 +150,7 @@ export default async function Page({
 
             <section className="max-w-6xl mx-auto mb-6 flex items-start justify-center flex-col lg:flex-row space-y-8">
                 <div className=" w-full lg:w-[70%] px-2 space-y-6">
-                    <Ingredients ingredients={recipe.ingredients} />
-                    <div className="p-6 rounded-lg border border-gray-100 bg-white mt-8 lg:mt-0 w-full">
+                    <div className="p-6 rounded-lg border border-gray-100 bg-white lg:mt-0 w-full">
                         <h3 className="text-xl font-semibold text-gray-800 mb-4">
                             Wartości odżywcze:
                         </h3>
@@ -198,6 +199,7 @@ export default async function Page({
                             ))}
                         </div>
                     </div>
+                    <Ingredients ingredients={recipe.ingredients} />
                 </div>
                 <div className="text-start bg-white flex flex-col items-center justify-center mx-3 px-2 rounded-lg border border-gray-100 py-12 space-y-20">
                     {recipe.steps?.map((s, i) => (
