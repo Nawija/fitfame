@@ -7,16 +7,6 @@ export const metadata: Metadata = {
     title: "GramFit - Trener Personalny",
     description:
         "GramFit to kompleksowa platforma dla osób pragnących poprawić swoją formę fizyczną. Oferujemy indywidualne plany treningowe, które pomagają osiągnąć wymarzoną sylwetkę, a także darmową bazę przepisów, które wspierają zdrowe odżywianie. Nasz sklep internetowy to miejsce, w którym znajdziesz wysokiej jakości produkty wspierające Twoje cele fitnessowe. Z GramFit osiągniesz sukces, zarówno na siłowni, jak i w kuchni",
-    openGraph: {
-        images: [
-            {
-                url: "/images/gramfit.jpg",
-                width: 1200,
-                height: 630,
-                alt: "GramFit - Trener Personalny",
-            },
-        ],
-    },
 };
 
 export default function RootLayout({
