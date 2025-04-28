@@ -44,7 +44,7 @@ export function LunchboxProduct({
         }
     };
 
-    const tags = content?.split(" ").filter(Boolean) || [];
+    const tags = content?.split(",").filter(Boolean) || [];
 
     return (
         <div
@@ -69,28 +69,34 @@ export function LunchboxProduct({
                 </div>
 
                 {(additionalImages?.length ?? 0) > 0 && (
-                    <div className="flex gap-2 flex-wrap relative">
-                        <Image
-                            src={image as string}
-                            alt={title}
-                            width={80}
-                            height={80}
-                            className="object-cover rounded border cursor-pointer"
-                            onClick={() => setSelectedImage(image as string)}
-                            onMouseEnter={() => setHoverImage(image as string)}
-                        />
-                        {additionalImages?.map((img, i) => (
+                    <div className="w-full overflow-x-scroll pb-2">
+                        <div className="flex gap-2 relative w-full">
                             <Image
-                                key={i}
-                                src={img}
-                                alt={`Dodatkowe zdjęcie ${i + 1}`}
+                                src={image as string}
+                                alt={title}
                                 width={80}
                                 height={80}
                                 className="object-cover rounded border cursor-pointer"
-                                onClick={() => setSelectedImage(img)}
-                                onMouseEnter={() => setHoverImage(img)}
+                                onClick={() =>
+                                    setSelectedImage(image as string)
+                                }
+                                onMouseEnter={() =>
+                                    setHoverImage(image as string)
+                                }
                             />
-                        ))}
+                            {additionalImages?.map((img, i) => (
+                                <Image
+                                    key={i}
+                                    src={img}
+                                    alt={`Dodatkowe zdjęcie ${i + 1}`}
+                                    width={80}
+                                    height={80}
+                                    className="object-cover rounded border cursor-pointer"
+                                    onClick={() => setSelectedImage(img)}
+                                    onMouseEnter={() => setHoverImage(img)}
+                                />
+                            ))}
+                        </div>
                     </div>
                 )}
             </div>
@@ -128,7 +134,7 @@ export function LunchboxProduct({
                     </div>
                 )}
 
-                <div className="text-2xl font-bold text-blue-600">
+                <div className="text-2xl font-bold text-green-600">
                     {selectedSizeAndPrice
                         ? `${selectedSizeAndPrice.price} zł`
                         : `${price.toFixed(2)} zł`}

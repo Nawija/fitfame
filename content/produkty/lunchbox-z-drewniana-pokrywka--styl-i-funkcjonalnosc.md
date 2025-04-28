@@ -29,5 +29,5 @@ sizesAndPrices:
   - size: 1200ml
     price: 49
 ---
-LunchBox Szklane Śniadanie
+LunchBox, Szklane LunchBoxy, Śniadanie, LunchBox z przykrywką
 

@@ -41,7 +41,7 @@ export default async function Page({
             );
         })
         .slice(0, 4);
-    const tags = recipe.content?.split(" ").filter(Boolean) || [];
+    const tags = recipe.content?.split(",").filter(Boolean) || [];
     return (
         <div className="w-full overflow-hidden relative h-full">
             <div className="my-3 px-4 max-w-6xl mx-auto">

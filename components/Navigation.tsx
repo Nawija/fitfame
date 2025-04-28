@@ -23,7 +23,7 @@ const Navigation = ({ links }: { links: { name: string; href: string }[] }) => {
                 >
                     <Link
                         href={link.href}
-                        className="text-gray-600 hover:text-gray-800"
+                        className="text-gray-600 hover:text-gray-800 line-clamp-1"
                     >
                         {link.name}
                     </Link>

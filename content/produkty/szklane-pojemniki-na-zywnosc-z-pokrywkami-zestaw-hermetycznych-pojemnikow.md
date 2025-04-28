@@ -28,4 +28,4 @@ sizesAndPrices:
   - size: 1000ml
     price: 39
 ---
-szklane pojemniki na żywność hermetyczne pojemniki pojemniki z pokrywkami zestaw pojemników do przechowywania przechowywanie żywności pojemniki do zamrażarki pojemniki do mikrofali
+szklane pojemniki na żywność, hermetyczne pojemniki, pojemniki z pokrywkami, zestaw pojemników do przechowywania, przechowywanie żywności, pojemniki do zamrażarki, pojemniki do mikrofali
