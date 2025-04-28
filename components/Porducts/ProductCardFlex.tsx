@@ -6,7 +6,6 @@ export function ProductCardFlex({ produkt }: { produkt: Product }) {
     return (
         <Link
             href={`/sklep/${produkt.slug}`}
-            key={produkt.slug}
             className="bg-white rounded-lg shadow-md overflow-hidden flex items-start justify-start hover:shadow-lg transition-shadow p-2"
         >
             <div className="relative w-40 h-40">

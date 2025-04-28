@@ -105,7 +105,7 @@ export function LunchboxProduct({
                             <ShareButton title={title} />
                         </div>
                         <div className="flex gap-2 flex-wrap">
-                            {sizesAndPrices.map((item, i) => (
+                            {sizesAndPrices.map((item) => (
                                 <button
                                     key={`${item.size}-${item.price}`}
                                     onClick={() =>
