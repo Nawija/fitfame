@@ -17,7 +17,7 @@ export default async function Page({
         return <div>Produkt nie został znaleziony.</div>;
     }
     const allProducts = await getAllProducts();
-    // Fetch similar products based on title or category
+    
     const similarProducts = allProducts
         .filter((p) => {
             if (p.slug === product.slug) return false;

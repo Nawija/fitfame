@@ -8,7 +8,7 @@ export function ProductCardFlex({ produkt }: { produkt: Product }) {
             href={`/sklep/${produkt.slug}`}
             className="bg-white rounded-lg shadow-md overflow-hidden flex items-start justify-start hover:shadow-lg transition-shadow p-2 group"
         >
-            <div className="relative w-32 h-32">
+            <div className="relative w-30 h-32">
                 <Image
                     src={produkt.image}
                     alt={produkt.title}
@@ -26,11 +26,11 @@ export function ProductCardFlex({ produkt }: { produkt: Product }) {
             </div>
             {/* TAGI */}
 
-            <div className="p-2 w-52">
+            <div className="p-2 w-50">
                 <h2 className="text-base font-semibold line-clamp-3">
                     {produkt.title}
                 </h2>
-                <p className="text-sm text-gray-500 mb-2">{produkt.category}</p>
+                <p className="text-sm text-gray-500">{produkt.category}</p>
                 <div className="flex items-center justify-between w-full mt-1">
                     <div className="font-bold text-green-600 ml-auto">
                         {produkt.sizesAndPrices?.[0]?.price.toFixed(2)} zł

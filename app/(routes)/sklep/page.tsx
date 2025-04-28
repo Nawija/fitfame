@@ -24,7 +24,7 @@ export default function ProduktyPage() {
         .slice(0, 5);
 
     return (
-        <div className="p-4 py-8 max-w-7xl mx-auto anim-opacity">
+        <div className="p-3 py-8 max-w-7xl mx-auto anim-opacity">
             <h1 className="text-3xl font-bold mb-6 text-gray-800">Polecane</h1>
             <div className="relative w-full overflow-x-scroll py-4">
                 <div className="w-max flex items-stretch justify-start space-x-3">
@@ -38,7 +38,7 @@ export default function ProduktyPage() {
                     <h2 className="text-3xl font-bold my-6 text-gray-800">
                         Pojemniki
                     </h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
                         {lunchBoxyProducts.map((produkt) => (
                             <ProductCard key={produkt.slug} produkt={produkt} />
                         ))}

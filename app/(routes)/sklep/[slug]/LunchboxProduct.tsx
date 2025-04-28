@@ -1,6 +1,7 @@
 "use client";
 
 import ShareButton from "@/components/Buttons/ShareButton";
+import Shimmer from "@/components/Shimmer";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -43,7 +44,7 @@ export function LunchboxProduct({
             setSelectedImage(image);
         }
     };
-
+    const [isImageLoading, setIsImageLoading] = useState<boolean>(true);
     const tags = content?.split(",").filter(Boolean) || [];
 
     return (
@@ -54,6 +55,10 @@ export function LunchboxProduct({
             {/* Galeria zdjęć */}
             <div className="space-y-4 w-full lg:col-span-3">
                 <div className="relative w-full aspect-square bg-gray-100 rounded-lg overflow-hidden image-container">
+                    {isImageLoading && (
+                        <Shimmer imageLoaded={!isImageLoading} />
+                    )}
+
                     <Image
                         src={
                             hoverImage ||
@@ -63,6 +68,7 @@ export function LunchboxProduct({
                             ""
                         }
                         alt={title}
+                        onLoadingComplete={() => setIsImageLoading(false)} // Set loading state to false once the image is loaded
                         fill
                         className="object-cover h-full w-full"
                     />
