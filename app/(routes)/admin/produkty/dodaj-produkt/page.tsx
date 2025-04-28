@@ -264,7 +264,31 @@ const AdminProdukty: React.FC = () => {
                             className="w-full p-2 border border-gray-200 rounded-lg"
                         />
 
-                        {/* Dodatkowe zdjęcia */}
+                        <div className="flex items-start justify-start flex-wrap">
+                            {additionalFiles.map((file, index) => (
+                                <div
+                                    key={index}
+                                    className="flex items-center space-x-2 mb-2"
+                                >
+                                    <img
+                                        src={
+                                            file instanceof File && file.name
+                                                ? URL.createObjectURL(file)
+                                                : ""
+                                        }
+                                        alt={`Image ${index}`}
+                                        className="w-16 h-16 object-cover rounded"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => handleDeleteImage(index)}
+                                        className="text-red-500"
+                                    >
+                                        <MdDelete className="text-xl" />
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
                         <label className="font-semibold mt-4 block">
                             Dodatkowe zdjęcia:
                         </label>
@@ -278,29 +302,6 @@ const AdminProdukty: React.FC = () => {
                                 }
                                 className="w-full p-2 border border-gray-200 rounded-lg my-2"
                             />
-                        ))}
-                        {additionalFiles.map((file, index) => (
-                            <div
-                                key={index}
-                                className="flex items-center space-x-2 mb-2"
-                            >
-                                <img
-                                    src={
-                                        file instanceof File && file.name
-                                            ? URL.createObjectURL(file)
-                                            : ""
-                                    }
-                                    alt={`Image ${index}`}
-                                    className="w-16 h-16 object-cover rounded"
-                                />
-                                <button
-                                    type="button"
-                                    onClick={() => handleDeleteImage(index)}
-                                    className="text-red-500"
-                                >
-                                    <MdDelete className="text-xl" />
-                                </button>
-                            </div>
                         ))}
 
                         <button

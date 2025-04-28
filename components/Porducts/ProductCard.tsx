@@ -7,15 +7,25 @@ export function ProductCard({ produkt }: { produkt: Product }) {
     return (
         <Link
             href={`/sklep/${produkt.slug}`}
-            className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow p-2"
+            className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow p-2 group"
         >
             <div className="relative h-52 w-full">
+                {/* Pierwsze zdjęcie */}
                 <Image
                     src={produkt.image}
                     alt={produkt.title}
                     fill
-                    className="object-cover rounded-xl"
+                    className="object-cover rounded-xl transition-opacity duration-300 group-hover:opacity-0"
                 />
+                {/* Drugie zdjęcie, które pokaże się na hover */}
+                {produkt.additionalImages?.[0] && (
+                    <Image
+                        src={produkt.additionalImages[0]}
+                        alt={produkt.title + " - podgląd"}
+                        fill
+                        className="object-cover rounded-xl transition-opacity duration-300 opacity-0 group-hover:opacity-100 absolute top-0 left-0"
+                    />
+                )}
             </div>
             <div className="p-4">
                 <h2 className="text-lg font-semibold">{produkt.title}</h2>

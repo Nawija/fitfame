@@ -25,7 +25,7 @@ export default function ProduktyPage() {
         <div className="p-4 py-8 max-w-7xl mx-auto">
             <h1 className="text-3xl font-bold mb-6 text-gray-800">Polecane</h1>
             <div className="relative w-full overflow-x-scroll py-4">
-                <div className="w-max flex items-stretch justify-start space-x-4">
+                <div className="w-max flex items-stretch justify-start space-x-3">
                     {products.slice(0, 10).map((produkt) => (
                         <ProductCardFlex key={produkt.slug} produkt={produkt} />
                     ))}
@@ -36,7 +36,7 @@ export default function ProduktyPage() {
                     <h2 className="text-3xl font-bold my-6 text-gray-800">
                         LunchBox
                     </h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3">
                         {lunchBoxyProducts.map((produkt) => (
                             <ProductCard key={produkt.slug} produkt={produkt} />
                         ))}
@@ -48,7 +48,7 @@ export default function ProduktyPage() {
                     <h2 className="text-3xl font-bold my-6 text-gray-800">
                         Akcesoria
                     </h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3">
                         {akcesoriaProducts.map((produkt) => (
                             <ProductCard key={produkt.slug} produkt={produkt} />
                         ))}
@@ -61,7 +61,7 @@ export default function ProduktyPage() {
                     <h2 className="text-3xl font-bold my-6 text-gray-800">
                         T-Shirt
                     </h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3">
                         {tshirtProducts.map((produkt) => (
                             <ProductCard key={produkt.slug} produkt={produkt} />
                         ))}
