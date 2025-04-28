@@ -30,7 +30,7 @@ const AdminProdukty: React.FC = () => {
         title: "",
         slug: "",
         description: "",
-        category: "LunchBox",
+        category: "Pojemniki",
         image: null,
         price: 0,
         content: "",
@@ -247,7 +247,7 @@ const AdminProdukty: React.FC = () => {
                             onChange={handleChange}
                             className="w-full p-2 border border-gray-200 rounded-lg"
                         >
-                            <option value="Lunchbox">LunchBox</option>
+                            <option value="Lunchbox">Pojemniki</option>
                             <option value="TShirt">T-Shirt</option>
                             <option value="Akcesoria">Akcesoria</option>
                         </select>
@@ -255,7 +255,7 @@ const AdminProdukty: React.FC = () => {
                         {/* Główne zdjęcie */}
 
                         <label className="font-semibold mt-4 block">
-                            Zdjęcie:
+                            Główne Zdjęcie:
                         </label>
                         <input
                             type="file"
@@ -264,11 +264,11 @@ const AdminProdukty: React.FC = () => {
                             className="w-full p-2 border border-gray-200 rounded-lg"
                         />
 
-                        <div className="flex items-start justify-start flex-wrap">
+                        <div className="flex items-start justify-start flex-wrap space-x-2">
                             {additionalFiles.map((file, index) => (
                                 <div
                                     key={index}
-                                    className="flex items-center space-x-2 mb-2"
+                                    className="flex items-center mb-2 relative group"
                                 >
                                     <img
                                         src={
@@ -282,9 +282,9 @@ const AdminProdukty: React.FC = () => {
                                     <button
                                         type="button"
                                         onClick={() => handleDeleteImage(index)}
-                                        className="text-red-500"
+                                        className="text-white absolute right-0 group-hover:opacity-100 opacity-0 duration-100 transition-opacity top-0 cursor-pointer bg-red-500 p-1 rounded-full"
                                     >
-                                        <MdDelete className="text-xl" />
+                                        <MdDelete className="text-base" />
                                     </button>
                                 </div>
                             ))}
@@ -326,6 +326,13 @@ const AdminProdukty: React.FC = () => {
                             name="description"
                             placeholder="Opis produktu"
                             value={form.description}
+                            onChange={handleChange}
+                            className="w-full p-2 border border-gray-200 h-24 rounded-lg"
+                        />
+                        <textarea
+                            name="content"
+                            placeholder="Hasztagi"
+                            value={form.content}
                             onChange={handleChange}
                             className="w-full p-2 border border-gray-200 h-24 rounded-lg"
                         />

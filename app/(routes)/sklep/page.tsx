@@ -5,16 +5,18 @@ import { ProductCardFlex } from "@/components/Porducts/ProductCardFlex";
 
 export default function ProduktyPage() {
     const products: Product[] = getAllProducts();
+    const lunchBoxyProducts = products
+        .filter((p) => {
+            if (p.category === "Pojemniki") return true;
+        })
+        .slice(0, 5);
+
     const akcesoriaProducts = products
         .filter((p) => {
             if (p.category === "Akcesoria") return true;
         })
         .slice(0, 5);
-    const lunchBoxyProducts = products
-        .filter((p) => {
-            if (p.category === "LunchBox") return true;
-        })
-        .slice(0, 5);
+
     const tshirtProducts = products
         .filter((p) => {
             if (p.category === "TShirt") return true;
@@ -34,7 +36,7 @@ export default function ProduktyPage() {
             {lunchBoxyProducts.length > 0 && (
                 <>
                     <h2 className="text-3xl font-bold my-6 text-gray-800">
-                        LunchBox
+                        Pojemniki
                     </h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3">
                         {lunchBoxyProducts.map((produkt) => (

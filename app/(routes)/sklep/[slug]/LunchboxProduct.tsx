@@ -16,6 +16,7 @@ type LunchboxProductProps = {
     image: string | File | null; // Image can be a URL (string) or an uploaded file (File)
     additionalImages?: string[]; // Optional array of additional image URLs
     sizesAndPrices?: SizeAndPrice[]; // Optional array of SizeAndPrice objects
+    content?: string;
 };
 
 export function LunchboxProduct({
@@ -25,6 +26,7 @@ export function LunchboxProduct({
     description,
     additionalImages,
     sizesAndPrices = [], // Default empty array for sizes and prices
+    content,
 }: LunchboxProductProps) {
     const [selectedSizeAndPrice, setSelectedSizeAndPrice] =
         useState<SizeAndPrice | null>(
@@ -41,6 +43,8 @@ export function LunchboxProduct({
             setSelectedImage(image);
         }
     };
+
+    const tags = content?.split(" ").filter(Boolean) || [];
 
     return (
         <div
@@ -136,6 +140,20 @@ export function LunchboxProduct({
                 >
                     Kup teraz
                 </button>
+
+                {tags.length > 0 && (
+                    <div className="flex flex-wrap gap-1 mb-2">
+                        {tags.map((tag, index) => (
+                            <span
+                                key={index}
+                                itemProp="keywords"
+                                className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full"
+                            >
+                                {tag}
+                            </span>
+                        ))}
+                    </div>
+                )}
             </div>
         </div>
     );

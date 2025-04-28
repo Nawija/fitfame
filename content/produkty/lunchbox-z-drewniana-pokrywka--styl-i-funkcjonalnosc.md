@@ -1,7 +1,7 @@
 ---
 title: LunchBox z Drewnianą Pokrywką – Styl i Funkcjonalność
 slug: lunchbox-z-drewniana-pokrywka--styl-i-funkcjonalnosc
-category: LunchBox
+category: Pojemniki
 price: 0
 image: >-
   /images/produkty/1745833593317_H73a44d454e114985977f7f63815fe953Y.jpg_720x720q50.avif
@@ -29,4 +29,5 @@ sizesAndPrices:
   - size: 1200ml
     price: 49
 ---
+LunchBox Szklane Śniadanie
 

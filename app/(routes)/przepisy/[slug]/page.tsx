@@ -41,7 +41,7 @@ export default async function Page({
             );
         })
         .slice(0, 4);
-
+    const tags = recipe.content?.split(" ").filter(Boolean) || [];
     return (
         <div className="w-full overflow-hidden relative h-full">
             <div className="my-3 px-4 max-w-6xl mx-auto">
@@ -55,6 +55,7 @@ export default async function Page({
                     ]}
                 />
             </div>
+
             <div className="max-w-6xl mx-auto anim-opacity px-2 py-2 flex items-center justify-center lg:items-start flex-col lg:space-x-7 relative">
                 <div className="w-full h-full">
                     <div className="w-full overflow-hidden h-62 lg:min-h-[500px] relative">
@@ -84,6 +85,18 @@ export default async function Page({
                     <p className="text-sm w-full px-2 py-3">
                         {recipe.description}
                     </p>
+                    {tags.length > 1 && (
+                        <div className="flex flex-wrap gap-1 mb-2">
+                            {tags.map((tag, index) => (
+                                <span
+                                    key={index}
+                                    className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full"
+                                >
+                                    {tag}
+                                </span>
+                            ))}
+                        </div>
+                    )}
 
                     <div className="py-4 w-full overflow-x-scroll">
                         <div className="flex items-center justify-start space-x-1 w-max">

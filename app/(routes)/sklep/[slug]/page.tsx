@@ -46,6 +46,7 @@ export default async function Page({
                     ]}
                 />
             </div>
+
             <div className="max-w-6xl mx-auto px-4 lg:py-10 py-4">
                 <LunchboxProduct
                     title={product.title}
@@ -54,6 +55,7 @@ export default async function Page({
                     image={product.image}
                     additionalImages={product.additionalImages}
                     sizesAndPrices={product.sizesAndPrices}
+                    content={product.content}
                 />
             </div>
 
@@ -65,10 +67,7 @@ export default async function Page({
                     </h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                         {similarProducts.map((product) => (
-                            <ProductCard
-                                key={product.slug} 
-                                produkt={product}
-                            />
+                            <ProductCard key={product.slug} produkt={product} />
                         ))}
                     </div>
                 </div>

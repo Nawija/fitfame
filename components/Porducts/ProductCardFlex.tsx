@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export function ProductCardFlex({ produkt }: { produkt: Product }) {
+   
     return (
         <Link
             href={`/sklep/${produkt.slug}`}
@@ -24,11 +25,13 @@ export function ProductCardFlex({ produkt }: { produkt: Product }) {
                     />
                 )}
             </div>
-            <div className="p-4 w-52">
-                <h2 className="text-base font-semibold">{produkt.title}</h2>
+            {/* TAGI */}
+            
+            <div className="p-2 w-52">
+                <h2 className="text-base font-semibold line-clamp-3">{produkt.title}</h2>
                 <p className="text-sm text-gray-500 mb-2">{produkt.category}</p>
-                <div className="flex items-center justify-between w-full mt-3">
-                    <div className="font-bold text-green-600">
+                <div className="flex items-center justify-between w-full mt-1">
+                    <div className="font-bold text-green-600 ml-auto">
                         {produkt.sizesAndPrices?.[0]?.price.toFixed(2)} zł
                     </div>
                 </div>
