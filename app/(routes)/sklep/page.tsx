@@ -16,10 +16,12 @@ export default function ProduktyPage() {
             <h1 className="text-3xl font-bold mb-6 text-gray-800">
                 Nasze Produkty
             </h1>
-            <div className="flex items-stretch justify-start space-x-4 lg:space-y-0 space-y-4 flex-wrap w-full">
-                {products.map((produkt) => (
-                    <ProductCardFlex produkt={produkt} />
-                ))}
+            <div className="relative w-full overflow-x-scroll py-4">
+                <div className="w-max flex items-stretch justify-start space-x-4">
+                    {products.map((produkt) => (
+                        <ProductCardFlex produkt={produkt} />
+                    ))}
+                </div>
             </div>
             <h2 className="text-3xl font-bold my-6 text-gray-800">Akcesoria</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">

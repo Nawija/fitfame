@@ -1,7 +1,6 @@
 import { Product } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
-import { MainBtn } from "../Buttons/MainBtn";
 
 export function ProductCardFlex({ produkt }: { produkt: Product }) {
     return (
