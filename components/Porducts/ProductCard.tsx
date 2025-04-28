@@ -7,7 +7,6 @@ export function ProductCard({ produkt }: { produkt: Product }) {
     return (
         <Link
             href={`/sklep/${produkt.slug}`}
-            key={produkt.slug}
             className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow p-2"
         >
             <div className="relative h-52 w-full">
