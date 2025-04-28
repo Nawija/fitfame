@@ -1,6 +1,7 @@
 "use client";
 
 import ShareButton from "@/components/Buttons/ShareButton";
+import { AddToCartButton } from "@/components/Cart/AddToCartButton";
 import Shimmer from "@/components/Shimmer";
 import Image from "next/image";
 import { useState } from "react";
@@ -152,6 +153,15 @@ export function LunchboxProduct({
                 >
                     Kup teraz
                 </button>
+                <AddToCartButton
+                    produkt={{
+                        title,
+                        price: selectedSizeAndPrice
+                            ? Number(selectedSizeAndPrice.price)
+                            : price,
+                        image: typeof image === "string" ? image : "",
+                    }}
+                />
 
                 {tags.length > 0 && (
                     <div className="flex flex-wrap gap-1 mb-2">

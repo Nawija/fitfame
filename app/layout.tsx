@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Nav from "@/components/Header/Nav";
 import Footer from "@/components/Footer";
+import { CartProvider } from "@/context/CartContext";
 
 export const metadata: Metadata = {
     title: "GramFit - Trener Personalny",
@@ -25,11 +26,13 @@ export default function RootLayout({
             <body
                 className={`flex flex-col min-h-screen w-full font-light antialiased font-sans bg-white`}
             >
-                <Nav />
-                <main className="flex-1 w-full relative bg-gray-50">
-                    {children}
-                </main>
-                <Footer />
+                <CartProvider>
+                    <Nav />
+                    <main className="flex-1 w-full relative bg-gray-50">
+                        {children}
+                    </main>
+                    <Footer />
+                </CartProvider>
             </body>
         </html>
     );

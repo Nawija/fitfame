@@ -32,4 +32,8 @@ export const NAVLINKS = [
         label: "Sklep",
         href: "/sklep",
     },
+    {
+        label: "Koszyk",
+        href: "/koszyk",
+    },
 ];

@@ -52,7 +52,7 @@ export type Product = {
     category: string;
     image: string;
     additionalImages: string[];
-    sizesAndPrices: SizeAndPrice[]; // ← poprawka tutaj
+    sizesAndPrices: SizeAndPrice[];
     price: number;
     description: string;
     content: string;
