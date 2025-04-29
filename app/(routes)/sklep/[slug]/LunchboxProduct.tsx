@@ -8,26 +8,28 @@ import { useState } from "react";
 
 type SizeAndPrice = {
     size: string;
-    price: number | string;
+    price: number;
 };
 
 type LunchboxProductProps = {
     title: string;
     price: number;
+    slug: string; 
     description: string;
-    image: string | File | null; // Image can be a URL (string) or an uploaded file (File)
-    additionalImages?: string[]; // Optional array of additional image URLs
-    sizesAndPrices?: SizeAndPrice[]; // Optional array of SizeAndPrice objects
+    image: string | File | null;
+    additionalImages?: string[];
+    sizesAndPrices?: SizeAndPrice[];
     content?: string;
 };
 
 export function LunchboxProduct({
     title,
     price,
+    slug,
     image,
     description,
     additionalImages,
-    sizesAndPrices = [], // Default empty array for sizes and prices
+    sizesAndPrices = [],
     content,
 }: LunchboxProductProps) {
     const [selectedSizeAndPrice, setSelectedSizeAndPrice] =
@@ -69,7 +71,7 @@ export function LunchboxProduct({
                             ""
                         }
                         alt={title}
-                        onLoadingComplete={() => setIsImageLoading(false)} // Set loading state to false once the image is loaded
+                        onLoadingComplete={() => setIsImageLoading(false)}
                         fill
                         className="object-cover h-full w-full"
                     />
@@ -156,10 +158,16 @@ export function LunchboxProduct({
                 <AddToCartButton
                     produkt={{
                         title,
+                        slug,
+                        category: "TShirt", // lub dynamicznie jeśli masz
+                        image: typeof image === "string" ? image : "",
+                        additionalImages: additionalImages ?? [],
+                        sizesAndPrices: sizesAndPrices ?? [],
                         price: selectedSizeAndPrice
                             ? Number(selectedSizeAndPrice.price)
                             : price,
-                        image: typeof image === "string" ? image : "",
+                        description,
+                        content: content ?? "",
                     }}
                 />
 

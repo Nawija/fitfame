@@ -52,6 +52,7 @@ export default async function Page({
                 <LunchboxProduct
                     title={product.title}
                     price={product.price}
+                    slug={product.slug}
                     description={product.description}
                     image={product.image}
                     additionalImages={product.additionalImages}
