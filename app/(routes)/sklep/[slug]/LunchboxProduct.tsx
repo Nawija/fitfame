@@ -159,7 +159,7 @@ export function LunchboxProduct({
                     produkt={{
                         title,
                         slug,
-                        category: "TShirt", // lub dynamicznie jeśli masz
+                        category: "", 
                         image: typeof image === "string" ? image : "",
                         additionalImages: additionalImages ?? [],
                         sizesAndPrices: sizesAndPrices ?? [],
