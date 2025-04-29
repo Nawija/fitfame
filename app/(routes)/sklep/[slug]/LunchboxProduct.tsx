@@ -151,7 +151,7 @@ export function LunchboxProduct({
 
                 <button
                     className="w-full cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200"
-                    onClick={() => alert("Dodałeś do koszyka (symulacja)")}
+                    onClick={() => alert("Kupujesz (symulacja)")}
                 >
                     Kup teraz
                 </button>

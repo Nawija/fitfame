@@ -97,7 +97,7 @@ export default function KoszykPage() {
                         Razem: {totalPrice.toFixed(2)} zł
                     </p>
                     <button className="bg-green-600 hover:bg-green-700 cursor-pointer text-white px-4 py-2 rounded-lg font-semibold text-xs mt-4 uppercase">
-                        Kupuję i płace
+                        Przejdż do kasy
                     </button>
                 </div>
             </div>
