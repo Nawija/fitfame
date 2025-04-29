@@ -1,7 +1,6 @@
 import { Product } from "@/types/types";
 import { getAllProducts } from "@/lib/getProducts";
 import { ProductCard } from "@/components/Porducts/ProductCard";
-import { ProductCardFlex } from "@/components/Porducts/ProductCardFlex";
 import { ProductSlider } from "./ProductSlider";
 
 export default function ProduktyPage() {
