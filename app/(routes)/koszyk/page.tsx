@@ -2,6 +2,7 @@
 
 import { useCart } from "@/context/CartContext";
 import Link from "next/link";
+import { MdDelete } from "react-icons/md";
 
 export default function KoszykPage() {
     const { cart, removeFromCart, updateQuantity, clearCart } = useCart();
@@ -40,9 +41,9 @@ export default function KoszykPage() {
                             className="w-24 h-24 object-cover rounded-lg"
                         />
                         <div className="flex-1">
-                            <h2 className="text-xl font-semibold">
+                            <Link href={`sklep/${produkt.slug}`} className="text-sm hover:underline lg:text-lg font-semibold">
                                 {produkt.title}
-                            </h2>
+                            </Link>
                             <p className="text-gray-600">{produkt.price} zł</p>
 
                             <div className="flex items-center gap-2 mt-2">
@@ -76,7 +77,7 @@ export default function KoszykPage() {
                             onClick={() => removeFromCart(produkt.slug)}
                             className="text-red-600 cursor-pointer hover:underline"
                         >
-                            Usuń
+                            <MdDelete />
                         </button>
                     </div>
                 ))}
@@ -95,8 +96,8 @@ export default function KoszykPage() {
                     <p className="text-2xl font-bold">
                         Razem: {totalPrice.toFixed(2)} zł
                     </p>
-                    <button className="bg-green-600 hover:bg-green-700 cursor-pointer text-white px-6 py-2 rounded-lg font-semibold mt-4">
-                        Przejdź do kasy
+                    <button className="bg-green-600 hover:bg-green-700 cursor-pointer text-white px-4 py-2 rounded-lg font-semibold text-xs mt-4 uppercase">
+                        Kupuję i płace
                     </button>
                 </div>
             </div>
