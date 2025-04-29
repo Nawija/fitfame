@@ -148,13 +148,6 @@ export function LunchboxProduct({
                         ? `${selectedSizeAndPrice.price} zł`
                         : `${price.toFixed(2)} zł`}
                 </div>
-
-                <button
-                    className="w-full cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200"
-                    onClick={() => alert("Kupujesz (symulacja)")}
-                >
-                    Kup teraz
-                </button>
                 <AddToCartButton
                     produkt={{
                         title,

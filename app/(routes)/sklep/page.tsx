@@ -2,6 +2,7 @@ import { Product } from "@/types/types";
 import { getAllProducts } from "@/lib/getProducts";
 import { ProductCard } from "@/components/Porducts/ProductCard";
 import { ProductCardFlex } from "@/components/Porducts/ProductCardFlex";
+import { ProductSlider } from "./ProductSlider";
 
 export default function ProduktyPage() {
     const products: Product[] = getAllProducts();
@@ -26,19 +27,13 @@ export default function ProduktyPage() {
     return (
         <div className="p-3 py-8 max-w-7xl mx-auto anim-opacity">
             <h1 className="text-3xl font-bold mb-6 text-gray-800">Polecane</h1>
-            <div className="relative w-full overflow-x-scroll py-4">
-                <div className="w-max flex items-stretch justify-start space-x-3">
-                    {products.slice(0, 10).map((produkt) => (
-                        <ProductCardFlex key={produkt.slug} produkt={produkt} />
-                    ))}
-                </div>
-            </div>
+            <ProductSlider products={products} />
             {lunchBoxyProducts.length > 0 && (
                 <>
                     <h2 className="text-3xl font-bold my-6 text-gray-800">
                         Pojemniki
                     </h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3">
                         {lunchBoxyProducts.map((produkt) => (
                             <ProductCard key={produkt.slug} produkt={produkt} />
                         ))}

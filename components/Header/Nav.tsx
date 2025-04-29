@@ -9,6 +9,7 @@ import { kanit } from "@/fonts";
 import { TiSocialFacebook } from "react-icons/ti";
 import { FiInstagram } from "react-icons/fi";
 import Logo from "@/components/Header/Logo";
+import ShoppingCart from "../Cart/ShoppingCart";
 
 export default function Nav() {
     const [showMenu, setShowMenu] = useState(false);
@@ -95,7 +96,7 @@ export default function Nav() {
                             showMenu ? "translate-x-0" : "-translate-x-full"
                         }`}
                     >
-                        <div className="flex flex-col h-full pt-20 px-6">
+                        <div className="flex flex-col h-full pt-12 px-6">
                             <nav aria-label="Menu mobilne">
                                 <ul className="flex flex-col space-y-6">
                                     {NAVLINKS.map((link, index) => (
@@ -137,6 +138,7 @@ export default function Nav() {
 
                             {/* Social media w menu mobilnym */}
                             <div className="flex gap-5 mt-auto mb-10 pt-10">
+                                <ShoppingCart />
                                 <Link
                                     href="https://www.facebook.com/JarekOlszewskiFotografia/"
                                     target="_blank"
@@ -163,7 +165,10 @@ export default function Nav() {
                     <nav className="hidden lg:block w-full">
                         <ul className="flex items-center justify-center xl:space-x-4 space-x-2 absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
                             {NAVLINKS.map((link) => (
-                                <li key={link.label} className="relative w-max font-medium">
+                                <li
+                                    key={link.label}
+                                    className="relative w-max font-medium"
+                                >
                                     <Link
                                         href={link.href}
                                         className={` py-4 px-1 uppercase lg:text-sm transition-all hover:text-[#a58b34] ${
@@ -186,6 +191,7 @@ export default function Nav() {
 
                     {/* Social media desktop */}
                     <div className="hidden lg:flex items-center gap-4">
+                        <ShoppingCart />
                         <Link
                             href="/"
                             target="_blank"

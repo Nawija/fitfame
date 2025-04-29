@@ -1,13 +1,5 @@
 export const NAVLINKS = [
     {
-        label: "Strona główna",
-        href: "/",
-    },
-    {
-        label: "O mnie",
-        href: "/o-mnie",
-    },
-    {
         label: "Plany treningowe",
         href: "/plany-treningowe",
     },
@@ -31,9 +23,5 @@ export const NAVLINKS = [
     {
         label: "Sklep",
         href: "/sklep",
-    },
-    {
-        label: "Koszyk",
-        href: "/koszyk",
     },
 ];

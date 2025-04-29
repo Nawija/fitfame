@@ -39,7 +39,7 @@ export function AddToCartButton({ produkt }: AddToCartButtonProps) {
         <>
             <button
                 onClick={handleAddToCart}
-                className="w-full cursor-pointer bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200"
+                className="w-full cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
             >
                 Dodaj do koszyka
             </button>
@@ -50,17 +50,17 @@ export function AddToCartButton({ produkt }: AddToCartButtonProps) {
                     <div className="fixed inset-0 z-50 flex items-center justify-center">
                         <motion.div
                             initial={{ opacity: 0 }}
-                            animate={{ opacity: 1, scale: 1 }}
+                            animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            transition={{ duration: 0.1 }}
-                            className="bg-white/10 backdrop-blur-lg p-8 w-full h-full absolute top-0 left-0 -z-10"
+                            transition={{ duration: 0.25 }}
+                            className="bg-black/30 p-8 w-full h-full absolute top-0 left-0 -z-10"
                         />
                         <motion.div
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.9 }}
+                            initial={{ opacity: 0, translateY: "100%" }}
+                            animate={{ opacity: 1, translateY: 0 }}
+                            exit={{ opacity: 0, translateY: "100%" }}
                             transition={{ duration: 0.25 }}
-                            className="bg-white rounded-2xl p-8 shadow-2xl text-center max-w-sm w-full space-y-6"
+                            className="bg-white rounded-2xl p-8 shadow-2xl text-center max-w-sm w-full h-screen lg:h-auto lg:mt-0 lg:rounded-lg mt-[50vh] space-y-6"
                         >
                             <h2 className="text-2xl font-bold">
                                 Produkt dodany!
