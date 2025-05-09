@@ -23,13 +23,13 @@ const Navigation = ({ links }: { links: { name: string; href: string }[] }) => {
                 >
                     <Link
                         href={link.href}
-                        className="text-gray-600 hover:text-gray-800 line-clamp-1"
+                        className="text-gray-800 hover:text-gray-900 line-clamp-1"
                     >
                         {link.name}
                     </Link>
                     {/* Separator | lub / */}
                     {index < links.length - 1 && (
-                        <span className="mx-2 text-gray-700">
+                        <span className="mx-2 text-gray-900">
                             /
                         </span>
                     )}

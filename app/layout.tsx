@@ -24,11 +24,11 @@ export default function RootLayout({
                 />
             </head>
             <body
-                className={`flex flex-col min-h-screen w-full font-light antialiased font-sans bg-white`}
+                className={`flex flex-col min-h-screen w-full font-light antialiased font-sans bg-white z-0`}
             >
                 <CartProvider>
                     <Nav />
-                    <main className="flex-1 w-full relative bg-gray-50">
+                    <main className="flex-1 w-full relative bg-gray-100 z-0">
                         {children}
                     </main>
                     <Footer />

@@ -13,6 +13,7 @@ import Newsletter from "@/components/Newsletter";
 import { FaBurn, FaMoneyBillWave, FaStar } from "react-icons/fa";
 import { GiKnifeFork } from "react-icons/gi";
 import { Metadata } from "next";
+import Logo from "@/components/Header/Logo";
 
 export default async function Page({
     params,
@@ -44,7 +45,7 @@ export default async function Page({
     const tags = recipe.content?.split(",").filter(Boolean) || [];
     return (
         <div className="w-full overflow-hidden relative h-full">
-            <div className="my-3 px-4 max-w-6xl mx-auto">
+            <div className="my-3 px-4 max-w-6xl mx-auto z-40">
                 <Navigation
                     links={[
                         { name: "Przepisy", href: "/przepisy" },
@@ -55,19 +56,29 @@ export default async function Page({
                     ]}
                 />
             </div>
+            <div className="w-full overflow-hidden h-96 lg:min-h-[400px] absolute top-0 anim-opacity -z-20">
+                <Image
+                    fill
+                    src={recipe.image}
+                    alt={recipe.title}
+                    quality={50}
+                    className="w-full object-cover shadow opacity-35 "
+                />
+                <div className="bg-red-100/20 inset-0 absolute backdrop-blur-md" />
+            </div>
 
-            <div className="max-w-6xl mx-auto anim-opacity px-2 py-2 flex items-center justify-center lg:items-start flex-col lg:space-x-7 relative">
-                <div className="w-full h-full">
-                    <div className="w-full overflow-hidden h-62 lg:min-h-[500px] relative">
+            <div className="max-w-6xl mx-auto anim-opacity px-2 pb-5 flex items-center justify-center lg:items-start flex-col lg:space-x-7 relative z-40">
+                <div className="w-full h-full p-4 bg-white rounded-lg border border-gray-100">
+                    <div className="w-full overflow-hidden h-64 lg:min-h-[500px] relative">
                         <Image
                             fill
                             src={recipe.image}
                             alt={recipe.title}
+                            quality={100}
                             className="w-full object-cover rounded-xl shadow"
                         />
-                        
                     </div>
-                    
+
                     <h1 className="text-2xl lg:text-4xl font-bold text-gray-800 py-4">
                         {recipe.title}
                     </h1>
@@ -149,7 +160,7 @@ export default async function Page({
             </div>
 
             <section className="max-w-6xl mx-auto mb-6 flex items-start justify-center flex-col lg:flex-row space-y-8">
-                <div className=" w-full lg:w-[70%] px-2 space-y-6">
+                <div className=" w-full lg:w-[80%] px-2 space-y-6">
                     <div className="p-6 rounded-lg border border-gray-100 bg-white lg:mt-0 w-full">
                         <h3 className="text-xl font-semibold text-gray-800 mb-4">
                             Wartości odżywcze:
@@ -201,15 +212,15 @@ export default async function Page({
                     </div>
                     <Ingredients ingredients={recipe.ingredients} />
                 </div>
-                <div className="text-start bg-white flex flex-col items-center justify-center mx-3 px-2 rounded-lg border border-gray-100 py-12 space-y-20">
+                <div className="text-start bg-white flex flex-col items-start justify-start mx-3 px-2 rounded-lg border border-gray-100 py-12 space-y-12">
                     {recipe.steps?.map((s, i) => (
                         <div
                             key={i}
                             id={s.title}
-                            className="space-y-4 mx-4 flex items-center justify-center flex-col"
+                            className="space-y-4 flex items-start justify-start flex-col w-full"
                         >
-                            <div className="space-y-4 ">
-                                <div className="relative w-max">
+                            <div className="space-y-4 px-3 w-full">
+                                <div className="relative w-full">
                                     <span className="absolute -top-4 font-bold text-xs -left-1 bg-yellow-500 py-0 px-2 text-white rounded-full">
                                         Krok {i + 1}
                                     </span>
@@ -218,19 +229,19 @@ export default async function Page({
                                     </h2>
                                 </div>
 
-                                <ul className="list-disc pl-6 text-base max-w-11/12 font-medium text-gray-700 space-y-1">
+                                <ul className="list-disc pl-6 text-base max-w-11/12 w-full font-medium text-gray-700 space-y-1">
                                     {s?.description.map((item, idx) => (
                                         <li key={idx}>{item}</li>
                                     ))}
                                 </ul>
+                                {s?.image && (
+                                    <img
+                                        src={s.image}
+                                        alt={s.title}
+                                        className="w-full h-full object-cover mx-auto rounded-lg shadow-md"
+                                    />
+                                )}
                             </div>
-                            {s?.image && (
-                                <img
-                                    src={s.image}
-                                    alt={s.title}
-                                    className="w-full max-w-2xl rounded-lg shadow-md"
-                                />
-                            )}
                         </div>
                     ))}
                 </div>
@@ -239,7 +250,7 @@ export default async function Page({
             <Newsletter />
 
             {similarRecipes.length > 0 && (
-                <div className="my-20 px-4 max-w-7xl mx-auto">
+                <div className="my-20 px-4 max-w-6xl mx-auto">
                     <h4 className="text-3xl font-extrabold text-gray-800 mb-10 text-center">
                         To też może Ci zasmakować
                     </h4>
